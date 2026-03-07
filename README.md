@@ -58,19 +58,6 @@ El sitio incluye información institucional, presentación del equipo, metodolog
 
 ---
 
-## ✨ Features
-
-- **Carrusel hero** con auto-avance (10s), flechas SVG y dots indicadores
-- **Navbar** con efecto glass, underline animado con "dientitos", menú hamburguesa con animación SVG `stroke-dasharray`
-- **Menú mobile fullscreen** con liquid glass violeta y scroll lock (compatible iOS)
-- **FadeIn** con `IntersectionObserver` y delays escalonados en todas las secciones
-- **Protección de imágenes** con `userSelect: none` y `draggable={false}`
-- **LinkedIn hover** en fotos del equipo con gradiente radial
-- **Scrollbar personalizada** con degradé fucsia/violeta
-- **ScrollToTop** automático en cada cambio de ruta
-
----
-
 ## ⚙️ Instalación y desarrollo
 
 ```bash
