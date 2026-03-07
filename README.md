@@ -1,16 +1,172 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="src/assets/images/icons/logo_neti_fuchsia.png" alt="NETI Logo" width="180"/>
 
-Currently, two official plugins are available:
+# NETI — Laboratorio de Innovación
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Sitio web oficial de NETI, laboratorio de innovación que combina tecnologías exponenciales con lógicas de diseño y co-creación.**
 
-## React Compiler
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Netlify](https://img.shields.io/badge/Deploy-Netlify-00C7B7?style=flat-square&logo=netlify&logoColor=white)](https://netlify.com/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[🌐 Ver sitio en vivo](https://noestatodoinventado.com) · [📸 Instagram](https://www.instagram.com/netimakers/) · [💼 LinkedIn](https://www.linkedin.com/company/no-est-todo-inventado-neti-/) · [✍️ Medium](https://noestatodoinventado.medium.com/)
 
-## Expanding the ESLint configuration
+</div>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📋 Descripción
+
+NETI es un laboratorio de innovación que trabaja con empresas e instituciones para desarrollar soluciones de alto impacto. Este repositorio contiene el código fuente del sitio web oficial, construido con un stack moderno y un design system consistente basado en la identidad visual de la marca.
+
+El sitio incluye información institucional, presentación del equipo, metodología Doble Diamante, el programa de **Liderazgo Disruptivo**, y próximamente secciones de servicios, eventos y contacto.
+
+---
+
+## 🎨 Design System
+
+| Token | Valor | Uso |
+|-------|-------|-----|
+| `fuchsia` | `#EC4E8D` | Acento principal, títulos outline, botones |
+| `cyan` | `#00D8ED` | Acento secundario, íconos |
+| `dark-purple` | `#251B37` | Textos, cuerpo |
+| `purple-gray` | `#85789A` | Textos secundarios, footer |
+| `white` | `#FFFFFF` | Fondo general |
+
+**Tipografías:**
+- **Tourney Black** — títulos display con efecto outline `-webkit-text-stroke`
+- **IBM Plex Sans** — cuerpo, párrafos, labels
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Tecnología | Versión | Rol |
+|-----------|---------|-----|
+| [React](https://react.dev/) | 19 | Framework UI |
+| [Vite](https://vitejs.dev/) | 6 | Bundler y dev server |
+| [Tailwind CSS](https://tailwindcss.com/) | v4 | Estilos utilitarios |
+| [React Router DOM](https://reactrouter.com/) | 7 | Navegación SPA |
+| [Google Fonts](https://fonts.google.com/) | — | Tipografías (Tourney + IBM Plex Sans) |
+
+**Herramientas de desarrollo:**
+- [Antigravity](https://antigravity.dev/) — IDE agent-first con Claude Opus 4.6
+- [Google Stitch](https://stitch.withgoogle.com/) — generación de UI desde wireframes
+- [Netlify](https://netlify.com/) — deploy continuo desde GitHub
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+neti/
+├── public/
+│   └── favicon.png
+├── src/
+│   ├── assets/
+│   │   └── images/
+│   │       ├── icons/          # Logos NETI (fuchsia, black, white)
+│   │       ├── pictures/       # Fotos del equipo, hero, secciones
+│   │       └── empresas/       # Logos de empresas clientes (15)
+│   ├── components/
+│   │   ├── Navbar.jsx          # Navbar sticky con glass effect + menú mobile
+│   │   ├── Footer.jsx          # Footer con RRSS y licencia CC
+│   │   └── ScrollToTop.jsx     # Scroll al top en cada cambio de ruta
+│   ├── pages/
+│   │   ├── Home/
+│   │   │   ├── Home.jsx        # Hero carrusel + MapaAccion + Empresas
+│   │   │   ├── MapaAccion.jsx  # 5 nodos en zigzag
+│   │   │   └── Empresas.jsx    # Grid de logos con animación
+│   │   ├── Nosotros/
+│   │   │   └── Nosotros.jsx    # Propuesta de valor + Doble Diamante + Equipo
+│   │   └── LiderazgoDisruptivo/
+│   │       └── LiderazgoDisruptivo.jsx
+│   ├── App.jsx
+│   ├── index.css               # @theme Tailwind v4 + utilidades globales
+│   └── main.jsx
+├── index.html
+├── vite.config.js
+└── package.json
+```
+
+---
+
+## 🚀 Páginas
+
+| Ruta | Página | Estado |
+|------|--------|--------|
+| `/` | Home | ✅ Completo |
+| `/nosotros` | Nosotros | ✅ Completo |
+| `/liderazgo-disruptivo` | Liderazgo Disruptivo | ✅ Completo |
+| `/servicios` | Servicios | 🔧 En desarrollo |
+| `/eventos` | Eventos | 🔧 En desarrollo |
+| `/contacto` | Contacto | 🔧 En desarrollo |
+
+---
+
+## ✨ Features
+
+- **Carrusel hero** con auto-avance (10s), flechas SVG y dots indicadores
+- **Navbar** con efecto glass, underline animado con "dientitos", menú hamburguesa con animación SVG `stroke-dasharray`
+- **Menú mobile fullscreen** con liquid glass violeta y scroll lock (compatible iOS)
+- **FadeIn** con `IntersectionObserver` y delays escalonados en todas las secciones
+- **Protección de imágenes** con `userSelect: none` y `draggable={false}`
+- **LinkedIn hover** en fotos del equipo con gradiente radial
+- **Scrollbar personalizada** con degradé fucsia/violeta
+- **ScrollToTop** automático en cada cambio de ruta
+
+---
+
+## ⚙️ Instalación y desarrollo
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/neti.git
+cd neti
+
+# Instalar dependencias
+npm install
+
+# Iniciar servidor de desarrollo
+npm run dev
+
+# Build para producción
+npm run build
+```
+
+---
+
+## 🌐 Deploy
+
+El sitio se despliega automáticamente en **Netlify** con cada push a `main`.
+
+Deploy final de producción: **Hostinger** vía FTP (dominio `noestatodoinventado.com`).
+
+---
+
+## 📬 Contacto & Redes
+
+<div align="center">
+
+| Red | Link |
+|-----|------|
+| 🌐 Web | [noestatodoinventado.com](https://noestatodoinventado.com) |
+| 📸 Instagram | [@netimakers](https://www.instagram.com/netimakers/) |
+| 💼 LinkedIn | [NETI en LinkedIn](https://www.linkedin.com/company/no-est-todo-inventado-neti-/) |
+| ✍️ Medium | [noestatodoinventado.medium.com](https://noestatodoinventado.medium.com/) |
+
+</div>
+
+---
+
+## 👨‍💻 Desarrollo
+
+Desarrollado por **[Agustín Cervelló](https://agustincervello.netlify.app/)** para NETI.
+
+---
+
+<div align="center">
+  <sub>© 2025 NETI — No Está Todo Inventado</sub>
+</div>
