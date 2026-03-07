@@ -58,21 +58,6 @@ El sitio incluye información institucional, presentación del equipo, metodolog
 
 ---
 
----
-
-## 🚀 Páginas
-
-| Ruta | Página | Estado |
-|------|--------|--------|
-| `/` | Home | ✅ Completo |
-| `/nosotros` | Nosotros | ✅ Completo |
-| `/liderazgo-disruptivo` | Liderazgo Disruptivo | ✅ Completo |
-| `/servicios` | Servicios | 🔧 En desarrollo |
-| `/eventos` | Eventos | 🔧 En desarrollo |
-| `/contacto` | Contacto | 🔧 En desarrollo |
-
----
-
 ## ✨ Features
 
 - **Carrusel hero** con auto-avance (10s), flechas SVG y dots indicadores
