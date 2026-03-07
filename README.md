@@ -58,39 +58,6 @@ El sitio incluye información institucional, presentación del equipo, metodolog
 
 ---
 
-## 📁 Estructura del Proyecto
-
-```
-neti/
-├── public/
-│   └── favicon.png
-├── src/
-│   ├── assets/
-│   │   └── images/
-│   │       ├── icons/          # Logos NETI (fuchsia, black, white)
-│   │       ├── pictures/       # Fotos del equipo, hero, secciones
-│   │       └── empresas/       # Logos de empresas clientes (15)
-│   ├── components/
-│   │   ├── Navbar.jsx          # Navbar sticky con glass effect + menú mobile
-│   │   ├── Footer.jsx          # Footer con RRSS y licencia CC
-│   │   └── ScrollToTop.jsx     # Scroll al top en cada cambio de ruta
-│   ├── pages/
-│   │   ├── Home/
-│   │   │   ├── Home.jsx        # Hero carrusel + MapaAccion + Empresas
-│   │   │   ├── MapaAccion.jsx  # 5 nodos en zigzag
-│   │   │   └── Empresas.jsx    # Grid de logos con animación
-│   │   ├── Nosotros/
-│   │   │   └── Nosotros.jsx    # Propuesta de valor + Doble Diamante + Equipo
-│   │   └── LiderazgoDisruptivo/
-│   │       └── LiderazgoDisruptivo.jsx
-│   ├── App.jsx
-│   ├── index.css               # @theme Tailwind v4 + utilidades globales
-│   └── main.jsx
-├── index.html
-├── vite.config.js
-└── package.json
-```
-
 ---
 
 ## 🚀 Páginas
