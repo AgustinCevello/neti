@@ -5,6 +5,7 @@ import Footer from './components/Footer'
 import Nosotros from './pages/Nosotros/Nosotros'
 import ScrollToTop from './components/ScrollToTop'
 import LiderazgoDisruptivo from './pages/LiderazgoDisruptivo/LiderazgoDisruptivo'
+import Servicios from './pages/Servicios/Servicios'
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/liderazgo-disruptivo" element={<LiderazgoDisruptivo />} />
-        <Route path="/servicios" element={<h1>Servicios</h1>} />
+<Route path="/servicios" element={<Servicios />} />
         <Route path="/eventos" element={<h1>Eventos</h1>} />
         <Route path="/contacto" element={<h1>Contacto</h1>} />
       </Routes>
