@@ -71,23 +71,21 @@ const LinkedInIcon = () => (
         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
     </svg>
 );
-
 const TeamCard = ({ member, delay = 0 }) => {
-    const imgSize = 220;
     return (
         <FadeIn delay={delay}>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center w-full">
                 <a
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative group mb-5 block"
-                    style={{ width: imgSize, height: imgSize }}
+                    className="relative group mb-5 block w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44"
                 >
                     <img
                         src={member.img}
                         alt={member.name}
-                        style={{ ...noSelect, width: imgSize, height: imgSize, objectFit: "contain", pointerEvents: "none" }}
+                        className="w-full h-full object-contain"
+                        style={{ ...noSelect, pointerEvents: "none" }}
                         draggable={false}
                     />
                     <div
@@ -99,8 +97,8 @@ const TeamCard = ({ member, delay = 0 }) => {
                         </div>
                     </div>
                 </a>
-                <span className="font-sans text-xs font-semibold text-[#EC4E8D] uppercase tracking-widest mb-1 text-center">{member.role}</span>
-                <h3 className="font-sans font-bold text-[#251B37] text-center text-sm">{member.name}</h3>
+                <span className="font-sans text-[10px] sm:text-xs font-semibold text-[#EC4E8D] uppercase tracking-widest mb-1 text-center leading-tight">{member.role}</span>
+                <h3 className="font-sans font-bold text-[#251B37] text-center text-xs sm:text-sm leading-tight">{member.name}</h3>
             </div>
         </FadeIn>
     );
