@@ -1,135 +1,135 @@
 .embla {
-    width: 100%;
-    margin: auto;
-    --slide-height: 22rem;
-    --slide-spacing: 0.75rem;
-    --slide-size: 50%;
+  width: 100%;
+  margin: auto;
+  --slide-height: 22rem;
+  --slide-spacing: 0.75rem;
+  --slide-size: 50%;
 }
 
 /* mobile: mostrar de a 1 */
 @media (max-width: 640px) {
-    .embla {
-        --slide-size: 85%;
-    }
+  .embla {
+    --slide-size: 85%;
+  }
 }
 
 .embla__viewport {
-    overflow: hidden;
-    border-radius: 1rem;
+  overflow: hidden;
+  border-radius: 1rem;
 }
 
 .embla__container {
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--slide-spacing) * -1);
 }
 
 .embla__slide {
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    padding-left: var(--slide-spacing);
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
 }
 
 .embla__slide__img {
-    width: 100%;
-    height: var(--slide-height);
-    object-fit: cover;
-    border-radius: 0.75rem;
-    display: block;
+  width: 100%;
+  height: var(--slide-height);
+  object-fit: cover;
+  border-radius: 0.75rem;
+  display: block;
 }
 
 /* Controls */
 .embla__controls {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 1.2rem;
-    margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.4rem;
 }
 
 .embla__buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 /* Botones flechas — estilo NETI */
 .embla__button {
-    appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    cursor: pointer;
-    border: 2px solid #EC4E8D;
-    width: 2.8rem;
-    height: 2.8rem;
-    border-radius: 50%;
-    color: #EC4E8D;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    padding: 0;
-    margin: 0;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 2px solid #EC4E8D;
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  color: #EC4E8D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  padding: 0;
+  margin: 0;
 }
 
 .embla__button:hover:not(.embla__button--disabled) {
-    background-color: #EC4E8D;
-    color: white;
+  background-color: #EC4E8D;
+  color: white;
 }
 
 .embla__button--disabled {
-    border-color: #85789A;
-    color: #85789A;
-    cursor: default;
-    opacity: 0.5;
+  border-color: #85789A;
+  color: #85789A;
+  cursor: default;
+  opacity: 0.5;
 }
 
 .embla__button__svg {
-    width: 35%;
-    height: 35%;
+  width: 35%;
+  height: 35%;
 }
 
 /* Dots — estilo NETI */
 .embla__dots {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.1rem;
 }
 
 .embla__dot {
-    appearance: none;
-    background-color: transparent;
-    touch-action: manipulation;
-    cursor: pointer;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    width: 2rem;
-    height: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    position: relative;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
 }
 
 .embla__dot::before {
-    content: '';
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 50%;
-    background-color: #85789A;
-    opacity: 0.35;
-    transition: all 0.25s ease;
-    position: absolute;
+  content: '';
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background-color: #85789A;
+  opacity: 0.35;
+  transition: all 0.25s ease;
+  position: absolute;
 }
 
 .embla__dot--selected::before {
-    background-color: #EC4E8D;
-    opacity: 1;
-    width: 1.8rem;
-    height: 0.45rem;
-    border-radius: 9999px;
+  background-color: #EC4E8D;
+  opacity: 1;
+  width: 1.8rem;
+  height: 0.45rem;
+  border-radius: 9999px;
 }
