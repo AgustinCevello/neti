@@ -265,17 +265,17 @@ function InscripcionForm() {
 // ── Componente orador ─────────────────────────────────────────────────────────
 function SpeakerCard({ speaker, delay }) {
     return (
-        <FadeIn delay={delay} className="flex flex-col items-center text-center w-[200px]">
+        <FadeIn delay={delay} className="flex flex-col items-center text-center">
             <img
                 src={speaker.img}
                 alt={speaker.name}
-                className="w-40 h-40 object-contain mb-5"
+                className="w-36 h-36 md:w-48 md:h-48 object-contain mb-4"
                 style={noSelect}
                 draggable={false}
             />
             <span className="font-sans text-xs font-bold text-[#EC4E8D] uppercase tracking-widest mb-1">{speaker.role}</span>
-            <h3 className="font-sans font-bold text-[#251B37] text-base mb-2">{speaker.name}</h3>
-            <p className="font-sans text-sm text-[#85789A] leading-relaxed">{speaker.bio}</p>
+            <h3 className="font-sans font-bold text-[#251B37] text-sm md:text-base mb-2">{speaker.name}</h3>
+            <p className="font-sans text-xs md:text-sm text-[#85789A] leading-relaxed max-w-[160px]">{speaker.bio}</p>
         </FadeIn>
     );
 }
@@ -288,17 +288,16 @@ export default function Eventos() {
         <div className="bg-white overflow-x-hidden">
 
             {/* ── HERO ─────────────────────────────────────────────────────── */}
-            <section className="relative h-[60vh] min-h-[400px] overflow-hidden">
+            <section className="relative w-full overflow-hidden">
                 <img
                     src={heroImg}
                     alt="Evento NETI"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="w-full h-auto block"
                     style={noSelect}
                     draggable={false}
                 />
-                {/* Overlay gradiente */}
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(37,27,55,0.85) 0%, rgba(37,27,55,0.2) 60%, transparent 100%)' }} />
-                <div className="absolute bottom-10 left-6 md:left-16">
+                <div className="absolute bottom-6 md:bottom-10 left-4 md:left-16 right-4 md:right-auto">
                     <h1
                         className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-none"
                         style={{ WebkitTextStroke: '2px #ffffff', color: 'white' }}
@@ -399,7 +398,12 @@ export default function Eventos() {
                             Oradores
                         </h2>
                     </FadeIn>
-                    <div className="flex flex-row flex-nowrap overflow-x-auto gap-8 pb-4 justify-start md:justify-center" style={{ scrollbarWidth: 'none' }}>
+                    <div className="hidden md:flex flex-row flex-nowrap overflow-x-auto gap-10 pb-4 justify-center" style={{ scrollbarWidth: 'none' }}>
+                        {oradores.map((s, i) => (
+                            <SpeakerCard key={i} speaker={s} delay={i * 80} />
+                        ))}
+                    </div>
+                    <div className="grid grid-cols-2 gap-8 md:hidden">
                         {oradores.map((s, i) => (
                             <SpeakerCard key={i} speaker={s} delay={i * 80} />
                         ))}

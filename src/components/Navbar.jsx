@@ -19,7 +19,6 @@ const NavUnderline = ({ isActive }) => (
     </div>
 );
 
-// ── Ícono hamburguesa animado (adaptado de MenuToggleIcon) ───────────────────
 const HamburgerIcon = ({ isOpen, duration = 500 }) => (
     <svg
         strokeWidth={2.5}
@@ -61,14 +60,45 @@ const Navbar = () => {
     const isHome = location.pathname === '/';
     const [isOpen, setIsOpen] = useState(false);
 
-    // Bloquear scroll del body cuando el menú está abierto
+    // Bloquear scroll — compatible iOS Safari
     useEffect(() => {
+        const html = document.documentElement;
+        const body = document.body;
+
         if (isOpen) {
-            document.body.style.overflow = 'hidden';
+            const scrollY = window.scrollY;
+            // Guardamos el scroll en un data attribute para recuperarlo al cerrar
+            body.dataset.scrollY = String(scrollY);
+            body.style.position = 'fixed';
+            body.style.top = `-${scrollY}px`;
+            body.style.left = '0';
+            body.style.right = '0';
+            body.style.width = '100%';
+            body.style.overflow = 'hidden';
+            html.style.overflow = 'hidden';
         } else {
-            document.body.style.overflow = '';
+            const scrollY = parseInt(body.dataset.scrollY || '0', 10);
+            body.style.position = '';
+            body.style.top = '';
+            body.style.left = '';
+            body.style.right = '';
+            body.style.width = '';
+            body.style.overflow = '';
+            html.style.overflow = '';
+            window.scrollTo(0, scrollY);
         }
-        return () => { document.body.style.overflow = ''; };
+
+        return () => {
+            const scrollY = parseInt(body.dataset.scrollY || '0', 10);
+            body.style.position = '';
+            body.style.top = '';
+            body.style.left = '';
+            body.style.right = '';
+            body.style.width = '';
+            body.style.overflow = '';
+            html.style.overflow = '';
+            if (scrollY) window.scrollTo(0, scrollY);
+        };
     }, [isOpen]);
 
     // Cerrar al cambiar de ruta
@@ -138,10 +168,7 @@ const Navbar = () => {
                 aria-hidden={!isOpen}
                 className="fixed inset-0 z-40 md:hidden flex flex-col transition-all duration-500"
                 style={{
-                    // Liquid glass violeta
-                    background: isOpen
-                        ? 'rgba(103,88,155,0.18)'
-                        : 'rgba(103,88,155,0)',
+                    background: isOpen ? 'rgba(103,88,155,0.18)' : 'rgba(103,88,155,0)',
                     backdropFilter: isOpen ? 'blur(28px) saturate(160%)' : 'blur(0px)',
                     WebkitBackdropFilter: isOpen ? 'blur(28px) saturate(160%)' : 'blur(0px)',
                     pointerEvents: isOpen ? 'auto' : 'none',
@@ -149,7 +176,6 @@ const Navbar = () => {
                 }}
                 onClick={(e) => { if (e.target === e.currentTarget) setIsOpen(false); }}
             >
-                {/* Panel del menú — desliza desde arriba */}
                 <div
                     className="mx-4 mt-24 rounded-3xl overflow-hidden"
                     style={{
