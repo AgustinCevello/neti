@@ -1,43 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-    --color-fuchsia: #EC4E8D;
-    --color-cyan: #00D8ED;
-    --color-dark-purple: #251B37;
-    --color-purple-gray: #85789A;
+  --color-fuchsia: #EC4E8D;
+  --color-cyan: #00D8ED;
+  --color-dark-purple: #251B37;
+  --color-purple-gray: #85789A;
 
-    --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui;
-    --font-tourney: "Tourney", display;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui;
+  --font-tourney: "Tourney", display;
 }
 
 @utility text-outline {
-    -webkit-text-stroke: 1px var(--color-fuchsia);
-    color: transparent;
+  -webkit-text-stroke: 1px var(--color-fuchsia);
+  color: transparent;
 }
 
 html {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #1a1a1a;
+  background: #1a1a1a;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #58569b, #c25e99);
-    border-radius: 9999px;
+  background: linear-gradient(to bottom, #58569b, #c25e99);
+  border-radius: 9999px;
 }
 
 /* ── Botón animado Inscribirse (Uiverse) ──────────────────────────────────── */
@@ -126,6 +126,7 @@ body {
   transition: opacity 0.4s ease;
   inset: -2px -3.5px;
 }
+
 .uiverse-outline::before {
   content: "";
   position: absolute;
@@ -135,12 +136,24 @@ body {
   animation-play-state: paused;
   opacity: 0.7;
 }
+
 @keyframes uiverse-spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
-.uiverse-btn:hover .uiverse-outline { opacity: 1; }
-.uiverse-btn:hover .uiverse-outline::before { animation-play-state: running; }
+
+.uiverse-btn:hover .uiverse-outline {
+  opacity: 1;
+}
+
+.uiverse-btn:hover .uiverse-outline::before {
+  animation-play-state: running;
+}
 
 /* States */
 .uiverse-state {
@@ -149,39 +162,83 @@ body {
   display: flex;
   position: relative;
 }
+
 .uiverse-state p {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .uiverse-state p span {
   display: block;
   opacity: 0;
   animation: uiverse-slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
 }
+
 .uiverse-btn:hover .uiverse-state p span {
   opacity: 1;
   animation: uiverse-wave 0.5s ease forwards calc(var(--i) * 0.02s);
 }
+
 .uiverse-btn:focus .uiverse-state p span {
   opacity: 1;
   animation: uiverse-disappear 0.6s ease forwards calc(var(--i) * 0.03s);
 }
 
 @keyframes uiverse-wave {
-  30% { opacity: 1; transform: translateY(4px); }
-  50% { opacity: 1; transform: translateY(-4px); color: var(--primary); }
-  100% { opacity: 1; transform: translateY(0); }
+  30% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+    color: var(--primary);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes uiverse-slideDown {
-  0% { opacity: 0; transform: translateY(-20px) translateX(5px) rotate(-90deg); color: var(--primary); filter: blur(5px); }
-  30% { opacity: 1; transform: translateY(4px); filter: blur(0); }
-  50% { opacity: 1; transform: translateY(-3px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateX(5px) rotate(-90deg);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(4px);
+    filter: blur(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes uiverse-disappear {
-  from { opacity: 1; }
-  to { opacity: 0; transform: translateX(5px) translateY(20px); color: var(--primary); filter: blur(5px); }
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(5px) translateY(20px);
+    color: var(--primary);
+    filter: blur(5px);
+  }
 }
 
 /* Icon */
@@ -197,53 +254,131 @@ body {
   align-items: center;
   justify-content: center;
 }
-.uiverse-icon svg { overflow: visible; }
-.uiverse-btn:hover .uiverse-state--default .uiverse-icon { transform: rotate(45deg) scale(1.25); }
-.uiverse-btn:focus .uiverse-state--default .uiverse-icon { transform: rotate(0) scale(1.25); }
-.uiverse-btn:focus .uiverse-state--default svg { animation: uiverse-takeOff 0.8s linear forwards; }
-.uiverse-state--default .uiverse-icon svg { animation: uiverse-land 0.6s ease forwards; }
+
+.uiverse-icon svg {
+  overflow: visible;
+}
+
+.uiverse-btn:hover .uiverse-state--default .uiverse-icon {
+  transform: rotate(45deg) scale(1.25);
+}
+
+.uiverse-btn:focus .uiverse-state--default .uiverse-icon {
+  transform: rotate(0) scale(1.25);
+}
+
+.uiverse-btn:focus .uiverse-state--default svg {
+  animation: uiverse-takeOff 0.8s linear forwards;
+}
+
+.uiverse-state--default .uiverse-icon svg {
+  animation: uiverse-land 0.6s ease forwards;
+}
 
 @keyframes uiverse-takeOff {
-  0% { opacity: 1; }
-  60% { opacity: 1; transform: translateX(80px) rotate(45deg) scale(2.2); }
-  100% { opacity: 0; transform: translateX(180px) rotate(45deg) scale(0); }
+  0% {
+    opacity: 1;
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateX(80px) rotate(45deg) scale(2.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(180px) rotate(45deg) scale(0);
+  }
 }
+
 @keyframes uiverse-land {
-  0% { transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2); opacity: 0; filter: blur(3px); }
-  100% { transform: translateX(0) translateY(0) rotate(0); opacity: 1; filter: blur(0); }
+  0% {
+    transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+    opacity: 0;
+    filter: blur(3px);
+  }
+
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
 }
 
 /* Sent state */
-.uiverse-state--sent { display: none; }
-.uiverse-state--sent svg { transform: scale(1.25); margin-right: 8px; }
-.uiverse-btn:focus .uiverse-state--default { position: absolute; }
-.uiverse-btn:focus .uiverse-state--sent { display: flex; }
-.uiverse-btn--sent .uiverse-state--default { position: absolute; }
-.uiverse-btn--sent .uiverse-state--sent { display: flex; }
+.uiverse-state--sent {
+  display: none;
+}
+
+.uiverse-state--sent svg {
+  transform: scale(1.25);
+  margin-right: 8px;
+}
+
+.uiverse-btn:focus .uiverse-state--default {
+  position: absolute;
+}
+
+.uiverse-btn:focus .uiverse-state--sent {
+  display: flex;
+}
+
+.uiverse-btn--sent .uiverse-state--default {
+  position: absolute;
+}
+
+.uiverse-btn--sent .uiverse-state--sent {
+  display: flex;
+}
+
 .uiverse-btn:focus .uiverse-state--sent span {
   opacity: 0;
   animation: uiverse-slideDown 0.8s ease forwards calc(var(--i) * 0.2s);
 }
+
 .uiverse-btn:focus .uiverse-state--sent .uiverse-icon svg {
   opacity: 0;
   animation: uiverse-appear 1.2s ease forwards 0.8s;
 }
+
 .uiverse-btn--sent .uiverse-state--sent span {
   opacity: 0;
   animation: uiverse-slideDown 0.8s ease forwards calc(var(--i) * 0.2s);
 }
+
 .uiverse-btn--sent .uiverse-state--sent .uiverse-icon svg {
   opacity: 0;
   animation: uiverse-appear 1.2s ease forwards 0.8s;
 }
+
 .uiverse-btn--sent .uiverse-state--default svg {
   animation: uiverse-takeOff 0.8s linear forwards;
 }
+
 @keyframes uiverse-appear {
-  0% { opacity: 0; transform: scale(4) rotate(-40deg); color: var(--primary); filter: blur(4px); }
-  30% { opacity: 1; transform: scale(0.6); filter: blur(1px); }
-  50% { opacity: 1; transform: scale(1.2); filter: blur(0); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(4) rotate(-40deg);
+    color: var(--primary);
+    filter: blur(4px);
+  }
+
+  30% {
+    opacity: 1;
+    transform: scale(0.6);
+    filter: blur(1px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Contrail */
@@ -256,20 +391,133 @@ body {
   left: -5px;
   background: linear-gradient(to right, transparent, rgba(236, 78, 141, 0.5));
 }
+
 .uiverse-btn:focus .uiverse-state--default .uiverse-icon::before {
   animation: uiverse-contrail 0.8s linear forwards;
 }
+
 @keyframes uiverse-contrail {
-  0% { width: 0; opacity: 1; }
-  8% { width: 15px; }
-  60% { opacity: 0.7; width: 80px; }
-  100% { opacity: 0; width: 160px; }
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+
+  8% {
+    width: 15px;
+  }
+
+  60% {
+    opacity: 0.7;
+    width: 80px;
+  }
+
+  100% {
+    opacity: 0;
+    width: 160px;
+  }
 }
+
 @keyframes thanksFadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 @keyframes thanksPop {
-  from { opacity: 0; transform: scale(0); }
-  to   { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Gradient CTA Button ─────────────────────────────────────────────────── */
+.gradient-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  padding: 18px 48px;
+  border-radius: 12px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 50%, #1a0a2e 100%);
+  box-shadow: 0 4px 24px rgba(236, 78, 141, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  z-index: 0;
+}
+
+/* Borde con glow giratorio */
+.gradient-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: conic-gradient(from var(--angle, 0deg),
+      transparent 60%,
+      #EC4E8D 75%,
+      #f9a8d4 82%,
+      #EC4E8D 88%,
+      transparent 100%);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Fondo interno para tapar el conic excepto el borde */
+.gradient-cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 50%, #1a0a2e 100%);
+  z-index: -1;
+}
+
+.gradient-cta-btn:hover::before {
+  opacity: 1;
+  animation: gradient-cta-spin 2s linear infinite;
+}
+
+.gradient-cta-btn:hover {
+  box-shadow: 0 8px 32px rgba(236, 78, 141, 0.3);
+  transform: translateY(-1px);
+}
+
+.gradient-cta-btn:active {
+  transform: translateY(0);
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-cta-spin {
+  from {
+    --angle: 0deg;
+  }
+
+  to {
+    --angle: 360deg;
+  }
 }

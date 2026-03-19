@@ -320,7 +320,7 @@ export default function LiderazgoDisruptivo() {
                 <FadeIn>
                     <a
                         href="#inscripcion"
-                        className="font-display inline-block px-12 py-5 border-2 border-[#EC4E8D] text-[#EC4E8D] font-black text-2xl md:text-3xl uppercase tracking-widest rounded-none transition-all duration-200 hover:bg-[#EC4E8D] hover:text-white"
+                        className="gradient-cta-btn"
                     >
                         Inscripción
                     </a>
