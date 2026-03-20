@@ -521,3 +521,235 @@ body {
     --angle: 360deg;
   }
 }
+
+/* ── Premium CTA Button (Liderazgo Disruptivo) ───────────────────────────── */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-border {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(-30px, -10px) scale(1.02); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.08; }
+}
+
+.premium-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 3rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(236, 78, 141, 0.2);
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.premium-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0%,
+    #EC4E8D 10%,
+    #00D8ED 20%,
+    #EC4E8D 30%,
+    transparent 40%
+  );
+  border-radius: 14px;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.premium-cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 100%);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.premium-cta-btn:hover::before {
+  opacity: 1;
+  animation: rotate-border 2s linear infinite;
+}
+
+.premium-cta-btn:hover {
+  box-shadow: 0 6px 30px rgba(236, 78, 141, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ── Hero Animated Background Gradients ──────────────────────────────────── */
+.hero-bg-gradient {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.05;
+  pointer-events: none;
+  animation: drift 20s ease-in-out infinite, pulse-soft 8s ease-in-out infinite;
+}
+
+.hero-bg-gradient-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #EC4E8D 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.hero-bg-gradient-2 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #00D8ED 0%, transparent 70%);
+  top: 50%;
+  right: -80px;
+  animation-delay: -7s;
+}
+
+.hero-bg-gradient-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #85789A 0%, transparent 70%);
+  bottom: -50px;
+  left: 30%;
+  animation-delay: -14s;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(-30px, -10px) scale(1.02); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.08; }
+}
+
+/* ── Glassmorphism Info Cards ────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(230, 226, 238, 0.6);
+  box-shadow:
+    0 4px 24px rgba(103, 88, 155, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ── Module Cards ────────────────────────────────────────────────────────── */
+.module-card {
+  border: 1px solid #E6E2EE;
+  box-shadow: 0 0 18px 2px rgba(103, 88, 155, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(103, 88, 155, 0.12);
+}
+
+/* ── Premium CTA Button ──────────────────────────────────────────────────── */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-border {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+.premium-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 3rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(236, 78, 141, 0.2);
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.premium-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0%,
+    #EC4E8D 10%,
+    #00D8ED 20%,
+    #EC4E8D 30%,
+    transparent 40%
+  );
+  border-radius: 14px;
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.premium-cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1050 100%);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.premium-cta-btn:hover::before {
+  opacity: 1;
+  animation: rotate-border 2s linear infinite;
+}
+
+.premium-cta-btn:hover {
+  box-shadow: 0 6px 30px rgba(236, 78, 141, 0.4);
+  transform: translateY(-2px);
+}
+
+.premium-cta-btn:active {
+  transform: translateY(0);
+}

@@ -15,6 +15,7 @@ import n4 from '../../assets/images/pictures/ServiciosGaleryNetiatones4.png';
 import n5 from '../../assets/images/pictures/ServiciosGaleryNetiatones5.png';
 import n6 from '../../assets/images/pictures/ServiciosGaleryNetiatones6.png';
 
+// ── FadeIn ────────────────────────────────────────────────────────────────────
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -39,18 +40,46 @@ function FadeIn({ children, delay = 0, className = '' }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
+// ── Section Separator ─────────────────────────────────────────────────────────
+function SectionSeparator() {
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-2">
+      <div style={{
+        height: '1px',
+        background: 'linear-gradient(to right, transparent, #505AA5, transparent)',
+        opacity: 0.25,
+      }} />
+    </div>
+  );
+}
+
 // ── CaptionPhoto ──────────────────────────────────────────────────────────────
 function CaptionPhoto({ src, alt, children }) {
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(103,88,155,0.10)' }}>
-      <img src={src} alt={alt} className="w-full object-cover" style={{ WebkitUserSelect:'none', MozUserSelect:'none', msUserSelect:'none', userSelect:'none', WebkitUserDrag:'none', pointerEvents:'none', display:'block' }} draggable={false} />
-      <div className="bg-white/90 px-4 py-2 flex flex-wrap items-center gap-1 border-t border-[#E6E2EE]">
+    <div
+      className="rounded-2xl overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+      style={{ boxShadow: '0 4px 20px rgba(103,88,155,0.12)' }}
+    >
+      <img
+        src={src}
+        alt={alt}
+        className="w-full object-cover"
+        style={{
+          WebkitUserSelect: 'none', MozUserSelect: 'none',
+          msUserSelect: 'none', userSelect: 'none',
+          WebkitUserDrag: 'none', pointerEvents: 'none', display: 'block',
+        }}
+        draggable={false}
+      />
+      <div className="px-4 py-2 flex flex-wrap items-center gap-1 border-t border-[#E6E2EE]"
+        style={{ background: 'rgba(255,255,255,0.95)' }}>
         <span className="font-sans text-sm">{children}</span>
       </div>
     </div>
   );
 }
 
+// ── Datos ─────────────────────────────────────────────────────────────────────
 const workshopsSlides = [g1, g2, g3, g4, g5, g6];
 const netiatonesSlides = [n1, n2, n3, n4, n5, n6];
 const carouselOptions = { slidesToScroll: 'auto', loop: false };
@@ -99,18 +128,29 @@ const talleres = [
   },
 ];
 
+// ── Componente principal ──────────────────────────────────────────────────────
 export default function Servicios() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      <section className="py-16 px-4 md:px-8">
-        <div className="max-w-5xl mx-auto">
+      {/* ── WORKSHOPS EMPRESAS ───────────────────────────────────────── */}
+      <section className="relative py-16 px-4 md:px-8 overflow-hidden">
+        {/* Orbe fondo */}
+        <div style={{
+          position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
+          width: 500, height: 500, top: -150, right: -150,
+          background: 'radial-gradient(circle, #505AA5 0%, transparent 70%)',
+          opacity: 0.05, pointerEvents: 'none',
+        }} />
+
+        <div className="relative max-w-5xl mx-auto z-10">
           <FadeIn>
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase text-center mb-14 leading-none tracking-widest">
               <span style={{ WebkitTextStroke: '2px #505AA5', color: 'rgba(80,90,165,1)' }}>Workshops </span>
               <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Empresas</span>
             </h1>
           </FadeIn>
+
           <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
             <FadeIn delay={80}>
               <div>
@@ -128,6 +168,7 @@ export default function Servicios() {
                 </Link>
               </div>
             </FadeIn>
+
             <FadeIn delay={140}>
               <div className="space-y-3">
                 <CaptionPhoto src={g1} alt="Workshop Oracle">
@@ -145,20 +186,33 @@ export default function Servicios() {
               </div>
             </FadeIn>
           </div>
+
           <FadeIn delay={60}>
             <EmblaCarousel slides={workshopsSlides} options={carouselOptions} />
           </FadeIn>
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8">
-        <div className="max-w-5xl mx-auto">
+      <SectionSeparator />
+
+      {/* ── ÚLTIMOS NETIATONES ───────────────────────────────────────── */}
+      <section className="relative py-16 px-4 md:px-8 overflow-hidden" style={{ background: 'rgba(240,230,255,0.2)' }}>
+        {/* Orbe fondo */}
+        <div style={{
+          position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
+          width: 400, height: 400, bottom: -100, left: -100,
+          background: 'radial-gradient(circle, #5D5FEF 0%, transparent 70%)',
+          opacity: 0.06, pointerEvents: 'none',
+        }} />
+
+        <div className="relative max-w-5xl mx-auto z-10">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase text-center mb-14 leading-none tracking-widest">
               <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Últimos </span>
               <span style={{ WebkitTextStroke: '2px #505AA5', color: 'rgba(80,90,165,1)' }}>Netiatones</span>
             </h2>
           </FadeIn>
+
           <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
             <FadeIn delay={80}>
               <div>
@@ -177,6 +231,7 @@ export default function Servicios() {
                 </Link>
               </div>
             </FadeIn>
+
             <FadeIn delay={140}>
               <div className="space-y-3">
                 <CaptionPhoto src={n1} alt="Neti en Rivadavia">
@@ -188,26 +243,33 @@ export default function Servicios() {
               </div>
             </FadeIn>
           </div>
+
           <FadeIn delay={60}>
             <EmblaCarousel slides={netiatonesSlides} options={carouselOptions} />
           </FadeIn>
         </div>
       </section>
 
+      <SectionSeparator />
+
+      {/* ── VENÍ A APRENDER ──────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14 leading-none" style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14 leading-none"
+              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
               Vení a aprender con nosotros
             </h2>
           </FadeIn>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {talleres.map((taller, i) => (
               <FadeIn key={i} delay={i * 100}>
                 <div className="relative w-full h-[560px] border border-white/40 rounded-2xl overflow-hidden">
-                  {/* Fondo sólido con inner shape */}
+                  {/* Fondo con inner shape */}
                   <div className="absolute inset-0 p-1" style={{ background: taller.from }}>
-                    <div className="w-full h-full rounded-xl bg-[#1a1030]" style={{ borderTopRightRadius: '80px', borderBottomRightRadius: '32px' }} />
+                    <div className="w-full h-full rounded-xl bg-[#1a1030]"
+                      style={{ borderTopRightRadius: '80px', borderBottomRightRadius: '32px' }} />
                   </div>
 
                   {/* Orbe animado */}
@@ -224,7 +286,6 @@ export default function Servicios() {
 
                   {/* Contenido */}
                   <div className="absolute inset-0 p-4 flex justify-between">
-                    {/* Panel izquierdo */}
                     <div className="w-[75%] p-4 flex flex-col rounded-xl backdrop-blur-md"
                       style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
                       <span className="font-sans text-lg font-bold text-white leading-snug mb-4">{taller.title}</span>
@@ -239,7 +300,6 @@ export default function Servicios() {
                       <div className="mt-4 text-xs font-sans text-white/30 tracking-widest uppercase">NETI</div>
                     </div>
 
-                    {/* Panel derecho */}
                     <div className="flex flex-col items-end justify-between py-1">
                       <span className="font-display text-sm font-black" style={{ color: 'rgba(255,255,255,0.35)' }}>0{i + 1}</span>
                       <button
@@ -260,17 +320,22 @@ export default function Servicios() {
         </div>
       </section>
 
-      <section className="py-16 px-4 md:px-8">
+      <SectionSeparator />
+
+      {/* ── CASOS DESTACADOS ─────────────────────────────────────────── */}
+      <section className="py-16 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.2)' }}>
         <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14" style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14"
+              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
               Casos Destacados
             </h2>
           </FadeIn>
 
           {/* Video principal */}
           <FadeIn delay={60}>
-            <div className="rounded-2xl overflow-hidden mb-8" style={{ boxShadow: '0 0 24px 4px rgba(103,88,155,0.13)' }}>
+            <div className="rounded-2xl overflow-hidden mb-8"
+              style={{ boxShadow: '0 0 32px 4px rgba(103,88,155,0.15)' }}>
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute inset-0 w-full h-full"
@@ -293,7 +358,8 @@ export default function Servicios() {
                 'https://www.youtube.com/embed/Cthlc5KZHLM',
                 'https://www.youtube.com/embed/ZgWhLIWC6V4',
               ].map((src, i) => (
-                <div key={i} className="rounded-xl overflow-hidden" style={{ boxShadow: '0 0 12px 2px rgba(103,88,155,0.10)' }}>
+                <div key={i} className="rounded-xl overflow-hidden transition-transform duration-300 hover:-translate-y-1"
+                  style={{ boxShadow: '0 0 16px 2px rgba(103,88,155,0.12)' }}>
                   <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                     <iframe
                       className="absolute inset-0 w-full h-full"
