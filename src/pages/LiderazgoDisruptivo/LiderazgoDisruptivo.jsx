@@ -1,9 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import LiderazgoDisruptivoImg from '../../assets/images/pictures/LiderazcoDisruptivo.png';
 import LiderazgoDisruptivoNuestroDiferencial1Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial1.png';
 import LiderazgoDisruptivoNuestroDiferencial2Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial2.png';
+import FormularioModal from '../../components/FormularioModal/FormularioModal';
 
 // ── Datos ─────────────────────────────────────────────────────────────────────
 
@@ -143,12 +144,13 @@ function SectionSeparator() {
 // ── Componente principal ──────────────────────────────────────────────────────
 
 export default function LiderazgoDisruptivo() {
+  const [modalAbierto, setModalAbierto] = useState(false);
+
   return (
     <div className="bg-white overflow-x-hidden">
 
       {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section className="relative pt-16 pb-20 px-4 md:px-8 overflow-hidden">
-        {/* Fondos animados */}
         <div className="hero-bg-gradient hero-bg-gradient-1" />
         <div className="hero-bg-gradient hero-bg-gradient-2" />
         <div className="hero-bg-gradient hero-bg-gradient-3" />
@@ -170,7 +172,6 @@ export default function LiderazgoDisruptivo() {
             </p>
           </FadeIn>
 
-          {/* Info cards con glassmorphism */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {infoCards.map((card, i) => (
               <FadeIn key={i} delay={i * 80} className="h-full">
@@ -264,19 +265,13 @@ export default function LiderazgoDisruptivo() {
             {modulos.map((mod, i) => (
               <FadeIn key={i} delay={i * 80} className="h-full">
                 <div className="module-card flex flex-col relative p-6 rounded-2xl bg-white overflow-hidden h-full">
-                  {/* Barra superior de color */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-1"
-                    style={{ background: mod.color }}
-                  />
-                  {/* Número decorativo */}
+                  <div className="absolute top-0 left-0 right-0 h-1" style={{ background: mod.color }} />
                   <div
                     className="absolute -top-3 -right-1 font-display font-black leading-none select-none pointer-events-none"
                     style={{ fontSize: 'clamp(3.5rem, 7vw, 5.5rem)', color: 'rgba(133,120,154,0.06)' }}
                   >
                     {mod.num}
                   </div>
-                  {/* Dot acento */}
                   <div className="w-3 h-3 rounded-full mb-4 mt-2" style={{ background: mod.color }} />
                   <h3 className="font-sans font-bold text-[#251B37] text-base mb-4 leading-snug">{mod.title}</h3>
                   <ul className="space-y-2">
@@ -309,7 +304,6 @@ export default function LiderazgoDisruptivo() {
           </FadeIn>
 
           <div className="grid md:grid-cols-2 gap-14 items-start">
-            {/* Fotos apiladas */}
             <FadeIn>
               <div className="space-y-4">
                 <img
@@ -329,14 +323,10 @@ export default function LiderazgoDisruptivo() {
               </div>
             </FadeIn>
 
-            {/* Textos con borde izquierdo alternado */}
             <div className="space-y-8">
               {diferencial.map((item, i) => (
                 <FadeIn key={i} delay={i * 100}>
-                  <div
-                    className="pl-4 border-l-2"
-                    style={{ borderColor: item.color }}
-                  >
+                  <div className="pl-4 border-l-2" style={{ borderColor: item.color }}>
                     <h3 className="font-sans font-bold text-[#251B37] text-lg mb-3">{item.title}</h3>
                     <p className="font-sans text-sm text-[#85789A] leading-relaxed">{item.body}</p>
                   </div>
@@ -352,11 +342,18 @@ export default function LiderazgoDisruptivo() {
       {/* ── CTA ──────────────────────────────────────────────────────── */}
       <section className="py-20 px-4 text-center">
         <FadeIn>
-          <a href="#inscripcion" className="premium-cta-btn">
+          <button
+            onClick={() => setModalAbierto(true)}
+            className="premium-cta-btn"
+          >
             Inscripción
-          </a>
+          </button>
         </FadeIn>
       </section>
+
+      {modalAbierto && (
+        <FormularioModal taller="liderazgo" onClose={() => setModalAbierto(false)} />
+      )}
 
     </div>
   );

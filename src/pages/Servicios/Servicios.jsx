@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import EmblaCarousel from '../../components/EmblaCarousel/EmblaCarousel';
+import FormularioModal from '../../components/FormularioModal/FormularioModal';
 
 import g1 from '../../assets/images/pictures/ServiciosGalery1.png';
 import g2 from '../../assets/images/pictures/ServiciosGalery2.png';
@@ -130,6 +131,9 @@ const talleres = [
 
 // ── Componente principal ──────────────────────────────────────────────────────
 export default function Servicios() {
+  const [modalTaller, setModalTaller] = useState(null);
+  const tallerKeys = ['liderazgo', 'hands_on', 'desarrollo'];
+
   return (
     <div className="bg-white overflow-x-hidden">
 
@@ -304,6 +308,7 @@ export default function Servicios() {
                       <span className="font-display text-sm font-black" style={{ color: 'rgba(255,255,255,0.35)' }}>0{i + 1}</span>
                       <button
                         type="button"
+                        onClick={() => setModalTaller(tallerKeys[i])}
                         className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 cursor-pointer"
                         style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.2)' }}
                       >
@@ -377,6 +382,9 @@ export default function Servicios() {
         </div>
       </section>
 
+      {modalTaller && (
+        <FormularioModal taller={modalTaller} onClose={() => setModalTaller(null)} />
+      )}
     </div>
   );
 }
