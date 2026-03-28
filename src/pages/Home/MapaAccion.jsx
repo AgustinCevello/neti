@@ -63,7 +63,7 @@ export default function MapaAccion() {
         style={{ zIndex: 0, transform: 'translateX(-50%)', width: 'auto' }}
       />
 
-      {/* CAPA 2: LÃ­nea punteada - solo en pantallas >= 768px */}
+      {/* CAPA 2: Línea punteada - solo en pantallas >= 768px */}
       {!esMobile && (
         <img
           src={imgLineaPunteada}
@@ -80,7 +80,7 @@ export default function MapaAccion() {
           ref={tituloRef}
           className="text-4xl md:text-6xl font-black text-center mb-24 uppercase tracking-widest text-transparent [-webkit-text-stroke:2px_#C85E99]"
         >
-          Mapa de AcciÃ³n
+          Mapa de Acción
         </h2>
 
         <div className="relative">
@@ -89,7 +89,7 @@ export default function MapaAccion() {
             <div className="md:w-1/2 md:pl-12">
               <TextoConGlow align="left">
                 <h3 className="text-xl font-bold mb-2">Call to action</h3>
-                <p className="text-gray-600">Dentro de lo cotidiano, surge el llamado al cambio. Es nuestro deber convertir los problemas en desafÃ­os y embarcarnos en la aventura.</p>
+                <p className="text-gray-600">Dentro de lo cotidiano, surge el llamado al cambio. Es nuestro deber convertir los problemas en desafíos y embarcarnos en la aventura.</p>
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">
@@ -101,8 +101,8 @@ export default function MapaAccion() {
           <div className="flex flex-col md:flex-row items-center mb-32 relative">
             <div className="md:w-1/2 md:pr-12">
               <TextoConGlow align="right">
-                <h3 className="text-xl font-bold mb-2">Mundo externo a la organizaciÃ³n</h3>
-                <p className="text-gray-600">AventurÃ¡ndonos en terreno desconocido, donde no se conocen las reglas ni limitaciones. Nos encontramos con guÃ­as que nos ayudarÃ¡n a entender este nuevo mundo.</p>
+                <h3 className="text-xl font-bold mb-2">Mundo externo a la organización</h3>
+                <p className="text-gray-600">Aventurándonos en terreno desconocido, donde no se conocen las reglas ni limitaciones. Nos encontramos con guías que nos ayudarán a entender este nuevo mundo.</p>
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pl-12">
@@ -114,8 +114,8 @@ export default function MapaAccion() {
           <div className="flex flex-col md:flex-row-reverse items-center mb-32 relative">
             <div className="md:w-1/2 md:pl-12">
               <TextoConGlow align="left">
-                <h3 className="text-xl font-bold mb-2">Convertir los desafÃ­os en soluciones</h3>
-                <p className="text-gray-600">Diferentes tipos de problemas surgirÃ¡n con la informaciÃ³n que obtuvimos hasta ahora. Llega el momento de superarnos, debemos tener miradas objetivas.</p>
+                <h3 className="text-xl font-bold mb-2">Convertir los desafíos en soluciones</h3>
+                <p className="text-gray-600">Diferentes tipos de problemas surgirán con la información que obtuvimos hasta ahora. Llega el momento de superarnos, debemos tener miradas objetivas.</p>
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">
@@ -141,7 +141,7 @@ export default function MapaAccion() {
             <div className="md:w-1/2 md:pl-12">
               <TextoConGlow align="left">
                 <h3 className="text-xl font-bold mb-2">Emprender/Sprints</h3>
-                <p className="text-gray-600">Nuestras ideas llegaron a buen puerto, pero como todo diseÃ±o, siempre se puede mejorar. En esta etapa repetimos las pruebas y analizamos los resultados de la soluciÃ³n.</p>
+                <p className="text-gray-600">Nuestras ideas llegaron a buen puerto, pero como todo diseño, siempre se puede mejorar. En esta etapa repetimos las pruebas y analizamos los resultados de la solución.</p>
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">

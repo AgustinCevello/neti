@@ -148,13 +148,13 @@ const Navbar = () => {
               ))}
             </nav>
 
-            {/* BotÃ³n hamburguesa */}
+            {/* Botón hamburguesa */}
             <button
               onClick={() => setIsOpen(o => !o)}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
               className="md:hidden text-[#251B37] hover:text-[#EC4E8D] transition-colors duration-200 focus:outline-none z-[60] relative"
-              aria-label={isOpen ? 'Cerrar menÃº' : 'Abrir menÃº'}
+              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
             >
               <HamburgerIcon isOpen={isOpen} />
             </button>

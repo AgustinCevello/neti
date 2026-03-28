@@ -16,7 +16,6 @@ import n4 from '../../assets/images/pictures/ServiciosGaleryNetiatones4.webp';
 import n5 from '../../assets/images/pictures/ServiciosGaleryNetiatones5.webp';
 import n6 from '../../assets/images/pictures/ServiciosGaleryNetiatones6.webp';
 
-// â”€â”€ FadeIn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -41,7 +40,6 @@ function FadeIn({ children, delay = 0, className = '' }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-// â”€â”€ Section Separator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function SectionSeparator() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-2">
@@ -54,7 +52,6 @@ function SectionSeparator() {
   );
 }
 
-// â”€â”€ CaptionPhoto â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function CaptionPhoto({ src, alt, children }) {
   return (
     <div
@@ -64,6 +61,7 @@ function CaptionPhoto({ src, alt, children }) {
       <img
         src={src}
         alt={alt}
+        loading="lazy"
         className="w-full object-cover"
         style={{
           WebkitUserSelect: 'none', MozUserSelect: 'none',
@@ -80,7 +78,6 @@ function CaptionPhoto({ src, alt, children }) {
   );
 }
 
-// â”€â”€ Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const workshopsSlides = [g1, g2, g3, g4, g5, g6];
 const netiatonesSlides = [n1, n2, n3, n4, n5, n6];
 const carouselOptions = { slidesToScroll: 'auto', loop: false };
@@ -92,25 +89,25 @@ const talleres = [
     to: "#f9a8d4",
     accent: "#EC4E8D",
     items: [
-      "Pensado para lÃ­deres que quieren desarrollar proyectos innovadores",
-      "Para la transformaciÃ³n sistÃ©mica de la organizaciÃ³n",
-      "Del mismo a sÃ­ mismo, a su equipo y a las redes de relacionamiento",
+      "Pensado para líderes que quieren desarrollar proyectos innovadores",
+      "Para la transformación sistémica de la organización",
+      "Del mismo a sí mismo, a su equipo y a las redes de relacionamiento",
       "Liderar los resultados, nuevos negocios y equipos orientados a resultados",
-      "Liderar una visiÃ³n centrada en el cliente",
+      "Liderar una visión centrada en el cliente",
     ],
     link: "/liderazgo-disruptivo",
   },
   {
-    title: "Talleres Hands On con MetodologÃ­as Ãgiles",
+    title: "Talleres Hands On con Metodologías Ágiles",
     from: "#7C3AED",
     to: "#a78bfa",
     accent: "#7C3AED",
     items: [
-      "Pensado para todos los miembros de la organizaciÃ³n que buscan innovar",
+      "Pensado para todos los miembros de la organización que buscan innovar",
       "Surfear el cambio de paradigma. Desarrollar nuevas habilidades",
       "Fuerza en marcos de proyectos innovadores",
-      "Eventos multidisciplinares que mejoran el espÃ­ritu de colaboraciÃ³n",
-      "Crea valor para la organizaciÃ³n y sus clientes",
+      "Eventos multidisciplinares que mejoran el espíritu de colaboración",
+      "Crea valor para la organización y sus clientes",
     ],
     link: "/servicios",
   },
@@ -121,15 +118,14 @@ const talleres = [
     accent: "#00D8ED",
     items: [
       "Pensado para aquellas personas curiosas que quieran desarrollar productos innovadores",
-      "Sector de prototipado rÃ¡pido. CombinÃ¡ la tecnologÃ­a y el diseÃ±o para lograr un prototipo funcional",
-      "Guiados por equipos multidisciplinarios de expertos para crear prototipos que surjan en la etapa de ideaciÃ³n",
-      "Con laboratorio de prototipado fÃ­sico: 3D Printing, Maquetado electrÃ³nico y/o Mediaciones",
+      "Sector de prototipado rápido. Combiná la tecnología y el diseño para lograr un prototipo funcional",
+      "Guiados por equipos multidisciplinarios de expertos para crear prototipos que surjan en la etapa de ideación",
+      "Con laboratorio de prototipado físico: 3D Printing, Maquetado electrónico y/o Mediaciones",
     ],
     link: "/servicios",
   },
 ];
 
-// â”€â”€ Componente principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function Servicios() {
   const [modalTaller, setModalTaller] = useState(null);
   const tallerKeys = ['liderazgo', 'hands_on', 'desarrollo'];
@@ -137,9 +133,8 @@ export default function Servicios() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* â”€â”€ WORKSHOPS EMPRESAS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* WORKSHOPS EMPRESAS */}
       <section className="relative py-16 px-4 md:px-8 overflow-hidden">
-        {/* Orbe fondo */}
         <div style={{
           position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
           width: 500, height: 500, top: -150, right: -150,
@@ -159,16 +154,16 @@ export default function Servicios() {
             <FadeIn delay={80}>
               <div>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-4">
-                  Nuestros servicios brindan un <strong>recorrido experiencial</strong> sobre el proceso de creaciÃ³n de soluciones innovadoras con impacto real.
+                  Nuestros servicios brindan un <strong>recorrido experiencial</strong> sobre el proceso de creación de soluciones innovadoras con impacto real.
                 </p>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-4">
-                  Conectamos a las personas con las tecnologÃ­as emergentes, en bÃºsqueda de <strong>potenciar la creatividad</strong>, la diversidad, la colaboraciÃ³n y el pensamiento crÃ­tico en los equipos de trabajo de la organizaciÃ³n.
+                  Conectamos a las personas con las tecnologías emergentes, en búsqueda de <strong>potenciar la creatividad</strong>, la diversidad, la colaboración y el pensamiento crítico en los equipos de trabajo de la organización.
                 </p>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-8">
-                  Dejamos instaladas las bases metodolÃ³gicas de acciÃ³n, el aprendizaje de nuevas herramientas y <strong>habilidades para los desafÃ­os del futuro</strong>.
+                  Dejamos instaladas las bases metodológicas de acción, el aprendizaje de nuevas herramientas y <strong>habilidades para los desafíos del futuro</strong>.
                 </p>
                 <Link to="/contacto" className="font-sans inline-block px-8 py-3 border-2 border-[#251B37] text-[#251B37] font-semibold tracking-widest uppercase text-sm hover:bg-[#251B37] hover:text-white transition-all duration-200">
-                  Leer mÃ¡s
+                  Leer más
                 </Link>
               </div>
             </FadeIn>
@@ -178,14 +173,14 @@ export default function Servicios() {
                 <CaptionPhoto src={g1} alt="Workshop Oracle">
                   <span className="font-bold text-[#251B37]">Oracle</span>
                   <span className="text-[#85789A] text-xs mx-1">Por</span>
-                  <span className="text-[#251B37]">Distefano Â· Durante Â· Farjoume</span>
-                  <span className="text-[#85789A] mx-2">Â·</span>
+                  <span className="text-[#251B37]">Distefano · Durante · Farjoume</span>
+                  <span className="text-[#85789A] mx-2">·</span>
                   <span className="text-[#251B37]">Oracle Cloud</span>
                 </CaptionPhoto>
                 <CaptionPhoto src={g2} alt="Workshop Publicidad Wifi">
                   <span className="font-bold text-[#251B37]">Publicidad Wifi</span>
                   <span className="text-[#85789A] text-xs mx-1">Por</span>
-                  <span className="text-[#251B37]">Distefano Â· Farjoume Â· Marchetti</span>
+                  <span className="text-[#251B37]">Distefano · Farjoume · Marchetti</span>
                 </CaptionPhoto>
               </div>
             </FadeIn>
@@ -199,9 +194,8 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ ÃšLTIMOS NETIATONES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ÚLTIMOS NETIATONES */}
       <section className="relative py-16 px-4 md:px-8 overflow-hidden" style={{ background: 'rgba(240,230,255,0.2)' }}>
-        {/* Orbe fondo */}
         <div style={{
           position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
           width: 400, height: 400, bottom: -100, left: -100,
@@ -212,7 +206,7 @@ export default function Servicios() {
         <div className="relative max-w-5xl mx-auto z-10">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase text-center mb-14 leading-none tracking-widest">
-              <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Ãšltimos </span>
+              <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Últimos </span>
               <span style={{ WebkitTextStroke: '2px #505AA5', color: 'rgba(80,90,165,1)' }}>Netiatones</span>
             </h2>
           </FadeIn>
@@ -220,18 +214,18 @@ export default function Servicios() {
           <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
             <FadeIn delay={80}>
               <div>
-                <h3 className="font-sans text-lg font-bold text-[#251B37] mb-4">Â¿QuÃ© son los Netiatones HÃ­bridos?</h3>
+                <h3 className="font-sans text-lg font-bold text-[#251B37] mb-4">¿Qué son los Netiatones Híbridos?</h3>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-4">
-                  Es la versiÃ³n 3.0 de los maratones makers, desarrollada en el mundo tecnolÃ³gico del metaverso. Permite una experiencia de hibridaciÃ³n entre lo real y lo virtual. Un espacio donde lo digital y lo fÃ­sico se encuentran y fusionan, creando interacciones que generan dinÃ¡micas de otro mundo.
+                  Es la versión 3.0 de los maratones makers, desarrollada en el mundo tecnológico del metaverso. Permite una experiencia de hibridación entre lo real y lo virtual. Un espacio donde lo digital y lo físico se encuentran y fusionan, creando interacciones que generan dinámicas de otro mundo.
                 </p>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-4">
-                  Experiencias virtuales que aproximan a las personas a los desafÃ­os presenciales, a la <strong>conexiÃ³n, interacciÃ³n y vinculaciÃ³n</strong>. Este modelo requiere el uso de plataformas de metaverso como Spatial Chat o Topia + Mural.
+                  Experiencias virtuales que aproximan a las personas a los desafíos presenciales, a la <strong>conexión, interacción y vinculación</strong>. Este modelo requiere el uso de plataformas de metaverso como Spatial Chat o Topia + Mural.
                 </p>
                 <p className="font-sans text-[#251B37] leading-relaxed mb-8">
-                  Se pueden sumar mÃºltiples features: facilitadores, mentores, juegos y productos fÃ­sicos.
+                  Se pueden sumar múltiples features: facilitadores, mentores, juegos y productos físicos.
                 </p>
                 <Link to="/contacto" className="font-sans inline-block px-8 py-3 border-2 border-[#251B37] text-[#251B37] font-semibold tracking-widest uppercase text-sm hover:bg-[#251B37] hover:text-white transition-all duration-200">
-                  Leer mÃ¡s
+                  Leer más
                 </Link>
               </div>
             </FadeIn>
@@ -239,10 +233,10 @@ export default function Servicios() {
             <FadeIn delay={140}>
               <div className="space-y-3">
                 <CaptionPhoto src={n1} alt="Neti en Rivadavia">
-                  <span className="text-[#251B37]">Neti en Rivadavia â€” Hackaton</span>
+                  <span className="text-[#251B37]">Neti en Rivadavia – Hackaton</span>
                 </CaptionPhoto>
-                <CaptionPhoto src={n2} alt="Hackaton hÃ­brido">
-                  <span className="text-[#251B37]">Hackaton hÃ­brido</span>
+                <CaptionPhoto src={n2} alt="Hackaton hibrido">
+                  <span className="text-[#251B37]">Hackaton híbrido</span>
                 </CaptionPhoto>
               </div>
             </FadeIn>
@@ -256,13 +250,13 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ VENÃ A APRENDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* VENI A APRENDER */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14 leading-none"
               style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
-              VenÃ­ a aprender con nosotros
+              Vení a aprender con nosotros
             </h2>
           </FadeIn>
 
@@ -270,13 +264,10 @@ export default function Servicios() {
             {talleres.map((taller, i) => (
               <FadeIn key={i} delay={i * 100}>
                 <div className="relative w-full h-[560px] border border-white/40 rounded-2xl overflow-hidden">
-                  {/* Fondo con inner shape */}
                   <div className="absolute inset-0 p-1" style={{ background: taller.from }}>
                     <div className="w-full h-full rounded-xl bg-[#1a1030]"
                       style={{ borderTopRightRadius: '80px', borderBottomRightRadius: '32px' }} />
                   </div>
-
-                  {/* Orbe animado */}
                   <div className="absolute inset-0 flex items-center justify-center" style={{ backdropFilter: 'blur(12px)' }}>
                     <div
                       className="w-48 h-48 rounded-full animate-spin"
@@ -287,8 +278,6 @@ export default function Servicios() {
                       }}
                     />
                   </div>
-
-                  {/* Contenido */}
                   <div className="absolute inset-0 p-4 flex justify-between">
                     <div className="w-[75%] p-4 flex flex-col rounded-xl backdrop-blur-md"
                       style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -296,14 +285,13 @@ export default function Servicios() {
                       <ul className="space-y-2.5 flex-1">
                         {taller.items.map((item, j) => (
                           <li key={j} className="flex items-start gap-2">
-                            <span className="shrink-0 mt-0.5 text-base font-bold" style={{ color: taller.to }}>Â·</span>
+                            <span className="shrink-0 mt-0.5 text-base font-bold" style={{ color: taller.to }}>·</span>
                             <span className="font-sans text-[13px] text-white/75 leading-relaxed">{item}</span>
                           </li>
                         ))}
                       </ul>
                       <div className="mt-4 text-xs font-sans text-white/30 tracking-widest uppercase">NETI</div>
                     </div>
-
                     <div className="flex flex-col items-end justify-between py-1">
                       <span className="font-display text-sm font-black" style={{ color: 'rgba(255,255,255,0.35)' }}>0{i + 1}</span>
                       <button
@@ -327,7 +315,7 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ CASOS DESTACADOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* CASOS DESTACADOS */}
       <section className="py-16 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.2)' }}>
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -337,7 +325,6 @@ export default function Servicios() {
             </h2>
           </FadeIn>
 
-          {/* Video principal */}
           <FadeIn delay={60}>
             <div className="rounded-2xl overflow-hidden mb-8"
               style={{ boxShadow: '0 0 32px 4px rgba(103,88,155,0.15)' }}>
@@ -354,7 +341,6 @@ export default function Servicios() {
             </div>
           </FadeIn>
 
-          {/* Otros videos */}
           <FadeIn delay={100}>
             <p className="font-sans text-xs font-semibold text-[#85789A] uppercase tracking-widest mb-5">Otros</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

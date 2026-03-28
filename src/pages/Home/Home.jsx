@@ -100,7 +100,7 @@ export default function Home() {
           </svg>
         </button>
 
-        {/* TÃ­tulo + dots */}
+        {/* Título + dots */}
         <div ref={heroRef} className="relative z-10 px-6 md:px-10 pb-4 max-w-4xl w-full">
           <h1
             className="font-display text-5xl md:text-7xl lg:text-8xl leading-none uppercase mb-3"
@@ -112,10 +112,10 @@ export default function Home() {
           >
             Laboratorio
             <br />
-            de innovaciÃ³n
+            de innovación
           </h1>
 
-          {/* Dots â€” pegados debajo del tÃ­tulo, alineados a la izquierda */}
+          {/* Dots â€” pegados debajo del título, alineados a la izquierda */}
           <div className="flex gap-[6px] items-center">
             {slides.map((_, i) => (
               <button
@@ -144,8 +144,8 @@ export default function Home() {
         >
           <p className="font-sans text-white text-sm md:text-base max-w-3xl mx-auto text-center leading-relaxed">
             Trabajamos para encontrar soluciones de alto impacto con el objetivo
-            de disminuir la incertidumbre y enfocar el proceso en la soluciÃ³n
-            del problema a travÃ©s del usuario.
+            de disminuir la incertidumbre y enfocar el proceso en la solución
+            del problema a través del usuario.
           </p>
         </div>
       </section>
