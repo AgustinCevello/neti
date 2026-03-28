@@ -16,6 +16,9 @@ import n4 from '../../assets/images/pictures/ServiciosGaleryNetiatones4.webp';
 import n5 from '../../assets/images/pictures/ServiciosGaleryNetiatones5.webp';
 import n6 from '../../assets/images/pictures/ServiciosGaleryNetiatones6.webp';
 
+// Importamos el logo
+import logoNetiBlue from '../../assets/images/icons/logo_neti_blue.webp';
+
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -251,56 +254,97 @@ export default function Servicios() {
       <SectionSeparator />
 
       {/* VENI A APRENDER */}
-      <section className="py-16 px-4 md:px-8">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14 leading-none"
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-16 leading-none"
               style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
               Vení a aprender con nosotros
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Acá agregamos items-stretch para que todas las cards de la fila midan lo mismo */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {talleres.map((taller, i) => (
-              <FadeIn key={i} delay={i * 100}>
-                <div className="relative w-full h-[560px] border border-white/40 rounded-2xl overflow-hidden">
-                  <div className="absolute inset-0 p-1" style={{ background: taller.from }}>
-                    <div className="w-full h-full rounded-xl bg-[#1a1030]"
-                      style={{ borderTopRightRadius: '80px', borderBottomRightRadius: '32px' }} />
+              <FadeIn key={i} delay={i * 100} className="flex">
+                <div className="relative flex flex-col w-full h-full min-h-[500px] border border-white/20 rounded-3xl overflow-hidden group">
+                  
+                  {/* Borde exterior colorido */}
+                  <div className="absolute inset-0 p-[2px]" style={{ background: taller.from }}>
+                    <div className="w-full h-full rounded-[22px] bg-[#140d28]" />
                   </div>
-                  <div className="absolute inset-0 flex items-center justify-center" style={{ backdropFilter: 'blur(12px)' }}>
+
+                  {/* Orbe Brillante de fondo */}
+                  <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
                     <div
-                      className="w-48 h-48 rounded-full animate-spin"
+                      className="w-64 h-64 rounded-full opacity-40 transition-transform duration-700 ease-out group-hover:scale-125 group-hover:opacity-50"
                       style={{
                         background: `radial-gradient(circle, ${taller.to} 0%, ${taller.from} 60%, transparent 100%)`,
-                        animationDuration: '12s',
-                        opacity: 0.5,
+                        filter: 'blur(50px)',
                       }}
                     />
                   </div>
-                  <div className="absolute inset-0 p-4 flex justify-between">
-                    <div className="w-[75%] p-4 flex flex-col rounded-xl backdrop-blur-md"
-                      style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}>
-                      <span className="font-sans text-lg font-bold text-white leading-snug mb-4">{taller.title}</span>
-                      <ul className="space-y-2.5 flex-1">
+
+                  {/* Contenido principal flex */}
+                  <div className="relative z-10 flex flex-1 p-3 sm:p-4">
+                    
+                    {/* Panel Izquierdo (Cristal / Glassmorphism) */}
+                    <div className="flex flex-col flex-1 p-6 sm:p-8 backdrop-blur-xl shadow-2xl"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        borderTopRightRadius: '64px',
+                        borderBottomRightRadius: '24px',
+                        borderTopLeftRadius: '16px',
+                        borderBottomLeftRadius: '16px'
+                      }}>
+                      
+                      <h3 className="font-sans text-[22px] font-bold text-white leading-tight mb-8 pr-2">
+                        {taller.title}
+                      </h3>
+                      
+                      {/* Flex-1 empuja el logo hacia abajo y estira la caja si hay mucho texto */}
+                      <ul className="space-y-4 flex-1">
                         {taller.items.map((item, j) => (
-                          <li key={j} className="flex items-start gap-2">
-                            <span className="shrink-0 mt-0.5 text-base font-bold" style={{ color: taller.to }}>·</span>
-                            <span className="font-sans text-[13px] text-white/75 leading-relaxed">{item}</span>
+                          <li key={j} className="flex items-start gap-3">
+                            <span 
+                              className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full" 
+                              style={{ background: taller.to, boxShadow: `0 0 8px ${taller.to}` }} 
+                            />
+                            <span className="font-sans text-[13.5px] text-white/80 leading-relaxed">
+                              {item}
+                            </span>
                           </li>
                         ))}
                       </ul>
-                      <div className="mt-4 text-xs font-sans text-white/30 tracking-widest uppercase">NETI</div>
+
+                      <div className="mt-10 pt-5 border-t border-white/10">
+                        <img 
+                          src={logoNetiBlue} 
+                          alt="Logo NETI" 
+                          className="h-6 w-auto opacity-60 transition-opacity duration-300 group-hover:opacity-100" 
+                          style={{ filter: 'brightness(0) invert(1)' }} 
+                        />
+                      </div>
                     </div>
-                    <div className="flex flex-col items-end justify-between py-1">
-                      <span className="font-display text-sm font-black" style={{ color: 'rgba(255,255,255,0.35)' }}>0{i + 1}</span>
+
+                    {/* Panel Derecho (Número + Botón) */}
+                    <div className="flex flex-col items-center justify-between w-12 sm:w-16 py-2 shrink-0">
+                      <span className="font-display text-xl font-black tracking-widest" style={{ color: taller.from }}>
+                        0{i + 1}
+                      </span>
+                      
                       <button
                         type="button"
                         onClick={() => setModalTaller(tallerKeys[i])}
-                        className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 cursor-pointer"
-                        style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.2)' }}
+                        className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20 cursor-pointer shadow-lg"
+                        style={{ 
+                          background: 'rgba(255,255,255,0.1)', 
+                          backdropFilter: 'blur(12px)', 
+                          border: '1px solid rgba(255,255,255,0.2)' 
+                        }}
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4 ml-0.5">
                           <path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6L4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="white" />
                         </svg>
                       </button>

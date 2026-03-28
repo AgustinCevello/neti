@@ -5,7 +5,8 @@ import { toast } from 'sonner';
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const soloNumeros = /^[0-9]+$/;
 
-function validarCampo(name, value) {
+// Le pasamos el objeto `form` entero para poder hacer validaciones dependientes
+function validarCampo(name, value, form = {}) {
   switch (name) {
     case 'tipo':
       return !value ? 'Seleccioná una opción para continuar' : '';
@@ -25,6 +26,10 @@ function validarCampo(name, value) {
       if (value && parseInt(value) > 100000) return 'Número demasiado alto';
       return '';
     case 'descripcion':
+      // Si eligió "Otro...", este campo pasa a ser estrictamente obligatorio
+      if (form.busco === 'otro' && (!value || !value.trim())) return 'Por favor, detallá qué estás buscando';
+      if (value && value.length > 600) return 'Máximo 600 caracteres';
+      return '';
     case 'motivacion':
       if (value && value.length > 600) return 'Máximo 600 caracteres';
       return '';
@@ -36,7 +41,8 @@ function validarCampo(name, value) {
 function validarTodo(form) {
   const errors = {};
   Object.keys(form).forEach(name => {
-    const err = validarCampo(name, form[name]);
+    // Pasamos el form completo
+    const err = validarCampo(name, form[name], form);
     if (err) errors[name] = err;
   });
   return errors;
@@ -239,6 +245,9 @@ function FormContent({ taller, onClose }) {
     if (!touched[name]) return '';
     if (errors[name]) return 'invalid';
     const requeridos = ['tipo', 'nombre', 'busco', 'email'];
+    // Validamos dinámicamente si seleccionó otro
+    if (form.busco === 'otro') requeridos.push('descripcion');
+
     if (requeridos.includes(name) && !form[name]) return '';
     return form[name] ? 'valid' : '';
   };
@@ -253,11 +262,20 @@ function FormContent({ taller, onClose }) {
   const applyField = (name, next) => {
     setForm(prev => {
       const updated = { ...prev, [name]: next };
+      // Limpiar descripción si cambia la opción a algo que no sea "otro"
       if (name === 'busco' && next !== 'otro') updated.descripcion = '';
+      
+      // Actualizamos errores validando con el nuevo estado completo de form
+      setErrors(prevErrs => ({
+        ...prevErrs,
+        [name]: validarCampo(name, next, updated),
+        // Validamos la descripción en tiempo real si el usuario juega con el radio "busco"
+        ...(name === 'busco' ? { descripcion: validarCampo('descripcion', updated.descripcion, updated) } : {})
+      }));
+      
       return updated;
     });
     setTouched(prev => ({ ...prev, [name]: true }));
-    setErrors(prev => ({ ...prev, [name]: validarCampo(name, next) }));
   };
 
   const handle = (e) => {
@@ -270,7 +288,7 @@ function FormContent({ taller, onClose }) {
     const { name, value } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
     setBlurred(prev => ({ ...prev, [name]: true }));
-    setErrors(prev => ({ ...prev, [name]: validarCampo(name, value) }));
+    setErrors(prev => ({ ...prev, [name]: validarCampo(name, value, form) }));
   };
 
   const handleNombreKeyDown = (e) => { if (e.key.length > 1) return; if (!NOMBRE_ALLOWED.test(e.key)) e.preventDefault(); };
@@ -347,9 +365,12 @@ function FormContent({ taller, onClose }) {
     }, 400);
   };
 
-  const required  = ['tipo', 'nombre', 'busco', 'email'];
-  const completed = required.filter(f => form[f] && !errors[f]).length;
-  const progress  = (completed / required.length) * 100;
+  // Cálculo de progreso dinámico 
+  const requiredFields = ['tipo', 'nombre', 'busco', 'email'];
+  if (form.busco === 'otro') requiredFields.push('descripcion'); // Sube el total si marca Otro...
+
+  const completed = requiredFields.filter(f => form[f] && !errors[f]).length;
+  const progress  = (completed / requiredFields.length) * 100;
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
@@ -358,7 +379,7 @@ function FormContent({ taller, onClose }) {
       <div className="flex flex-col gap-1.5">
         <div className="flex justify-between items-center">
           <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-[#C4BAD4]">Completado</span>
-          <span className="font-sans text-[10px] font-bold text-[#C4BAD4]">{completed}/{required.length}</span>
+          <span className="font-sans text-[10px] font-bold text-[#C4BAD4]">{completed}/{requiredFields.length}</span>
         </div>
         <div className="h-1 bg-[#F0EBF8] rounded-full overflow-hidden">
           <div className="h-full rounded-full transition-all duration-500 ease-out"
@@ -415,11 +436,16 @@ function FormContent({ taller, onClose }) {
       </Field>
 
       {form.busco === 'otro' && (
-        <Field label={cfg.descripcionLabel} hint="Opcional — si ya tenés algo en mente, ¡contanos!">
+        <Field 
+          label={cfg.descripcionLabel} 
+          required 
+          error={touched.descripcion && errors.descripcion}
+          hint="Detallá qué estás buscando para poder ayudarte mejor"
+        >
           <div className="relative">
             <textarea name="descripcion" value={form.descripcion} onBlur={handleBlur}
               {...makeHandlers('descripcion', 600)} placeholder={cfg.descripcionPlaceholder} rows={3}
-              className={`${inputClass(getState('descripcion'))} min-h-[110px]`} />
+              className={`${inputClass(getState('descripcion'))} min-h-[110px] resize-y`} />
             {form.descripcion.length > 0 && (
               <span className="absolute right-3 bottom-3 pointer-events-none">
                 <CharCount current={form.descripcion.length} max={600} />

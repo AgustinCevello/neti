@@ -60,7 +60,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
 
-  // Bloquear scroll â€” compatible iOS Safari
+  // Bloquear scroll -” compatible iOS Safari
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;

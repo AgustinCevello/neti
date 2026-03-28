@@ -30,7 +30,7 @@ const infoCards = [
   },
   {
     label: "4 encuentros",
-    value: "Mar 18:30â€“20:30",
+    value: "Mar 18:30–20:30",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
@@ -168,7 +168,7 @@ export default function LiderazgoDisruptivo() {
           <FadeIn delay={100}>
             <p className="font-sans text-[#85789A] text-base md:text-lg italic max-w-3xl mx-auto leading-relaxed mb-14">
               "Líder: cualquier persona que asume la responsabilidad de encontrar el potencial en las personas y los procesos, y que tiene el coraje de desarrollar ese potencial."
-              <span className="block mt-2 not-italic font-semibold text-[#251B37]">â€” Brené Brown</span>
+              <span className="block mt-2 not-italic font-semibold text-[#251B37]">– Brené Brown</span>
             </p>
           </FadeIn>
 

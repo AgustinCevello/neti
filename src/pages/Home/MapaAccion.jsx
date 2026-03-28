@@ -1,4 +1,6 @@
 ﻿import { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import imgInspirar from "../../assets/images/pictures/MapaDeAccionInspirar.webp";
 import imgEmpatizar from "../../assets/images/pictures/MapaDeAccionEmpatizaryAprender.webp";
 import imgGenerar from "../../assets/images/pictures/MapaDeAccionGenerarIdeas.webp";
@@ -150,14 +152,35 @@ export default function MapaAccion() {
           </div>
         </div>
 
-        <div className="text-center mt-12">
-          <a
+        {/* Botón CTA Mejorado */}
+        <div className="text-center mt-12 flex justify-center pb-8">
+          <Link
             ref={botonRef}
-            className="inline-block px-12 py-4 bg-pink-100 text-transparent font-bold text-xl uppercase tracking-wider rounded-full border-2 border-fuchsia-500 hover:bg-fuchsia-500 hover:text-white transition-colors duration-300 shadow-lg [-webkit-text-stroke:1px_#d946ef]"
             to="/servicios"
+            className="group relative inline-flex items-center justify-center gap-3 px-10 md:px-14 py-4 md:py-5 text-white font-sans font-bold text-base md:text-lg uppercase tracking-widest rounded-full overflow-hidden transition-all duration-300 hover:-translate-y-1"
+            style={{
+              background: 'linear-gradient(135deg, #1a1030 40%, #251B37 100%)',
+              boxShadow: '0 8px 32px rgba(236,78,141,0.25)',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 40px rgba(236,78,141,0.45)'; }}
+            onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 8px 32px rgba(236,78,141,0.25)'; }}
           >
-            Servicios
-          </a>
+            {/* Brillo interior fucsia */}
+            <span
+              className="absolute top-0 right-0 w-32 h-full pointer-events-none transition-transform duration-500 group-hover:translate-x-4"
+              style={{ background: 'radial-gradient(ellipse at center, rgba(236,78,141,0.6), transparent 70%)' }}
+            />
+            
+            <span className="relative z-10 flex items-center gap-3">
+              Servicios
+              <svg 
+                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5" 
+                fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </Link>
         </div>
       </div>
     </section>

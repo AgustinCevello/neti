@@ -78,7 +78,7 @@ export default function Home() {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        {/* Flecha izquierda â€” chevron simple, pegado al borde */}
+        {/* Flecha izquierda -” chevron simple, pegado al borde */}
         <button
           onClick={handlePrev}
           className="absolute left-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
@@ -89,7 +89,7 @@ export default function Home() {
           </svg>
         </button>
 
-        {/* Flecha derecha â€” chevron simple, pegado al borde */}
+        {/* Flecha derecha -” chevron simple, pegado al borde */}
         <button
           onClick={handleNext}
           className="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
@@ -115,7 +115,7 @@ export default function Home() {
             de innovación
           </h1>
 
-          {/* Dots â€” pegados debajo del título, alineados a la izquierda */}
+          {/* Dots -” pegados debajo del título, alineados a la izquierda */}
           <div className="flex gap-[6px] items-center">
             {slides.map((_, i) => (
               <button
