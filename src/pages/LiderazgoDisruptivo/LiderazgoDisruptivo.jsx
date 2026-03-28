@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import LiderazgoDisruptivoImg from '../../assets/images/pictures/LiderazcoDisruptivo.png';
-import LiderazgoDisruptivoNuestroDiferencial1Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial1.png';
-import LiderazgoDisruptivoNuestroDiferencial2Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial2.png';
+import LiderazgoDisruptivoImg from '../../assets/images/pictures/LiderazcoDisruptivo.webp';
+import LiderazgoDisruptivoNuestroDiferencial1Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial1.webp';
+import LiderazgoDisruptivoNuestroDiferencial2Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial2.webp';
 import FormularioModal from '../../components/FormularioModal/FormularioModal';
 
-// ── Datos ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const infoCards = [
   {
@@ -21,7 +21,7 @@ const infoCards = [
   {
     label: "Modalidad",
     value: "100% Online",
-    sub: "Modalidad sincrónica",
+    sub: "Modalidad sincrÃ³nica",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -30,7 +30,7 @@ const infoCards = [
   },
   {
     label: "4 encuentros",
-    value: "Mar 18:30–20:30",
+    value: "Mar 18:30â€“20:30",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
@@ -50,9 +50,9 @@ const infoCards = [
 ];
 
 const logros = [
-  "Desarrollar una visión global de los proyectos",
-  "Liderar la generación de nuevos negocios y equipos, orientados a resultados",
-  "Aplicar herramientas de ideación y métodos sistémicos",
+  "Desarrollar una visiÃ³n global de los proyectos",
+  "Liderar la generaciÃ³n de nuevos negocios y equipos, orientados a resultados",
+  "Aplicar herramientas de ideaciÃ³n y mÃ©todos sistÃ©micos",
   "Entrenar la habilidad de inspirar y motivar a las personas",
 ];
 
@@ -60,7 +60,7 @@ const modulos = [
   {
     num: "01",
     title: "Cambio de paradigma",
-    items: ["Nuestra historia en perspectiva", "Construcción del significado", "Matriz de Innovación", "Canva de estrategia adaptativa"],
+    items: ["Nuestra historia en perspectiva", "ConstrucciÃ³n del significado", "Matriz de InnovaciÃ³n", "Canva de estrategia adaptativa"],
     color: "#EC4E8D",
   },
   {
@@ -77,31 +77,31 @@ const modulos = [
   },
   {
     num: "04",
-    title: "Convertir problemas en desafíos",
-    items: ["Metodología de diseño: doble diamante", "Herramientas de ideación y prototipado rápido"],
+    title: "Convertir problemas en desafÃ­os",
+    items: ["MetodologÃ­a de diseÃ±o: doble diamante", "Herramientas de ideaciÃ³n y prototipado rÃ¡pido"],
     color: "#00D8ED",
   },
 ];
 
 const diferencial = [
   {
-    title: "Metodología hands-on",
-    body: "No sólo te brindaremos bibliografía y apoyo teórico sobre las temáticas, sino que aprenderás a ser un líder disruptivo liderando. Cada módulo cuenta con actividades prácticas que realizaremos en clase con el apoyo de facilitadores guiándote a cada paso.",
+    title: "MetodologÃ­a hands-on",
+    body: "No sÃ³lo te brindaremos bibliografÃ­a y apoyo teÃ³rico sobre las temÃ¡ticas, sino que aprenderÃ¡s a ser un lÃ­der disruptivo liderando. Cada mÃ³dulo cuenta con actividades prÃ¡cticas que realizaremos en clase con el apoyo de facilitadores guiÃ¡ndote a cada paso.",
     color: "#EC4E8D",
   },
   {
     title: "Spatial chat",
-    body: "El Workshop se realiza de manera virtual en el metaverso de Spatial Chat. Un espacio colaborativo que nos brinda las posibilidades de encuentro y comunicación de un aula presencial, con la comodidad y las posibilidades de extensión de la virtualidad.",
+    body: "El Workshop se realiza de manera virtual en el metaverso de Spatial Chat. Un espacio colaborativo que nos brinda las posibilidades de encuentro y comunicaciÃ³n de un aula presencial, con la comodidad y las posibilidades de extensiÃ³n de la virtualidad.",
     color: "#00D8ED",
   },
   {
     title: "Mural",
-    body: "La presentación teórica y práctica será mediante la plataforma mural, una herramienta que nos permite trabajar de forma colaborativa sobre pizarras virtuales. Todos los participantes del workshop podrán experimentar el uso de la plataforma en primera persona.",
+    body: "La presentaciÃ³n teÃ³rica y prÃ¡ctica serÃ¡ mediante la plataforma mural, una herramienta que nos permite trabajar de forma colaborativa sobre pizarras virtuales. Todos los participantes del workshop podrÃ¡n experimentar el uso de la plataforma en primera persona.",
     color: "#EC4E8D",
   },
 ];
 
-// ── FadeIn ────────────────────────────────────────────────────────────────────
+// â”€â”€ FadeIn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
@@ -127,7 +127,7 @@ function FadeIn({ children, delay = 0, className = '' }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-// ── Section Separator ─────────────────────────────────────────────────────────
+// â”€â”€ Section Separator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function SectionSeparator() {
   return (
@@ -141,7 +141,7 @@ function SectionSeparator() {
   );
 }
 
-// ── Componente principal ──────────────────────────────────────────────────────
+// â”€â”€ Componente principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function LiderazgoDisruptivo() {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -149,7 +149,7 @@ export default function LiderazgoDisruptivo() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
+      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="relative pt-16 pb-20 px-4 md:px-8 overflow-hidden">
         <div className="hero-bg-gradient hero-bg-gradient-1" />
         <div className="hero-bg-gradient hero-bg-gradient-2" />
@@ -167,8 +167,8 @@ export default function LiderazgoDisruptivo() {
 
           <FadeIn delay={100}>
             <p className="font-sans text-[#85789A] text-base md:text-lg italic max-w-3xl mx-auto leading-relaxed mb-14">
-              "Líder: cualquier persona que asume la responsabilidad de encontrar el potencial en las personas y los procesos, y que tiene el coraje de desarrollar ese potencial."
-              <span className="block mt-2 not-italic font-semibold text-[#251B37]">— Brené Brown</span>
+              "LÃ­der: cualquier persona que asume la responsabilidad de encontrar el potencial en las personas y los procesos, y que tiene el coraje de desarrollar ese potencial."
+              <span className="block mt-2 not-italic font-semibold text-[#251B37]">â€” BrenÃ© Brown</span>
             </p>
           </FadeIn>
 
@@ -193,7 +193,7 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* ── A QUIÉNES ESTÁ DIRIGIDO ───────────────────────────────────── */}
+      {/* â”€â”€ A QUIÃ‰NES ESTÃ DIRIGIDO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.25)' }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-14 items-center">
           <FadeIn>
@@ -215,7 +215,7 @@ export default function LiderazgoDisruptivo() {
                       <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                   </div>
-                  <h2 className="font-sans text-xl font-bold text-[#251B37]">¿A quiénes está dirigido?</h2>
+                  <h2 className="font-sans text-xl font-bold text-[#251B37]">Â¿A quiÃ©nes estÃ¡ dirigido?</h2>
                 </div>
                 <p className="font-sans text-[#85789A] leading-relaxed text-sm">
                   Pensado para personas que quieran adoptar competencias de liderazgo disruptivo y que tengan en cuenta la importancia del capital humano para generar proyectos de alto impacto innovador.
@@ -231,12 +231,12 @@ export default function LiderazgoDisruptivo() {
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <h2 className="font-sans text-xl font-bold text-[#251B37]">¿Qué lográs con el Workshop?</h2>
+                  <h2 className="font-sans text-xl font-bold text-[#251B37]">Â¿QuÃ© logrÃ¡s con el Workshop?</h2>
                 </div>
                 <ul className="space-y-3">
                   {logros.map((logro, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="text-[#EC4E8D] font-black mt-0.5">·</span>
+                      <span className="text-[#EC4E8D] font-black mt-0.5">Â·</span>
                       <span className="font-sans text-sm text-[#251B37] leading-relaxed">{logro}</span>
                     </li>
                   ))}
@@ -249,7 +249,7 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* ── 4 MÓDULOS ────────────────────────────────────────────────── */}
+      {/* â”€â”€ 4 MÃ“DULOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -257,7 +257,7 @@ export default function LiderazgoDisruptivo() {
               className="font-display text-4xl md:text-6xl font-black text-center mb-14 uppercase tracking-widest"
               style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}
             >
-              4 Módulos
+              4 MÃ³dulos
             </h2>
           </FadeIn>
 
@@ -277,7 +277,7 @@ export default function LiderazgoDisruptivo() {
                   <ul className="space-y-2">
                     {mod.items.map((item, j) => (
                       <li key={j} className="flex items-start gap-2">
-                        <span className="text-xs mt-1" style={{ color: mod.color }}>·</span>
+                        <span className="text-xs mt-1" style={{ color: mod.color }}>Â·</span>
                         <span className="font-sans text-xs text-[#85789A] leading-relaxed">{item}</span>
                       </li>
                     ))}
@@ -291,7 +291,7 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* ── NUESTRO DIFERENCIAL ───────────────────────────────────────── */}
+      {/* â”€â”€ NUESTRO DIFERENCIAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.25)' }}>
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -339,14 +339,14 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* ── CTA ──────────────────────────────────────────────────────── */}
+      {/* â”€â”€ CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 text-center">
         <FadeIn>
           <button
             onClick={() => setModalAbierto(true)}
             className="premium-cta-btn"
           >
-            Inscripción
+            InscripciÃ³n
           </button>
         </FadeIn>
       </section>

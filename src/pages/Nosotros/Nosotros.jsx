@@ -1,20 +1,20 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import dobleDiamante from '../../assets/images/pictures/DobleDiamante.png';
-import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.png';
-import nosotros1 from '../../assets/images/pictures/Nosotros1.png';
-import nosotros2 from '../../assets/images/pictures/Nosotros2.png';
-import nosotros3 from '../../assets/images/pictures/Nosotros3.png';
-import nosotros4 from '../../assets/images/pictures/Nosotros4.png';
-import mara from '../../assets/images/pictures/EmpleadoMara.png';
-import esteban1 from '../../assets/images/pictures/EmpleadoEsteban1.png';
-import euge from '../../assets/images/pictures/EmpleadoEuge.png';
-import esteban2 from '../../assets/images/pictures/EmpleadoEsteban2.png';
-import estefania from '../../assets/images/pictures/EmpleadoEstefi.png';
-import sorelys from '../../assets/images/pictures/EmpleadoSorelys.png';
-import juani from '../../assets/images/pictures/EmpleadoJuani.png';
+import dobleDiamante from '../../assets/images/pictures/DobleDiamante.webp';
+import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.webp';
+import nosotros1 from '../../assets/images/pictures/Nosotros1.webp';
+import nosotros2 from '../../assets/images/pictures/Nosotros2.webp';
+import nosotros3 from '../../assets/images/pictures/Nosotros3.webp';
+import nosotros4 from '../../assets/images/pictures/Nosotros4.webp';
+import mara from '../../assets/images/pictures/EmpleadoMara.webp';
+import esteban1 from '../../assets/images/pictures/EmpleadoEsteban1.webp';
+import euge from '../../assets/images/pictures/EmpleadoEuge.webp';
+import esteban2 from '../../assets/images/pictures/EmpleadoEsteban2.webp';
+import estefania from '../../assets/images/pictures/EmpleadoEstefi.webp';
+import sorelys from '../../assets/images/pictures/EmpleadoSorelys.webp';
+import juani from '../../assets/images/pictures/EmpleadoJuani.webp';
 
-// ── FadeIn ────────────────────────────────────────────────────────────────────
+// â”€â”€ FadeIn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -39,21 +39,21 @@ function FadeIn({ children, delay = 0, className = '' }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-// ── Datos ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const teamMembers = [
   { name: "Mara Provenzano", role: "Cofundadora-DEO", linkedin: "https://www.linkedin.com/in/marapro/", img: mara },
   { name: "Esteban Bonomi", role: "Cofundador-COO", linkedin: "https://www.linkedin.com/in/esteban-bonomi-642720116/", img: esteban1 },
-  { name: "Euge Abratti Bogdanich", role: "Diseñadora de experiencia", linkedin: "https://www.linkedin.com/in/eugenia-abratti-bogdanich/", img: euge },
+  { name: "Euge Abratti Bogdanich", role: "DiseÃ±adora de experiencia", linkedin: "https://www.linkedin.com/in/eugenia-abratti-bogdanich/", img: euge },
   { name: "Santiago Marchetti", role: "Facilitador IoT", linkedin: "https://www.linkedin.com/in/santiago-marchetti/", img: esteban2 },
   { name: "Estefania Cedermaz", role: "Facilitadora SD", linkedin: "https://www.linkedin.com/in/estefaniacedermazservicedesigner/", img: estefania },
   { name: "Sorelys Marcano Martinez", role: "Facilitadora SD", linkedin: "https://www.linkedin.com/in/sorelys-marcano-martinez", img: sorelys },
-  { name: "Juan Ignacio Franchi", role: "Diseñador UX/UI", linkedin: "https://www.linkedin.com/in/juan-ignacio-franchi-5356a81b7/", img: juani },
+  { name: "Juan Ignacio Franchi", role: "DiseÃ±ador UX/UI", linkedin: "https://www.linkedin.com/in/juan-ignacio-franchi-5356a81b7/", img: juani },
 ];
 
 const diamanteTexts = [
-  { num: "01", text: "Para que el modelo funcione, es necesario tener una cultura de empresa que valore y fomente el diseño como herramientas de resolución de problemas." },
-  { num: "02", text: "El primer diamante engloba las etapas de descubrimiento y definición, y sirve para entender, en vez de asumir, cuál es el problema." },
-  { num: "03", text: "El segundo diamante incluye las fases de desarrollo y entrega. Aquí se trata de proporcionar soluciones al problema, codiseñando con las personas involucradas." },
+  { num: "01", text: "Para que el modelo funcione, es necesario tener una cultura de empresa que valore y fomente el diseÃ±o como herramientas de resoluciÃ³n de problemas." },
+  { num: "02", text: "El primer diamante engloba las etapas de descubrimiento y definiciÃ³n, y sirve para entender, en vez de asumir, cuÃ¡l es el problema." },
+  { num: "03", text: "El segundo diamante incluye las fases de desarrollo y entrega. AquÃ­ se trata de proporcionar soluciones al problema, codiseÃ±ando con las personas involucradas." },
   { num: "04", text: "No es necesario pasar de forma lineal por cada una de estas etapas. De hecho, se recomienda avanzar y retroceder en cada fase." },
 ];
 
@@ -115,7 +115,7 @@ export default function Nosotros() {
   return (
     <div className="bg-white overflow-hidden">
 
-      {/* ── SECCIÓN 1 ────────────────────────────────────────────────── */}
+      {/* â”€â”€ SECCIÃ“N 1 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
         <FadeIn>
           <h1
@@ -128,7 +128,7 @@ export default function Nosotros() {
 
         <FadeIn delay={100}>
           <h2 className="font-sans text-2xl md:text-3xl font-bold text-center text-[#251B37] mb-16 max-w-4xl mx-auto leading-relaxed">
-            Somos Diseñadores, Creadores y Makers que combinan tecnologías exponenciales con lógicas de diseño y co-creación.
+            Somos DiseÃ±adores, Creadores y Makers que combinan tecnologÃ­as exponenciales con lÃ³gicas de diseÃ±o y co-creaciÃ³n.
           </h2>
         </FadeIn>
 
@@ -136,13 +136,13 @@ export default function Nosotros() {
           <FadeIn delay={150}>
             <div>
               <h3 className="font-sans text-xl font-bold text-[#251B37] mb-4">
-                ¿Sentís que tu organización necesita trabajar en su modelo de innovación?
+                Â¿SentÃ­s que tu organizaciÃ³n necesita trabajar en su modelo de innovaciÃ³n?
               </h3>
               <p className="font-sans text-[#251B37] mb-4 leading-relaxed">
-                En NETI actuamos como <strong>catalizadores de innovación</strong> y ayudamos a <strong>desarrollar soluciones integrales</strong>. Que acompañan y empoderan a las empresas e instituciones para dar respuesta a las exigencias que viven frente a los cambios tecnológicos del nuevo paradigma digital.
+                En NETI actuamos como <strong>catalizadores de innovaciÃ³n</strong> y ayudamos a <strong>desarrollar soluciones integrales</strong>. Que acompaÃ±an y empoderan a las empresas e instituciones para dar respuesta a las exigencias que viven frente a los cambios tecnolÃ³gicos del nuevo paradigma digital.
               </p>
               <p className="font-sans text-[#251B37] mb-8 leading-relaxed">
-                Nos centramos en las <strong>necesidades de las personas</strong>, basándonos en su experiencia, sus percepciones y emociones, y en las características específicas de cada organización para potenciar el aprendizaje de <strong>nuevas herramientas y habilidades para el futuro</strong>.
+                Nos centramos en las <strong>necesidades de las personas</strong>, basÃ¡ndonos en su experiencia, sus percepciones y emociones, y en las caracterÃ­sticas especÃ­ficas de cada organizaciÃ³n para potenciar el aprendizaje de <strong>nuevas herramientas y habilidades para el futuro</strong>.
               </p>
               <Link
                 to="/contacto"
@@ -175,7 +175,7 @@ export default function Nosotros() {
         </div>
       </div>
 
-      {/* ── SECCIÓN 2 — Doble Diamante ─────────────────────────────── */}
+      {/* â”€â”€ SECCIÃ“N 2 â€” Doble Diamante â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
@@ -218,7 +218,7 @@ export default function Nosotros() {
         </div>
       </div>
 
-      {/* ── SECCIÓN 3 — El Equipo ───────────────────────────────────── */}
+      {/* â”€â”€ SECCIÃ“N 3 â€” El Equipo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div
         className="py-20 px-4"
         style={{

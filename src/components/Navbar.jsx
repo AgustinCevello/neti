@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import logoFuchsia from '../assets/images/icons/logo_neti_fuchsia.png';
-import logoBlack from '../assets/images/icons/logo_neti_black.png';
+import logoFuchsia from '../assets/images/icons/logo_neti_fuchsia.webp';
+import logoBlack from '../assets/images/icons/logo_neti_black.webp';
 
 const NavUnderline = ({ isActive }) => (
   <div
@@ -60,7 +60,7 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
 
-  // Bloquear scroll — compatible iOS Safari
+  // Bloquear scroll â€” compatible iOS Safari
   useEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -109,7 +109,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* ── BARRA ─────────────────────────────────────────────────── */}
+      {/* â”€â”€ BARRA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <header className="sticky top-0 z-50 transition-colors duration-300 bg-white/65 backdrop-blur-[18px] backdrop-saturate-[180%] border-b border-white/30 shadow-[0_2px_16px_rgba(103,88,155,0.07)]">
         <div className="w-full px-6 lg:px-16">
           <div className="flex justify-between items-center h-20">
@@ -148,13 +148,13 @@ const Navbar = () => {
               ))}
             </nav>
 
-            {/* Botón hamburguesa */}
+            {/* BotÃ³n hamburguesa */}
             <button
               onClick={() => setIsOpen(o => !o)}
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
               className="md:hidden text-[#251B37] hover:text-[#EC4E8D] transition-colors duration-200 focus:outline-none z-[60] relative"
-              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={isOpen ? 'Cerrar menÃº' : 'Abrir menÃº'}
             >
               <HamburgerIcon isOpen={isOpen} />
             </button>
@@ -162,7 +162,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* ── OVERLAY FULLSCREEN MOBILE ─────────────────────────────── */}
+      {/* â”€â”€ OVERLAY FULLSCREEN MOBILE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div
         id="mobile-menu"
         aria-hidden={!isOpen}

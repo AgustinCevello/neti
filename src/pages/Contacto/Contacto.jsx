@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import tallerImg from '../../assets/images/pictures/ContactoTaller.png';
-import bannerImg from '../../assets/images/pictures/ContactoBanner.png';
-import losEsperamosImg from '../../assets/images/pictures/ContactoLosEsperamos.png';
+import tallerImg from '../../assets/images/pictures/ContactoTaller.webp';
+import bannerImg from '../../assets/images/pictures/ContactoBanner.webp';
+import losEsperamosImg from '../../assets/images/pictures/ContactoLosEsperamos.webp';
 
-// ── FadeIn ────────────────────────────────────────────────────────────────────
+// â”€â”€ FadeIn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -36,12 +36,12 @@ const noSelect = {
   WebkitUserDrag: 'none', pointerEvents: 'none',
 };
 
-// ── Componente principal ──────────────────────────────────────────────────────
+// â”€â”€ Componente principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function Contacto() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* ── SOMOS NETI ───────────────────────────────────────────────── */}
+      {/* â”€â”€ SOMOS NETI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="pt-16 pb-10 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -71,15 +71,15 @@ export default function Contacto() {
             <FadeIn delay={140}>
               <div>
                 <h2 className="font-sans text-2xl md:text-3xl font-bold text-[#251B37] mb-5">
-                  El universo de la innovación
+                  El universo de la innovaciÃ³n
                 </h2>
 
                 <p className="font-sans font-bold text-[#251B37] text-base leading-relaxed mb-5">
-                  Innovar es hacer. Y nuestro ADN es 100% MAKER, somos parte de una expresión cultural que cree que fallar es mejor que nunca intentarlo.
+                  Innovar es hacer. Y nuestro ADN es 100% MAKER, somos parte de una expresiÃ³n cultural que cree que fallar es mejor que nunca intentarlo.
                 </p>
 
                 <blockquote className="font-sans text-sm italic text-[#85789A] leading-relaxed mb-5 pl-4 border-l-2 border-[#EC4E8D]">
-                  "Tendemos a sobrestimar el efecto de una tecnología a corto plazo y a subestimar el efecto a largo plazo". – Roy Amara fue investigador, científico y ex presidente del Institute for the Future.
+                  "Tendemos a sobrestimar el efecto de una tecnologÃ­a a corto plazo y a subestimar el efecto a largo plazo". â€“ Roy Amara fue investigador, cientÃ­fico y ex presidente del Institute for the Future.
                 </blockquote>
 
                 {/* Divisor */}
@@ -89,7 +89,7 @@ export default function Contacto() {
                 <div className="space-y-5 mb-8">
                   <div>
                     <p className="font-sans font-bold text-[#251B37] text-base mb-2">
-                      ¿Querés hacer un taller con nosotros?
+                      Â¿QuerÃ©s hacer un taller con nosotros?
                     </p>
                     <Link
                       to="/servicios"
@@ -103,7 +103,7 @@ export default function Contacto() {
                   </div>
                   <div>
                     <p className="font-sans font-bold text-[#251B37] text-base mb-2">
-                      ¿Querés ser parte de nuestra comunidad?
+                      Â¿QuerÃ©s ser parte de nuestra comunidad?
                     </p>
                     <a
                       href="mailto:contacto@noestatodoinventado.com"
@@ -117,7 +117,7 @@ export default function Contacto() {
                   </div>
                 </div>
 
-                {/* Botón + RRSS */}
+                {/* BotÃ³n + RRSS */}
                 <div className="flex items-center gap-6 flex-wrap">
                   <a
                     href="mailto:contacto@noestatodoinventado.com"
@@ -151,7 +151,7 @@ export default function Contacto() {
         </div>
       </section>
 
-      {/* ── BANNER FOTOS ─────────────────────────────────────────────── */}
+      {/* â”€â”€ BANNER FOTOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <FadeIn delay={60}>
         <div className="w-full my-10">
           <img
@@ -164,16 +164,16 @@ export default function Contacto() {
         </div>
       </FadeIn>
 
-      {/* ── PÁRRAFO CENTRAL ──────────────────────────────────────────── */}
+      {/* â”€â”€ PÃRRAFO CENTRAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-12 px-4 md:px-8">
         <FadeIn>
           <p className="font-sans text-[#251B37] text-xl md:text-2xl text-center max-w-4xl mx-auto leading-relaxed font-medium">
-            Somos una comunidad diversa que entrelaza saberes y funciona como catalizadora de innovaciones para las personas. Aplicamos metodologías ágiles como "llave" para destrabar la transformación y el crecimiento en sus organizaciones.
+            Somos una comunidad diversa que entrelaza saberes y funciona como catalizadora de innovaciones para las personas. Aplicamos metodologÃ­as Ã¡giles como "llave" para destrabar la transformaciÃ³n y el crecimiento en sus organizaciones.
           </p>
         </FadeIn>
       </section>
 
-      {/* ── ¡LOS ESPERAMOS! ──────────────────────────────────────────── */}
+      {/* â”€â”€ Â¡LOS ESPERAMOS! â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="pt-8 pb-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -181,7 +181,7 @@ export default function Contacto() {
               className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-10 tracking-widest"
               style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}
             >
-              ¡Los esperamos!
+              Â¡Los esperamos!
             </h2>
           </FadeIn>
 

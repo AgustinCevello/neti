@@ -1,20 +1,20 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 
-import cocacola from '../../assets/images/empresas/cocacola.png'
-import oracle from '../../assets/images/empresas/oracle.png'
-import urg from '../../assets/images/empresas/urg.png'
-import gire from '../../assets/images/empresas/gire.png'
-import bgh from '../../assets/images/empresas/bgh.png'
-import dream from '../../assets/images/empresas/dream.png'
-import globant from '../../assets/images/empresas/globant.png'
-import mercedes from '../../assets/images/empresas/mercedes.png'
-import nanotecnologia from '../../assets/images/empresas/nanotecnologia.png'
-import telefonica from '../../assets/images/empresas/telefonica.png'
-import apex from '../../assets/images/empresas/apex.png'
-import iae from '../../assets/images/empresas/iae.png'
-import areastres from '../../assets/images/empresas/areastres.png'
-import sepyme from '../../assets/images/empresas/sepyme.png'
-import abinbev from '../../assets/images/empresas/abinbev.png'
+import cocacola from '../../assets/images/empresas/cocacola.webp'
+import oracle from '../../assets/images/empresas/oracle.webp'
+import urg from '../../assets/images/empresas/urg.webp'
+import gire from '../../assets/images/empresas/gire.webp'
+import bgh from '../../assets/images/empresas/bgh.webp'
+import dream from '../../assets/images/empresas/dream.webp'
+import globant from '../../assets/images/empresas/globant.webp'
+import mercedes from '../../assets/images/empresas/mercedes.webp'
+import nanotecnologia from '../../assets/images/empresas/nanotecnologia.webp'
+import telefonica from '../../assets/images/empresas/telefonica.webp'
+import apex from '../../assets/images/empresas/apex.webp'
+import iae from '../../assets/images/empresas/iae.webp'
+import areastres from '../../assets/images/empresas/areastres.webp'
+import sepyme from '../../assets/images/empresas/sepyme.webp'
+import abinbev from '../../assets/images/empresas/abinbev.webp'
 
 const empresas = [
   { src: cocacola, alt: "The Coca-Cola Company" },
@@ -25,11 +25,11 @@ const empresas = [
   { src: dream, alt: "Drean" },
   { src: globant, alt: "Globant" },
   { src: mercedes, alt: "Mercedes-Benz" },
-  { src: nanotecnologia, alt: "Fundación Argentina de Nanotecnología" },
-  { src: telefonica, alt: "Telefónica Fundación" },
+  { src: nanotecnologia, alt: "FundaciÃ³n Argentina de NanotecnologÃ­a" },
+  { src: telefonica, alt: "TelefÃ³nica FundaciÃ³n" },
   { src: apex, alt: "Apex" },
   { src: iae, alt: "IAE Business School" },
-  { src: areastres, alt: "Área Tres" },
+  { src: areastres, alt: "Ãrea Tres" },
   { src: sepyme, alt: "SEPYME" },
   { src: abinbev, alt: "ABInBev" },
 ]

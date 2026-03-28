@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
-import heroImg from '../../assets/images/pictures/Eventosherosection.png';
-import separadorImg from '../../assets/images/pictures/separadoreventossection.png';
-import mapaInspirar from '../../assets/images/pictures/MapaDeAccionInspirar.png';
-import mara from '../../assets/images/pictures/EmpleadoMara.png';
-import esteban from '../../assets/images/pictures/EmpleadoEsteban3.png';
-import maraP from '../../assets/images/pictures/EmpleadoMaraProvenzano.png';
-import euge from '../../assets/images/pictures/EmpleadoEuge.png';
-import juani from '../../assets/images/pictures/EmpleadoJuani.png';
-import dreamLogo from '../../assets/images/empresas/dream.png';
-import globantLogo from '../../assets/images/empresas/globant.png';
-import mercedesLogo from '../../assets/images/empresas/mercedes.png';
-import nanotecnologiaLogo from '../../assets/images/empresas/nanotecnologia.png';
-import telefonicaLogo from '../../assets/images/empresas/telefonica.png';
+import heroImg from '../../assets/images/pictures/Eventosherosection.webp';
+import separadorImg from '../../assets/images/pictures/separadoreventossection.webp';
+import mapaInspirar from '../../assets/images/pictures/MapaDeAccionInspirar.webp';
+import mara from '../../assets/images/pictures/EmpleadoMara.webp';
+import esteban from '../../assets/images/pictures/EmpleadoEsteban3.webp';
+import maraP from '../../assets/images/pictures/EmpleadoMaraProvenzano.webp';
+import euge from '../../assets/images/pictures/EmpleadoEuge.webp';
+import juani from '../../assets/images/pictures/EmpleadoJuani.webp';
+import dreamLogo from '../../assets/images/empresas/dream.webp';
+import globantLogo from '../../assets/images/empresas/globant.webp';
+import mercedesLogo from '../../assets/images/empresas/mercedes.webp';
+import nanotecnologiaLogo from '../../assets/images/empresas/nanotecnologia.webp';
+import telefonicaLogo from '../../assets/images/empresas/telefonica.webp';
 
-// ── FadeIn ────────────────────────────────────────────────────────────────────
+// â”€â”€ FadeIn â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FadeIn({ children, delay = 0, className = '' }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -40,7 +40,7 @@ function FadeIn({ children, delay = 0, className = '' }) {
   return <div ref={ref} className={className}>{children}</div>;
 }
 
-// ── Datos ─────────────────────────────────────────────────────────────────────
+// â”€â”€ Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const noSelect = {
   WebkitUserSelect: 'none', MozUserSelect: 'none',
   msUserSelect: 'none', userSelect: 'none',
@@ -55,8 +55,8 @@ const infoCards = [
         <circle cx="12" cy="9" r="2.5" />
       </svg>
     ),
-    label: '¿Qué?',
-    text: 'Un espacio de innovación, co-creación y aprendizaje. Combinamos workshops, fórums y actividades prácticas para transformar ideas en soluciones reales.',
+    label: 'Â¿QuÃ©?',
+    text: 'Un espacio de innovaciÃ³n, co-creaciÃ³n y aprendizaje. Combinamos workshops, fÃ³rums y actividades prÃ¡cticas para transformar ideas en soluciones reales.',
   },
   {
     icon: (
@@ -64,8 +64,8 @@ const infoCards = [
         <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
       </svg>
     ),
-    label: '¿Cuándo?',
-    text: 'Fecha inicio y final. Es un único día, las horas que abarca.',
+    label: 'Â¿CuÃ¡ndo?',
+    text: 'Fecha inicio y final. Es un Ãºnico dÃ­a, las horas que abarca.',
   },
   {
     icon: (
@@ -73,35 +73,35 @@ const infoCards = [
         <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
       </svg>
     ),
-    label: '¿Dónde?',
-    text: 'Si tiene parte presencial, híbrido o "nos encontraremos por zoom/meet/spatialchat/topia", va acá.',
+    label: 'Â¿DÃ³nde?',
+    text: 'Si tiene parte presencial, hÃ­brido o "nos encontraremos por zoom/meet/spatialchat/topia", va acÃ¡.',
   },
 ];
 
 const oradores = [
   { name: 'Mara Provenzano', role: 'Cofundadora', img: mara, bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
   { name: 'Esteban Bonomi', role: 'Cofundador', img: esteban, bio: 'Esteban Bonomi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Mara Provenzano', role: 'Diseñadora', img: maraP, bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Euge Abratti', role: 'Diseñadora de experiencia', img: euge, bio: 'Euge is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Juan Ignacio Franchi', role: 'Diseñador UX/UI', img: juani, bio: 'Juani Franchi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Mara Provenzano', role: 'DiseÃ±adora', img: maraP, bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Euge Abratti', role: 'DiseÃ±adora de experiencia', img: euge, bio: 'Euge is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Juan Ignacio Franchi', role: 'DiseÃ±ador UX/UI', img: juani, bio: 'Juani Franchi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
 ];
 
 const agendaMock = [
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
+  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'TÃ­tulo de la actividad', desc: 'DescripciÃ³n de la actividad/reuniÃ³n/sesiÃ³n' },
+  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'TÃ­tulo de la actividad', desc: 'DescripciÃ³n de la actividad/reuniÃ³n/sesiÃ³n' },
+  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'TÃ­tulo de la actividad', desc: 'DescripciÃ³n de la actividad/reuniÃ³n/sesiÃ³n' },
+  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'TÃ­tulo de la actividad', desc: 'DescripciÃ³n de la actividad/reuniÃ³n/sesiÃ³n' },
+  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'TÃ­tulo de la actividad', desc: 'DescripciÃ³n de la actividad/reuniÃ³n/sesiÃ³n' },
 ];
 
 const organizadores = [dreamLogo, globantLogo, mercedesLogo, nanotecnologiaLogo, telefonicaLogo];
 
-// ── Validación ────────────────────────────────────────────────────────────────
+// â”€â”€ ValidaciÃ³n â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LC = 'abcdefghijklmnopqrstuvwxyz';
 const UC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const ACCENTS = 'áéíóúÁÉÍÓÚüÜñÑ';
+const ACCENTS = 'Ã¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ¼ÃœÃ±Ã‘';
 const EMAIL_CHARS = LC + UC + '0123456789@.-_+';
 
 const NOMBRE_SET = new Set([...LC, ...UC, ...ACCENTS, ' ', '-', "'"]);
@@ -113,15 +113,15 @@ const isEmailChar = (ch) => EMAIL_SET.has(ch);
 function validateForm({ nombre, apellido, email }) {
   const errors = {};
   if (!nombre.trim()) errors.nombre = 'El nombre es requerido';
-  else if (nombre.length > 30) errors.nombre = 'Máximo 30 caracteres';
+  else if (nombre.length > 30) errors.nombre = 'MÃ¡ximo 30 caracteres';
   if (!apellido.trim()) errors.apellido = 'El apellido es requerido';
-  else if (apellido.length > 30) errors.apellido = 'Máximo 30 caracteres';
+  else if (apellido.length > 30) errors.apellido = 'MÃ¡ximo 30 caracteres';
   if (!email.trim()) errors.email = 'El email es requerido';
-  else if (!emailRegex.test(email)) errors.email = 'Email inválido';
+  else if (!emailRegex.test(email)) errors.email = 'Email invÃ¡lido';
   return errors;
 }
 
-// ── Toast de éxito ────────────────────────────────────────────────────────────
+// â”€â”€ Toast de Ã©xito â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function SuccessToast({ nombre, email }) {
   return (
     <div style={{
@@ -147,7 +147,7 @@ function SuccessToast({ nombre, email }) {
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <p style={{ margin: 0, fontWeight: 700, fontSize: '0.875rem', color: '#251B37', lineHeight: 1.3 }}>
-          ¡Inscripción enviada!
+          Â¡InscripciÃ³n enviada!
         </p>
         <p style={{ margin: '3px 0 0', fontSize: '0.775rem', color: '#6B5F80', lineHeight: 1.45 }}>
           Gracias <strong style={{ color: '#251B37' }}>{nombre}</strong>, te escribimos a{' '}
@@ -158,7 +158,7 @@ function SuccessToast({ nombre, email }) {
   );
 }
 
-// ── Formulario ────────────────────────────────────────────────────────────────
+// â”€â”€ Formulario â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function InscripcionForm() {
   const [form, setForm] = useState({ nombre: '', apellido: '', email: '' });
   const [errors, setErrors] = useState({});
@@ -234,11 +234,11 @@ function InscripcionForm() {
         </div>
         <h3 className="font-sans font-bold text-[#251B37] text-xl mb-2"
           style={{ animation: 'thanksFadeIn 0.5s ease 0.3s forwards', opacity: 0 }}>
-          ¡Gracias por inscribirte!
+          Â¡Gracias por inscribirte!
         </h3>
         <p className="font-sans text-[#85789A] text-sm"
           style={{ animation: 'thanksFadeIn 0.5s ease 0.5s forwards', opacity: 0 }}>
-          Te contactaremos pronto con más información.
+          Te contactaremos pronto con mÃ¡s informaciÃ³n.
         </p>
       </div>
     );
@@ -306,7 +306,7 @@ function InscripcionForm() {
               </svg>
             </div>
             <p>
-              {['¡', 'L', 'i', 's', 't', 'o', '!'].map((char, i) => (
+              {['Â¡', 'L', 'i', 's', 't', 'o', '!'].map((char, i) => (
                 <span key={i} style={{ '--i': i + 5 }}>{char}</span>
               ))}
             </p>
@@ -317,7 +317,7 @@ function InscripcionForm() {
   );
 }
 
-// ── Componente orador ─────────────────────────────────────────────────────────
+// â”€â”€ Componente orador â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function SpeakerCard({ speaker, delay }) {
   return (
     <FadeIn delay={delay} className="flex flex-col items-center text-center">
@@ -333,14 +333,14 @@ function SpeakerCard({ speaker, delay }) {
   );
 }
 
-// ── Componente principal ──────────────────────────────────────────────────────
+// â”€â”€ Componente principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 export default function Eventos() {
   const [activeTab, setActiveTab] = useState('JUNIO');
 
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* ── HERO ─────────────────────────────────────────────────────── */}
+      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="relative w-full overflow-hidden">
         <img src={heroImg} alt="Evento NETI" className="w-full h-auto block" style={noSelect} draggable={false} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(37,27,55,0.85) 0%, rgba(37,27,55,0.2) 60%, transparent 100%)' }} />
@@ -352,7 +352,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── INFO CARDS ───────────────────────────────────────────────── */}
+      {/* â”€â”€ INFO CARDS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-14 px-4 md:px-8">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
           {infoCards.map((card, i) => (
@@ -369,12 +369,12 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── SEPARADOR ────────────────────────────────────────────────── */}
+      {/* â”€â”€ SEPARADOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div className="w-full">
         <img src={separadorImg} alt="Separador" className="w-full object-cover max-h-48" style={noSelect} draggable={false} />
       </div>
 
-      {/* ── PROPUESTA DE VALOR ───────────────────────────────────────── */}
+      {/* â”€â”€ PROPUESTA DE VALOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <FadeIn>
@@ -382,7 +382,7 @@ export default function Eventos() {
           </FadeIn>
           <FadeIn delay={100}>
             <p className="font-sans font-bold text-[#251B37] text-xl md:text-2xl leading-relaxed mb-6">
-              Propuesta de valor. Describir en un párrafo el objetivo del evento, mostrar lo que va a enganchar a la gente. Usar palabras clave.
+              Propuesta de valor. Describir en un pÃ¡rrafo el objetivo del evento, mostrar lo que va a enganchar a la gente. Usar palabras clave.
             </p>
             <p className="font-sans text-[#85789A] leading-relaxed">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -391,7 +391,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── ACTIVIDADES ──────────────────────────────────────────────── */}
+      {/* â”€â”€ ACTIVIDADES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -405,7 +405,7 @@ export default function Eventos() {
                 style={{ boxShadow: '0 0 12px rgba(236,78,141,0.08)' }}>
                 <span className="font-sans text-xs font-bold text-[#EC4E8D] uppercase tracking-widest">Actividad</span>
                 <p className="font-sans text-xs text-[#85789A]">Jueves 15 de Julio<br />14:00 (GMT-3)</p>
-                <p className="font-sans text-xs text-[#85789A]">Lugar (o en físico)</p>
+                <p className="font-sans text-xs text-[#85789A]">Lugar (o en fÃ­sico)</p>
               </div>
             ))}
           </div>
@@ -420,7 +420,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── ORADORES ─────────────────────────────────────────────────── */}
+      {/* â”€â”€ ORADORES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -437,7 +437,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── AGENDA ───────────────────────────────────────────────────── */}
+      {/* â”€â”€ AGENDA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
@@ -487,7 +487,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── ORGANIZADORES ────────────────────────────────────────────── */}
+      {/* â”€â”€ ORGANIZADORES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -507,7 +507,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ── INSCRIBIRSE ──────────────────────────────────────────────── */}
+      {/* â”€â”€ INSCRIBIRSE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8">
         <div className="max-w-4xl mx-auto">
           <FadeIn>

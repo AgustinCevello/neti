@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+﻿import { useEffect, useRef, useState, useCallback } from "react";
 import MapaAccion from "./MapaAccion";
 import Empresas from "./Empresas";
 
-import slide1 from "../../assets/images/pictures/carruselherosection1.png";
-import slide2 from "../../assets/images/pictures/carruselherosection2.png";
-import slide3 from "../../assets/images/pictures/carruselherosection3.png";
+import slide1 from "../../assets/images/pictures/carruselherosection1.webp";
+import slide2 from "../../assets/images/pictures/carruselherosection2.webp";
+import slide3 from "../../assets/images/pictures/carruselherosection3.webp";
 
 const slides = [slide1, slide2, slide3];
 
@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <main className="bg-white overflow-x-hidden">
-      {/* ── HERO CARRUSEL ─────────────────────────────────────────── */}
+      {/* â”€â”€ HERO CARRUSEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="relative w-full min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end overflow-hidden">
 
         {/* Slides */}
@@ -78,7 +78,7 @@ export default function Home() {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        {/* Flecha izquierda — chevron simple, pegado al borde */}
+        {/* Flecha izquierda â€” chevron simple, pegado al borde */}
         <button
           onClick={handlePrev}
           className="absolute left-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
@@ -89,7 +89,7 @@ export default function Home() {
           </svg>
         </button>
 
-        {/* Flecha derecha — chevron simple, pegado al borde */}
+        {/* Flecha derecha â€” chevron simple, pegado al borde */}
         <button
           onClick={handleNext}
           className="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
@@ -100,7 +100,7 @@ export default function Home() {
           </svg>
         </button>
 
-        {/* Título + dots */}
+        {/* TÃ­tulo + dots */}
         <div ref={heroRef} className="relative z-10 px-6 md:px-10 pb-4 max-w-4xl w-full">
           <h1
             className="font-display text-5xl md:text-7xl lg:text-8xl leading-none uppercase mb-3"
@@ -112,10 +112,10 @@ export default function Home() {
           >
             Laboratorio
             <br />
-            de innovación
+            de innovaciÃ³n
           </h1>
 
-          {/* Dots — pegados debajo del título, alineados a la izquierda */}
+          {/* Dots â€” pegados debajo del tÃ­tulo, alineados a la izquierda */}
           <div className="flex gap-[6px] items-center">
             {slides.map((_, i) => (
               <button
@@ -144,8 +144,8 @@ export default function Home() {
         >
           <p className="font-sans text-white text-sm md:text-base max-w-3xl mx-auto text-center leading-relaxed">
             Trabajamos para encontrar soluciones de alto impacto con el objetivo
-            de disminuir la incertidumbre y enfocar el proceso en la solución
-            del problema a través del usuario.
+            de disminuir la incertidumbre y enfocar el proceso en la soluciÃ³n
+            del problema a travÃ©s del usuario.
           </p>
         </div>
       </section>
