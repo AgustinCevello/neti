@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 
 // ── Validación ────────────────────────────────────────────────────────────────
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const soloNumeros = /^[0-9]+$/;
 
-// Le pasamos el objeto `form` entero para poder hacer validaciones dependientes
 function validarCampo(name, value, form = {}) {
   switch (name) {
     case 'tipo':
@@ -41,7 +41,6 @@ function validarCampo(name, value, form = {}) {
 function validarTodo(form) {
   const errors = {};
   Object.keys(form).forEach(name => {
-    // Pasamos el form completo
     const err = validarCampo(name, form[name], form);
     if (err) errors[name] = err;
   });
@@ -236,6 +235,7 @@ function FormContent({ taller, onClose }) {
   const [form, setForm] = useState({
     tipo: '', nombre: '', busco: '', descripcion: '',
     experiencia: '', participantes: '', email: '', motivacion: '',
+    aceptaLegales: false,
   });
   const [touched, setTouched] = useState({});
   const [blurred,  setBlurred]  = useState({});
@@ -244,7 +244,7 @@ function FormContent({ taller, onClose }) {
   const getState = (name) => {
     if (!touched[name]) return '';
     if (errors[name]) return 'invalid';
-    const requeridos = ['tipo', 'nombre', 'busco', 'email'];
+    const requeridos = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
     // Validamos dinámicamente si seleccionó otro
     if (form.busco === 'otro') requeridos.push('descripcion');
 
@@ -346,7 +346,14 @@ function FormContent({ taller, onClose }) {
     const allTouched = Object.keys(form).reduce((acc, k) => ({ ...acc, [k]: true }), {});
     setTouched(allTouched);
     setBlurred(allTouched);
+    
     const errs = validarTodo(form);
+    
+    // VALIDACIÓN DEL CHECKBOX: Si no está marcado, agregamos el error
+    if (!form.aceptaLegales) {
+      errs.aceptaLegales = 'Debes aceptar la Política de Privacidad y Términos';
+    }
+
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
@@ -366,8 +373,8 @@ function FormContent({ taller, onClose }) {
   };
 
   // Cálculo de progreso dinámico 
-  const requiredFields = ['tipo', 'nombre', 'busco', 'email'];
-  if (form.busco === 'otro') requiredFields.push('descripcion'); // Sube el total si marca Otro...
+  const requiredFields = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
+  if (form.busco === 'otro') requiredFields.push('descripcion');
 
   const completed = requiredFields.filter(f => form[f] && !errors[f]).length;
   const progress  = (completed / requiredFields.length) * 100;
@@ -501,6 +508,55 @@ function FormContent({ taller, onClose }) {
           )}
         </div>
       </Field>
+
+      {/* ─── INICIO DEL CHECKBOX LEGAL ALINEADO PERFECTO ─── */}
+      <div className="flex flex-col gap-1 mt-2">
+        <label className="flex items-start gap-2.5 cursor-pointer group">
+          
+          {/* Caja del Checkbox */}
+          <div className="relative flex items-center justify-center shrink-0 w-[18px] h-[18px] rounded border-2 transition-colors duration-200"
+            style={{ 
+              borderColor: form.aceptaLegales ? cfg.color : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
+              background: form.aceptaLegales ? cfg.color : 'transparent'
+            }}>
+            <input 
+              type="checkbox" 
+              name="aceptaLegales"
+              className="absolute opacity-0 w-full h-full cursor-pointer m-0 p-0"
+              checked={form.aceptaLegales}
+              onChange={(e) => {
+                const checked = e.target.checked;
+                setForm(prev => ({ ...prev, aceptaLegales: checked }));
+                setTouched(prev => ({ ...prev, aceptaLegales: true }));
+                if (checked) setErrors(prev => ({ ...prev, aceptaLegales: null }));
+              }}
+            />
+            {form.aceptaLegales && (
+              <svg className="w-3.5 h-3.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </div>
+
+          {/* Texto Legal */}
+          <span className="font-sans text-[11.5px] leading-[18px] text-[#6B5F80] select-none flex-1">
+            He leído y acepto la{' '}
+            <Link to="/politica-de-privacidad" target="_blank" className="font-semibold underline hover:opacity-70 transition-opacity" style={{ color: cfg.color }}>
+              Política de Privacidad
+            </Link> y los{' '}
+            <Link to="/terminos-y-condiciones" target="_blank" className="font-semibold underline hover:opacity-70 transition-opacity" style={{ color: cfg.color }}>
+              Términos y Condiciones
+            </Link>.
+          </span>
+
+        </label>
+        
+        {/* Mensaje de error */}
+        {touched.aceptaLegales && errors.aceptaLegales && (
+          <p className="font-sans text-[10px] text-red-400 pl-[28px] m-0">{errors.aceptaLegales}</p>
+        )}
+      </div>
+      {/* ─── FIN DEL CHECKBOX LEGAL ─── */}
 
       {/* Botón enviar */}
       <div className="flex justify-center pt-2 pb-1">

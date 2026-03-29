@@ -94,7 +94,7 @@ export default function Footer() {
               <li>
                 <Link to="/servicios" className="group flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors">
                   <span className="w-1.5 h-1.5 rounded-full bg-fuchsia/50 group-hover:bg-fuchsia transition-colors" />
-                  Hands On (Metodologias Agiles)
+                  Hands On (Metodologías Ágiles)
                 </Link>
               </li>
               <li>
@@ -106,10 +106,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Columna 3: Navegacion */}
+          {/* Columna 3: Navegación */}
           <div className="flex flex-col gap-5">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-cyan/80">
-              Navegacion
+              Navegación
             </h4>
             <ul className="flex flex-col gap-3">
               <li>
@@ -151,13 +151,13 @@ export default function Footer() {
               Contacto
             </h4>
             <p className="text-sm text-white/60 leading-relaxed">
-              Tenes un desafio en mente?<br />
-              Nos encantaria escucharlo.
+              ¿Tenés un desafío en mente?<br />
+              Nos encantaría escucharlo.
             </p>
             {isContactPage ? (
               <button 
                 onClick={scrollToTop}
-                className="premium-cta-btn w-fit !py-3 !px-6 !text-sm"
+                className="premium-cta-btn w-fit !py-3 !px-6 !text-sm flex items-center"
               >
                 Escribinos
                 <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -167,7 +167,7 @@ export default function Footer() {
             ) : (
               <Link 
                 to="/contacto"
-                className="premium-cta-btn w-fit !py-3 !px-6 !text-sm"
+                className="premium-cta-btn w-fit !py-3 !px-6 !text-sm flex items-center"
               >
                 Escribinos
                 <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -179,28 +179,41 @@ export default function Footer() {
 
         </div>
 
-        {/* ZONA INFERIOR: Copyright & Credits */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+        {/* ZONA INFERIOR: Copyright, Legales & Credits */}
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
           
-          <p className="text-xs text-white/40 text-center md:text-left">
-            {new Date().getFullYear()} NETI. Contenido bajo{" "}
-            <a
-              href="https://creativecommons.org/licenses/by/4.0/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 hover:text-fuchsia underline underline-offset-2 transition-colors"
-            >
-              CC BY 4.0
-            </a>
-          </p>
+          {/* Legales & Copyright */}
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <p className="text-xs text-white/40 text-center md:text-left">
+              {new Date().getFullYear()} NETI. Contenido bajo{" "}
+              <a
+                href="https://creativecommons.org/licenses/by/4.0/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-fuchsia underline underline-offset-2 transition-colors"
+              >
+                CC BY 4.0
+              </a>
+            </p>
+            <div className="flex items-center gap-3 text-[11px] text-white/40">
+              <Link to="/politica-de-privacidad" className="hover:text-cyan transition-colors">
+                Política de Privacidad
+              </Link>
+              <span>|</span>
+              <Link to="/terminos-y-condiciones" className="hover:text-cyan transition-colors">
+                Términos y Condiciones
+              </Link>
+            </div>
+          </div>
 
+          {/* Credits */}
           <a
             href="https://agustincervello.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-white/40 hover:text-cyan transition-colors"
+            className="text-xs text-white/40 hover:text-cyan transition-colors shrink-0"
           >
-            Disenado por Agus
+            Diseñado por Agus
           </a>
 
         </div>

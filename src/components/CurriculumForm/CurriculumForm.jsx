@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
 import { enviarContacto } from '../../services/sheets';
 
 // ── Whitelists ────────────────────────────────────────────────────────────────
@@ -13,7 +14,7 @@ const NOMBRE_SET = new Set([...LC, ...UC, ...ACCENTS, ' ', '-', "'"].flat());
 const URL_SET = new Set([...URL_CHARS]);
 
 // ── Validación CV ─────────────────────────────────────────────────────────────
-function validarCV({ nombre, linkedin }) {
+function validarCV({ nombre, linkedin, aceptaLegales }) {
   const errors = {};
   if (!nombre.trim()) errors.nombre = 'El nombre es requerido';
   else if (nombre.length > 80) errors.nombre = 'Máximo 80 caracteres';
@@ -21,6 +22,8 @@ function validarCV({ nombre, linkedin }) {
   if (!linkedin.trim()) errors.linkedin = 'El link es requerido';
   else if (!linkedin.includes('linkedin.com')) errors.linkedin = 'Debe ser un link válido de LinkedIn';
   else if (linkedin.length > 200) errors.linkedin = 'URL demasiado larga';
+
+  if (!aceptaLegales) errors.aceptaLegales = 'Debes aceptar las políticas';
   return errors;
 }
 
@@ -94,7 +97,7 @@ function Field({ label, required, hint, error, status, children }) {
 
 // ── Componente Principal Exportado ────────────────────────────────────────────
 export default function CurriculumForm({ onSuccess }) {
-  const [form, setForm] = useState({ nombre: '', linkedin: '' });
+  const [form, setForm] = useState({ nombre: '', linkedin: '', aceptaLegales: false });
   const [touched, setTouched] = useState({});
   const [focused, setFocused] = useState('');
   const [loading, setLoading] = useState(false);
@@ -130,7 +133,7 @@ export default function CurriculumForm({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setTouched({ nombre: true, linkedin: true });
+    setTouched({ nombre: true, linkedin: true, aceptaLegales: true });
     const errs = validarCV(form);
     if (Object.keys(errs).length > 0) return;
     
@@ -143,7 +146,7 @@ export default function CurriculumForm({ onSuccess }) {
         duration: 5000,
         position: 'top-right',
       });
-      setForm({ nombre: '', linkedin: '' });
+      setForm({ nombre: '', linkedin: '', aceptaLegales: false });
       setTouched({});
       if (onSuccess) onSuccess();
     }, 800);
@@ -168,6 +171,45 @@ export default function CurriculumForm({ onSuccess }) {
           {...makeTextHandlers('linkedin', 200, URL_SET)}
         />
       </Field>
+
+      {/* CHECKBOX LEGAL ALINEADO */}
+      <div className="flex flex-col gap-1 mt-1">
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <div className="relative flex items-center justify-center shrink-0 w-[18px] h-[18px] mt-[2px] rounded border-2 transition-colors duration-200"
+            style={{ 
+              borderColor: form.aceptaLegales ? '#EC4E8D' : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
+              background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
+            }}>
+            <input 
+              type="checkbox" 
+              name="aceptaLegales"
+              className="absolute opacity-0 w-full h-full cursor-pointer"
+              checked={form.aceptaLegales}
+              onChange={(e) => {
+                apply('aceptaLegales', e.target.checked);
+                setTouched(prev => ({ ...prev, aceptaLegales: true }));
+              }}
+            />
+            {form.aceptaLegales && (
+              <svg className="w-3.5 h-3.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </div>
+          <span className="font-sans text-[11.5px] leading-[1.3] text-[#6B5F80] select-none pt-[1px]">
+            He leído y acepto la{' '}
+            <Link to="/politica-de-privacidad" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
+              Política de Privacidad
+            </Link> y los{' '}
+            <Link to="/terminos-y-condiciones" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
+              Términos y Condiciones
+            </Link>.
+          </span>
+        </label>
+        {touched.aceptaLegales && errors.aceptaLegales && (
+          <p className="font-sans text-[10px] text-red-400 pl-[30px]">{errors.aceptaLegales}</p>
+        )}
+      </div>
 
       <button
         type="submit"
