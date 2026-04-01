@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { enviarContacto } from '../../services/sheets';
@@ -162,17 +162,21 @@ function ContactoForm({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setTouched({ nombre: true, email: true, telefono: true, linkedin: true, mensaje: true, aceptaLegales: true });
     const errs = validar(form);
     if (Object.keys(errs).length > 0) return;
+
     setLoading(true);
-    enviarContacto({ ...form, tipo: 'Contacto General' });
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await enviarContacto({ ...form, tipo: 'Contacto General' });
       setSubmitted(true);
       toast.custom(() => <SuccessToast nombre={form.nombre} />, { duration: 5000, position: 'top-right' });
       setTimeout(() => onSuccess?.(), 1500);
-    }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const errors = validar(form);
@@ -240,10 +244,9 @@ function ContactoForm({ onSuccess }) {
         </div>
       </Field>
 
-      {/* CHECKBOX LEGAL ALINEADO */}
       <div className="flex flex-col gap-1 mt-1">
-        <label className="flex items-start gap-3 cursor-pointer group">
-          <div className="relative flex items-center justify-center shrink-0 w-[18px] h-[18px] mt-[2px] rounded border-2 transition-colors duration-200"
+        <label className="flex items-start gap-2.5 cursor-pointer group">
+          <div className="relative flex shrink-0 items-center justify-center w-[18px] h-[18px] mt-[1px] rounded border-2 transition-colors duration-200"
             style={{ 
               borderColor: form.aceptaLegales ? '#EC4E8D' : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
               background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
@@ -264,7 +267,7 @@ function ContactoForm({ onSuccess }) {
               </svg>
             )}
           </div>
-          <span className="font-sans text-[11.5px] leading-[1.3] text-[#6B5F80] select-none pt-[1px]">
+          <span className="font-sans text-[12px] leading-[18px] text-[#6B5F80] select-none">
             He leído y acepto la{' '}
             <Link to="/politica-de-privacidad" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
               Política de Privacidad
@@ -275,7 +278,7 @@ function ContactoForm({ onSuccess }) {
           </span>
         </label>
         {touched.aceptaLegales && errors.aceptaLegales && (
-          <p className="font-sans text-[10px] text-red-400 pl-[30px]">{errors.aceptaLegales}</p>
+          <p className="font-sans text-[10px] text-red-400 pl-[26px]">{errors.aceptaLegales}</p>
         )}
       </div>
 
@@ -300,8 +303,11 @@ function ContactoForm({ onSuccess }) {
   );
 }
 
-// ── Exportamos el Modal Principal ──────────────────────────────────────────────
+// ── Modal Principal ────────────────────────────────────────────────────────────
 export default function ContactoModal({ onClose }) {
+  // Ref para trackear si el mousedown empezó en el backdrop
+  const mouseDownOnBackdrop = useRef(false);
+
   useEffect(() => {
     const body = document.body;
     const html = document.documentElement;
@@ -329,6 +335,19 @@ export default function ContactoModal({ onClose }) {
     };
   }, [onClose]);
 
+  const handleBackdropMouseDown = (e) => {
+    // Solo marcar como "started on backdrop" si el mousedown fue directamente sobre él
+    mouseDownOnBackdrop.current = e.target === e.currentTarget;
+  };
+
+  const handleBackdropMouseUp = (e) => {
+    // Cerrar solo si tanto el inicio como el fin del click ocurrieron en el backdrop
+    if (mouseDownOnBackdrop.current && e.target === e.currentTarget) {
+      onClose();
+    }
+    mouseDownOnBackdrop.current = false;
+  };
+
   return (
     <>
       <style>{`
@@ -337,8 +356,18 @@ export default function ContactoModal({ onClose }) {
           to   { opacity: 1; transform: scale(1) translateY(0); }
         }
       `}</style>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(20,13,40,0.6)', backdropFilter: 'blur(6px)' }} onClick={onClose}>
-        <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl" style={{ animation: 'modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards' }} onClick={(e) => e.stopPropagation()}>
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        style={{ background: 'rgba(20,13,40,0.6)', backdropFilter: 'blur(6px)' }}
+        onMouseDown={handleBackdropMouseDown}
+        onMouseUp={handleBackdropMouseUp}
+      >
+        <div
+          className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white shadow-2xl"
+          style={{ animation: 'modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards' }}
+          // Evitar que los eventos del modal burbujeen al backdrop
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           <button onClick={onClose} className="absolute top-4 right-4 z-20 w-9 h-9 flex items-center justify-center rounded-full border-2 border-[#E6E2EE] text-[#85789A] hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-all duration-200" aria-label="Cerrar">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" /></svg>
           </button>

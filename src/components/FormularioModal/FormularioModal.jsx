@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
+import { enviarConsultaTaller } from '../../services/sheets';
 
 // ── Validación ────────────────────────────────────────────────────────────────
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -237,9 +238,10 @@ function FormContent({ taller, onClose }) {
     experiencia: '', participantes: '', email: '', motivacion: '',
     aceptaLegales: false,
   });
-  const [touched, setTouched] = useState({});
-  const [blurred,  setBlurred]  = useState({});
-  const [errors,   setErrors]   = useState({});
+  const [touched,   setTouched]   = useState({});
+  const [blurred,   setBlurred]   = useState({});
+  const [errors,    setErrors]    = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const getState = (name) => {
     if (!touched[name]) return '';
@@ -341,15 +343,15 @@ function FormContent({ taller, onClose }) {
     applyField('email', next);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return; // Guard: aborta doble envío
+
     const allTouched = Object.keys(form).reduce((acc, k) => ({ ...acc, [k]: true }), {});
     setTouched(allTouched);
     setBlurred(allTouched);
-    
+
     const errs = validarTodo(form);
-    
-    // VALIDACIÓN DEL CHECKBOX: Si no está marcado, agregamos el error
     if (!form.aceptaLegales) {
       errs.aceptaLegales = 'Debes aceptar la Política de Privacidad y Términos';
     }
@@ -357,19 +359,24 @@ function FormContent({ taller, onClose }) {
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
+    setIsLoading(true);
     const { nombre, email } = form;
     const color = cfg.color;
 
-    // 1. Cerrar el modal primero (libera el body: fixed)
-    onClose();
-
-    // 2. Lanzar el toast cuando el body ya está libre
-    setTimeout(() => {
-      toast.custom(
-        () => <SuccessToast nombre={nombre} email={email} color={color} />,
-        { duration: 5000, position: 'top-right' }
-      );
-    }, 400);
+    try {
+      await enviarConsultaTaller({ ...form, taller: taller });
+      // Cerramos el modal (libera el body: fixed)
+      onClose();
+      // Lanzamos el toast cuando el body ya está libre
+      setTimeout(() => {
+        toast.custom(
+          () => <SuccessToast nombre={nombre} email={email} color={color} />,
+          { duration: 5000, position: 'top-right' }
+        );
+      }, 400);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // Cálculo de progreso dinámico 
@@ -561,17 +568,22 @@ function FormContent({ taller, onClose }) {
       {/* Botón enviar */}
       <div className="flex justify-center pt-2 pb-1">
         <button type="submit"
-          className="relative text-white font-sans font-bold text-sm uppercase tracking-widest px-10 py-3.5 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
+          disabled={isLoading}
+          className="relative text-white font-sans font-bold text-sm uppercase tracking-widest px-10 py-3.5 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
           style={{ background: `linear-gradient(135deg, #1a1030 60%, #2d1a4a)`, boxShadow: `0 4px 20px ${cfg.color}33` }}
-          onMouseEnter={e => { e.currentTarget.style.boxShadow = `0 8px 28px ${cfg.color}55`; }}
+          onMouseEnter={e => { if (!isLoading) e.currentTarget.style.boxShadow = `0 8px 28px ${cfg.color}55`; }}
           onMouseLeave={e => { e.currentTarget.style.boxShadow = `0 4px 20px ${cfg.color}33`; }}>
           <span className="absolute top-0 right-0 w-20 h-full pointer-events-none"
             style={{ background: `radial-gradient(ellipse at top right, ${cfg.color}88, transparent 70%)` }} />
           <span className="relative z-10 flex items-center gap-2">
-            Enviar consulta
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            {isLoading ? 'Enviando...' : (
+              <>
+                Enviar consulta
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </>
+            )}
           </span>
         </button>
       </div>

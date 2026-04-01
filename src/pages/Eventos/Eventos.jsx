@@ -1,5 +1,7 @@
 ﻿import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
+import { enviarInscripcionEvento } from '../../services/sheets';
 
 import heroImg from '../../assets/images/pictures/Eventosherosection.webp';
 import separadorImg from '../../assets/images/pictures/separadoreventossection.webp';
@@ -33,7 +35,8 @@ function FadeIn({ children, delay = 0, className = '' }) {
       },
       { threshold: 0.1 }
     );
-    observer.observe(el);
+    const currentRef = el;
+    observer.observe(currentRef);
     return () => observer.disconnect();
   }, [delay]);
   return <div ref={ref} className={className}>{children}</div>;
@@ -104,7 +107,7 @@ const EMAIL_SET = new Set([...EMAIL_CHARS]);
 const isNombreChar = (ch) => NOMBRE_SET.has(ch);
 const isEmailChar = (ch) => EMAIL_SET.has(ch);
 
-function validateForm({ nombre, apellido, email }) {
+function validateForm({ nombre, apellido, email, aceptaLegales }) {
   const errors = {};
   if (!nombre.trim()) errors.nombre = 'El nombre es requerido';
   else if (nombre.length > 30) errors.nombre = 'Máximo 30 caracteres';
@@ -112,6 +115,7 @@ function validateForm({ nombre, apellido, email }) {
   else if (apellido.length > 30) errors.apellido = 'Máximo 30 caracteres';
   if (!email.trim()) errors.email = 'El email es requerido';
   else if (!emailRegex.test(email)) errors.email = 'Email inválido';
+  if (!aceptaLegales) errors.aceptaLegales = 'Debes aceptar las políticas';
   return errors;
 }
 
@@ -152,10 +156,12 @@ function SuccessToast({ nombre, email }) {
 }
 
 function InscripcionForm() {
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '' });
+  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', aceptaLegales: false });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [sent, setSent] = useState(false);
+
+  // Ref para bloquear el envío: evita doble click y bugeo de animación
+  const sendingRef = useRef(false);
   const btnRef = useRef(null);
 
   const applyNombre = (name, raw) => {
@@ -194,16 +200,27 @@ function InscripcionForm() {
     else if (type === 'email') applyEmail(form.email + pasted);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Guard con ref: corta inmediatamente en el primer click, sin esperar re-renders
+    if (sendingRef.current) return;
+
     const errs = validateForm(form);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
       btnRef.current?.blur();
       return;
     }
+
+    // Bloquear envíos subsiguientes antes de cualquier await
+    sendingRef.current = true;
+    btnRef.current?.blur();
+
     const { nombre, email } = form;
-    setSent(true);
+
+    await enviarInscripcionEvento(form);
+
     setTimeout(() => {
       setSubmitted(true);
       toast.custom(() => <SuccessToast nombre={nombre} email={email} />, {
@@ -264,8 +281,51 @@ function InscripcionForm() {
           </div>
         ))}
       </div>
+
+      {/* CHECKBOX LEGAL — estrategia 18px */}
+      <div className="flex flex-col gap-1 mb-10">
+        <label className="flex items-start gap-2.5 cursor-pointer group">
+          <div
+            className="relative flex shrink-0 items-center justify-center w-[18px] h-[18px] mt-[1px] rounded border-2 transition-colors duration-200"
+            style={{ 
+              borderColor: form.aceptaLegales ? '#EC4E8D' : (errors.aceptaLegales ? '#f87171' : '#E6E2EE'),
+              background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
+            }}
+          >
+            <input 
+              type="checkbox" 
+              name="aceptaLegales"
+              className="absolute opacity-0 w-full h-full cursor-pointer m-0 p-0"
+              checked={form.aceptaLegales}
+              onChange={(e) => {
+                const checked = e.target.checked;
+                setForm(prev => ({ ...prev, aceptaLegales: checked }));
+                if (checked) setErrors(prev => ({ ...prev, aceptaLegales: null }));
+              }}
+            />
+            {form.aceptaLegales && (
+              <svg className="w-3.5 h-3.5 text-white pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            )}
+          </div>
+          <span className="font-sans text-[12px] leading-[18px] text-[#85789A] select-none flex-1">
+            He leído y acepto la{' '}
+            <Link to="/politica-de-privacidad" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
+              Política de Privacidad
+            </Link> y los{' '}
+            <Link to="/terminos-y-condiciones" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
+              Términos y Condiciones
+            </Link>.
+          </span>
+        </label>
+        {errors.aceptaLegales && (
+          <p className="font-sans text-[10px] text-red-400 pl-[26px] m-0">{errors.aceptaLegales}</p>
+        )}
+      </div>
+
       <div className="text-center">
-        <button ref={btnRef} type="submit" className={`uiverse-btn${sent ? ' uiverse-btn--sent' : ''}`}>
+        <button ref={btnRef} type="submit" className="uiverse-btn">
           <div className="uiverse-outline" />
           <div className="uiverse-state uiverse-state--default">
             <div className="uiverse-icon">
@@ -313,7 +373,7 @@ function SpeakerCard({ speaker, delay }) {
     <FadeIn delay={delay} className="flex flex-col items-center text-center">
       <img
         src={speaker.img} alt={speaker.name}
-        loading="lazy"   // ← agregar esto
+        loading="lazy" 
         className="w-36 h-36 md:w-48 md:h-48 object-contain mb-4"
         style={noSelect} draggable={false}
       />
@@ -330,7 +390,7 @@ export default function Eventos() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* HERO — sin lazy, es lo primero visible */}
+      {/* HERO */}
       <section className="relative w-full overflow-hidden">
         <img src={heroImg} alt="Evento NETI" className="w-full h-auto block" style={noSelect} draggable={false} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(37,27,55,0.85) 0%, rgba(37,27,55,0.2) 60%, transparent 100%)' }} />
@@ -499,7 +559,7 @@ export default function Eventos() {
       </section>
 
       {/* INSCRIBIRSE */}
-      <section className="py-20 px-4 md:px-8">
+      <section className="py-20 px-4 md:px-8 bg-[#faf9fc]">
         <div className="max-w-4xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase mb-12" style={{ color: '#35112F' }}>
@@ -513,6 +573,11 @@ export default function Eventos() {
           </FadeIn>
         </div>
       </section>
+
+      <style>{`
+        @keyframes thanksFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes thanksPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+      `}</style>
 
     </div>
   );

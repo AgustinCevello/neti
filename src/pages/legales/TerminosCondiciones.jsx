@@ -55,7 +55,7 @@ export default function TerminosCondiciones() {
           <section>
             <h2 className="text-xl font-bold text-[#251B37] mb-3">3. Uso de Formularios y Recepción de Perfiles</h2>
             <p className="mb-2">
-              Al utilizar nuestros formularios de "Contacto" o "Dejar curriculum", te comprometés a proporcionar información veraz, precisa y actualizada. 
+              Al utilizar nuestros formularios de "Contacto" o "Dejar currículum", te comprometés a proporcionar información veraz, precisa y actualizada. 
             </p>
             <p>
               El envío de un currículum o perfil de LinkedIn no garantiza la contratación de servicios, la participación en proyectos futuros ni la incorporación inmediata a la comunidad o al equipo de NETI. Evaluamos los perfiles en función de nuestras necesidades y proyectos vigentes.

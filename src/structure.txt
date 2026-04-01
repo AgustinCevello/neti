@@ -1,0 +1,328 @@
+══════════════════════════════════════════════════════════════════════════════
+  NETI — DICCIONARIO DE DATOS GOOGLE SHEETS
+  Generado por ingeniería inversa del codebase React
+  Fecha: Abril 2026
+══════════════════════════════════════════════════════════════════════════════
+
+Fuente de cada campo rastreada al estado (useState) del componente o al objeto
+hardcodeado correspondiente. Se indica el archivo de origen entre paréntesis.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔴  DATOS ENTRANTES  (POST — De la web al Sheet)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+────────────────────────────────────────────────────────────────────────────
+📥 PESTAÑA 1 — Consultas Generales
+    Fuente: ContactoModal.jsx → ContactoForm → enviarContacto({ tipo: 'Contacto General' })
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ Fecha y Hora        │ Automático (Apps Script: new Date())
+  Columna B │ Nombre              │ form.nombre — texto, máx 80 chars (obligatorio)
+  Columna C │ Email               │ form.email  — texto, único arroba (obligatorio)
+  Columna D │ Teléfono            │ form.telefono — texto, con código de país (opcional)
+  Columna E │ LinkedIn            │ form.linkedin — URL linkedin.com (opcional)
+  Columna F │ Mensaje             │ form.mensaje — texto libre, máx 500 chars (obligatorio)
+  Columna G │ Tipo                │ Literal "Contacto General" (enviado por el code)
+  Columna H │ Origen              │ Literal "contacto" (campo origen en sheets.js)
+  Columna I │ Aceptó Legales      │ TRUE / FALSE — form.aceptaLegales
+
+  Notas:
+  - El campo "Teléfono" acepta dígitos, +, -, (, ), espacio.
+  - "LinkedIn" solo se envía si el usuario lo completa.
+  - El submit espera ~800ms antes de confirmar (setTimeout simulado).
+
+
+────────────────────────────────────────────────────────────────────────────
+📥 PESTAÑA 2 — Currículums
+    Fuente: CurriculumForm.jsx → enviarContacto({ tipo: 'Curriculum' })
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ Fecha y Hora        │ Automático (Apps Script: new Date())
+  Columna B │ Nombre              │ form.nombre — texto, máx 80 chars (obligatorio)
+  Columna C │ LinkedIn            │ form.linkedin — URL linkedin.com (obligatorio)
+  Columna D │ Tipo                │ Literal "Curriculum" (enviado por el code)
+  Columna E │ Origen              │ Literal "contacto" (campo origen en sheets.js)
+  Columna F │ Aceptó Legales      │ TRUE / FALSE — form.aceptaLegales
+
+  Notas:
+  - A diferencia del formulario de contacto, el LinkedIn es OBLIGATORIO aquí.
+  - No hay campo "mensaje" ni "teléfono" en este formulario.
+  - Se activa desde la página /contacto al expandir "Dejar curriculum".
+
+
+────────────────────────────────────────────────────────────────────────────
+📥 PESTAÑA 3 — Consultas de Talleres (FormularioModal)
+    Fuente: FormularioModal.jsx → FormContent → handleSubmit
+            sheets.js → enviarConsultaTaller()
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ Fecha y Hora        │ Automático (Apps Script: new Date())
+  Columna B │ Email               │ form.email (obligatorio, máx 100 chars)
+  Columna C │ Nombre              │ form.nombre (obligatorio, máx 80 chars)
+  Columna D │ Taller              │ form.taller — clave del taller consultado:
+             │                    │   "liderazgo" | "hands_on" | "desarrollo"
+  Columna E │ Tipo de Consultante │ form.tipo — radio:
+             │                    │   "individual"  → "Soy un individuo / freelance"
+             │                    │   "empresa"     → "Represento a una empresa u organización"
+  Columna F │ Servicio Buscado    │ form.busco — depende del taller elegido:
+             │                    │   Liderazgo: "inside_out" | "otro"
+             │                    │   Hands On:  "sprint_estrategia" | "hackatones" |
+             │                    │              "netiatones" | "sprint_descubrimiento" | "otro"
+             │                    │   Desarrollo: "inside_out" | "maker_uo" | "otro"
+  Columna G │ Descripción         │ form.descripcion — texto libre, máx 600 chars
+             │                    │   (obligatorio solo si form.busco === "otro")
+  Columna H │ Experiencia Previa  │ form.experiencia — radio opcional:
+             │                    │   "si" | "algo" | "no"
+  Columna I │ Nº Participantes    │ form.participantes — número entero (opcional)
+  Columna J │ Motivación          │ form.motivacion — texto libre, máx 600 chars (opcional)
+  Columna K │ Aceptó Legales      │ TRUE / FALSE — form.aceptaLegales
+  Columna L │ Origen              │ Literal "taller" (campo origen en sheets.js)
+
+  Notas:
+  - Este modal se abre desde /servicios (card de cada taller) y desde /liderazgo-disruptivo.
+  - "Descripción" es condicional: solo aparece si el usuario elige "Otro..." en Servicio Buscado.
+  - El nombre de taller legible queda implícito en la columna D (Taller).
+    Agregar columna auxiliar en Sheets con SWITCH para mostrar el nombre completo si se prefiere.
+
+
+────────────────────────────────────────────────────────────────────────────
+📥 PESTAÑA 4 — Inscripciones a Eventos
+    Fuente: Eventos.jsx → InscripcionForm → handleSubmit
+            sheets.js → enviarInscripcionEvento()
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ Fecha y Hora        │ Automático (Apps Script: new Date())
+  Columna B │ Nombre              │ form.nombre — texto, máx 30 chars (obligatorio)
+  Columna C │ Apellido            │ form.apellido — texto, máx 30 chars (obligatorio)
+  Columna D │ Email               │ form.email — texto, máx 100 chars (obligatorio)
+  Columna E │ Origen              │ Literal "eventos" (campo origen en sheets.js)
+
+  Notas:
+  - Es el formulario más simple. Solo 3 campos de usuario.
+  - Si en el futuro se agregan múltiples eventos simultáneos, agregar:
+    Columna F │ ID Evento          │ identificador del evento al que se inscribió.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🟢  DATOS SALIENTES  (GET — Del Sheet a la web)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+────────────────────────────────────────────────────────────────────────────
+✏️  PESTAÑA 5 — Gestión de Talleres
+    Fuente hardcodeada: Servicios.jsx → const talleres[]
+                        LiderazgoDisruptivo.jsx → const infoCards[], modulos[], diferencial[], logros[]
+                        FormularioModal.jsx → const config{}
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ ID                  │ Clave interna única: "liderazgo" | "hands_on" | "desarrollo"
+             │                    │   Debe coincidir con la clave usada en FormularioModal → config{}
+  Columna B │ Título              │ Nombre del taller completo
+             │                    │   Ej: "Taller de Liderazgo Disruptivo"
+  Columna C │ Slug / URL          │ Ruta React Router: "/liderazgo-disruptivo" | "/servicios"
+  Columna D │ Color Primario      │ Hex del color de acento de la card
+             │                    │   Ej: "#EC4E8D" | "#7C3AED" | "#00D8ED"
+  Columna E │ Color Gradiente     │ Hex del color final del gradiente (campo "to")
+             │                    │   Ej: "#f9a8d4" | "#a78bfa" | "#6ee7f7"
+  Columna F │ Descripción Corta   │ Texto del párrafo introductorio de la sección
+  Columna G │ Ítem 1              │ Bullet point 1 del array items[]
+  Columna H │ Ítem 2              │ Bullet point 2 del array items[]
+  Columna I │ Ítem 3              │ Bullet point 3 del array items[]
+  Columna J │ Ítem 4              │ Bullet point 4 del array items[]
+  Columna K │ Ítem 5              │ Bullet point 5 del array items[] (puede estar vacío)
+  Columna L │ Activo              │ TRUE/FALSE — para ocultar un taller sin borrarlo
+
+  ── Sub-hoja recomendada: "Opciones del Formulario" ──────────────────────
+  Columna A │ ID Taller           │ Clave del taller ("liderazgo" | "hands_on" | "desarrollo")
+  Columna B │ Value Opción        │ value del radio (ej: "inside_out")
+  Columna C │ Label Opción        │ Texto visible (ej: "Inside Out – Outside In")
+  Columna D │ Descripción Label   │ Label del textarea descripción cuando busco==="otro"
+  Columna E │ Descripción Placeholder │ Placeholder del textarea descripción
+
+  Notas:
+  - Los campos "from", "to", "accent" del objeto hardcodeado en Servicios.jsx
+    corresponden a Columnas D y E de esta pestaña.
+  - Si se opta por una sola pestaña, concatenar los ítems con salto de línea
+    y separar con un carácter especial (ej: "|") para parsear desde el front.
+
+
+────────────────────────────────────────────────────────────────────────────
+✏️  PESTAÑA 6 — Liderazgo Disruptivo (Detalle del Taller)
+    Fuente hardcodeada: LiderazgoDisruptivo.jsx
+────────────────────────────────────────────────────────────────────────────
+
+  SUB-SECCIÓN: Info Cards (datos de cursada)
+  ─────────────────────────────────────────
+  Columna A │ Label Inicio        │ "Inicio" → valor actual: "11 de Octubre"
+  Columna B │ Valor Inicio        │ Fecha de inicio legible (ej: "11 de Octubre")
+  Columna C │ Label Modalidad     │ "Modalidad" → valor actual: "100% Online"
+  Columna D │ Valor Modalidad     │ Descripción (ej: "100% Online")
+  Columna E │ Sub Modalidad       │ Texto secundario (ej: "Modalidad sincrónica")
+  Columna F │ Label Encuentros    │ "4 encuentros"
+  Columna G │ Valor Encuentros    │ Horario (ej: "Mar 18:30–20:30")
+  Columna H │ Valor Precio        │ Texto del precio (ej: "Consultar")
+  Columna I │ Sub Precio          │ Texto secundario (ej: "Precios especiales para grupos")
+
+  SUB-SECCIÓN: Logros (¿Qué lográs con el Workshop?)
+  ─────────────────────────────────────────────────
+  Columna J │ Logro 1             │ Bullet point de logros
+  Columna K │ Logro 2             │
+  Columna L │ Logro 3             │
+  Columna M │ Logro 4             │
+
+  SUB-SECCIÓN: Módulos (1 fila por módulo, o sub-hoja separada)
+  ────────────────────────────────────────────────────────────
+  → Recomendado: hoja separada "Módulos Liderazgo"
+  Columna A │ Número              │ "01" | "02" | "03" | "04"
+  Columna B │ Título Módulo       │ Ej: "Cambio de paradigma"
+  Columna C │ Color Accent        │ Hex (ej: "#EC4E8D")
+  Columna D │ Ítem 1              │ Contenido del módulo
+  Columna E │ Ítem 2              │
+  Columna F │ Ítem 3              │
+  Columna G │ Ítem 4              │
+
+  SUB-SECCIÓN: Diferencial (Nuestro diferencial)
+  ─────────────────────────────────────────────
+  → Recomendado: hoja separada "Diferencial Liderazgo"
+  Columna A │ Título              │ Ej: "Metodología hands-on"
+  Columna B │ Descripción         │ Texto largo explicativo
+  Columna C │ Color Accent        │ Hex del color del borde izquierdo
+
+
+────────────────────────────────────────────────────────────────────────────
+✏️  PESTAÑA 7 — Evento Activo
+    Fuente hardcodeada: Eventos.jsx → const infoCards[], oradores[], agendaMock[]
+────────────────────────────────────────────────────────────────────────────
+
+  SUB-SECCIÓN: Datos del Evento (una sola fila = evento actual)
+  ─────────────────────────────────────────────────────────────
+  Columna A │ Slogan              │ Título grande del hero (ej: "Slogan del evento")
+  Columna B │ Qué Texto           │ Texto de la info card "¿Qué?" — descripción del evento
+  Columna C │ Cuándo Texto        │ Texto de la info card "¿Cuándo?" — fecha/horario
+  Columna D │ Dónde Texto         │ Texto de la info card "¿Dónde?" — lugar o plataforma
+  Columna E │ Propuesta Valor     │ Párrafo principal de la sección propuesta de valor
+  Columna F │ Propuesta Detalle   │ Párrafo secundario (lorem ipsum actual)
+  Columna G │ Activo              │ TRUE/FALSE — para activar/desactivar la página
+
+
+  SUB-SECCIÓN: Agenda (una fila por actividad)
+  ─────────────────────────────────────────────
+  → Hoja separada: "Agenda Evento"
+  Columna A │ ID Actividad        │ Número o código único
+  Columna B │ Tag                 │ Etiqueta/categoría (ej: "Actividad" | "Panel" | "Break")
+  Columna C │ Fecha               │ Día legible (ej: "15 de Julio")
+  Columna D │ Hora                │ Hora con zona horaria (ej: "14:00 (GMT-3)")
+  Columna E │ Título              │ Título de la actividad
+  Columna F │ Descripción         │ Breve descripción
+  Columna G │ Lugar               │ Lugar físico o link a plataforma virtual
+  Columna H │ Mes/Pestaña         │ "JUNIO" | "JULIO" — para el filtro de tabs de la UI
+  Columna I │ Visible             │ TRUE/FALSE — para ocultar sin borrar
+
+
+  SUB-SECCIÓN: Oradores (una fila por orador)
+  ─────────────────────────────────────────────
+  → Hoja separada: "Oradores Evento"
+  Columna A │ ID Orador           │ Número o código único
+  Columna B │ Nombre              │ Nombre completo (ej: "Mara Provenzano")
+  Columna C │ Rol / Cargo         │ (ej: "Cofundadora" | "Diseñadora UX/UI")
+  Columna D │ Bio                 │ Texto corto de presentación
+  Columna E │ URL Foto            │ URL pública de la imagen (o nombre del archivo en assets)
+  Columna F │ Orden               │ Número para controlar el orden de aparición
+  Columna G │ Visible             │ TRUE/FALSE
+
+
+  SUB-SECCIÓN: Organizadores (logos)
+  ─────────────────────────────────
+  → Hoja separada: "Organizadores Evento"
+  Columna A │ ID Organizador      │ Número único
+  Columna B │ Nombre              │ Nombre de la empresa/organización
+  Columna C │ URL Logo            │ URL pública del logo
+  Columna D │ Orden               │ Número para el orden visual
+  Columna E │ Visible             │ TRUE/FALSE
+
+
+────────────────────────────────────────────────────────────────────────────
+✏️  PESTAÑA 8 — Reuniones / Cronograma General
+    Fuente: Inferido de la estructura de agendaMock y de la existencia
+            de pestañas de meses en Eventos.jsx (tabs "JUNIO" | "JULIO")
+────────────────────────────────────────────────────────────────────────────
+
+  Columna A │ ID                  │ Identificador único de la reunión/actividad
+  Columna B │ Tipo                │ "Reunión" | "Taller" | "Evento" | "Workshop"
+  Columna C │ Título              │ Nombre de la actividad
+  Columna D │ Descripción         │ Breve descripción
+  Columna E │ Fecha               │ Fecha completa (ej: "2026-07-15")
+  Columna F │ Hora Inicio         │ Formato HH:MM (ej: "14:00")
+  Columna G │ Hora Fin            │ Formato HH:MM (ej: "16:00")
+  Columna H │ Zona Horaria        │ (ej: "GMT-3")
+  Columna I │ Modalidad           │ "Presencial" | "Virtual" | "Híbrido"
+  Columna J │ Lugar / Link        │ Dirección física o URL de plataforma
+  Columna K │ Mes                 │ Mes en mayúsculas para el filtro UI (ej: "JULIO")
+  Columna L │ Visible             │ TRUE/FALSE
+  Columna M │ Link Calendario     │ URL del evento en Google Calendar (para el botón "Agregar")
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋  RESUMEN DE PESTAÑAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  #  │ Nombre de la Pestaña        │ Dirección │ Fuente principal
+  ───┼─────────────────────────────┼───────────┼─────────────────────────────
+  1  │ 📥 Consultas Generales      │  POST →   │ ContactoModal.jsx
+  2  │ 📥 Currículums              │  POST →   │ CurriculumForm.jsx
+  3  │ 📥 Consultas de Talleres    │  POST →   │ FormularioModal.jsx
+  4  │ 📥 Inscripciones Eventos    │  POST →   │ Eventos.jsx → InscripcionForm
+  ───┼─────────────────────────────┼───────────┼─────────────────────────────
+  5  │ ✏️  Gestión de Talleres     │  ← GET    │ Servicios.jsx → talleres[]
+  5b │ ✏️  Opciones Formulario     │  ← GET    │ FormularioModal.jsx → config{}
+  6  │ ✏️  Liderazgo Disruptivo    │  ← GET    │ LiderazgoDisruptivo.jsx
+  6b │ ✏️  Módulos Liderazgo       │  ← GET    │ LiderazgoDisruptivo.jsx → modulos[]
+  6c │ ✏️  Diferencial Liderazgo   │  ← GET    │ LiderazgoDisruptivo.jsx → diferencial[]
+  7  │ ✏️  Evento Activo           │  ← GET    │ Eventos.jsx → infoCards (evento)
+  7b │ ✏️  Agenda Evento           │  ← GET    │ Eventos.jsx → agendaMock[]
+  7c │ ✏️  Oradores Evento         │  ← GET    │ Eventos.jsx → oradores[]
+  7d │ ✏️  Organizadores Evento    │  ← GET    │ Eventos.jsx → organizadores[]
+  8  │ ✏️  Cronograma General      │  ← GET    │ Inferido de agenda + tabs de meses
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️  NOTAS TÉCNICAS PARA LA INTEGRACIÓN (Google Apps Script)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. ROUTER EN APPS SCRIPT (POST)
+     El campo "origen" ya está presente en sheets.js en cada función de envío.
+     En el doPost(e) del Apps Script, usar ese campo para enrutar a la
+     pestaña correcta:
+
+       const SHEET_MAP = {
+         'contacto': 'Consultas Generales',  // incluye Currículum (usar campo tipo)
+         'taller':   'Consultas de Talleres',
+         'eventos':  'Inscripciones Eventos',
+       };
+
+     Para separar Currículum de Contacto General dentro de "contacto":
+     Verificar el campo "tipo": si es "Curriculum" → escribir en hoja 2.
+
+  2. CAMPO "origen" en CurriculumForm
+     ATENCIÓN: CurriculumForm.jsx llama a enviarContacto({ ...form, tipo: 'Curriculum' })
+     pero la función enviarContacto() en sheets.js envía origen: 'contacto'.
+     El Apps Script debe usar el campo "tipo" para discriminar la hoja destino.
+
+  3. GET: PUBLICAR EL SHEET
+     Para que la web lea datos, publicar la hoja como JSON público o crear un
+     endpoint GET en Apps Script que devuelva los datos en formato JSON.
+     Usar el parámetro ?sheet=NombrePestaña para enrutar.
+
+  4. COLUMNA "Visible" / "Activo"
+     En todas las pestañas de datos salientes (GET) se incluye esta columna.
+     El Apps Script debe filtrar y solo devolver las filas con Visible = TRUE.
+
+  5. CAMPO "tipo" en FormularioModal
+     El formulario de talleres NO llama a ninguna función de sheets.js todavía
+     (handleSubmit solo cierra el modal y muestra un toast).
+     PENDIENTE: conectar enviarConsultaTaller() al submit del FormularioModal.
+
+══════════════════════════════════════════════════════════════════════════════
+  Fin del Diccionario de Datos — NETI Google Sheets
+══════════════════════════════════════════════════════════════════════════════

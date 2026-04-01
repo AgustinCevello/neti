@@ -133,15 +133,15 @@ export default function CurriculumForm({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setTouched({ nombre: true, linkedin: true, aceptaLegales: true });
     const errs = validarCV(form);
     if (Object.keys(errs).length > 0) return;
-    
+
     setLoading(true);
-    enviarContacto({ ...form, tipo: 'Curriculum' }); 
-    
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await enviarContacto({ ...form, tipo: 'Curriculum' });
       toast.custom(() => <SuccessToast nombre={form.nombre} />, {
         duration: 5000,
         position: 'top-right',
@@ -149,7 +149,9 @@ export default function CurriculumForm({ onSuccess }) {
       setForm({ nombre: '', linkedin: '', aceptaLegales: false });
       setTouched({});
       if (onSuccess) onSuccess();
-    }, 800);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const errors = validarCV(form);
@@ -172,14 +174,16 @@ export default function CurriculumForm({ onSuccess }) {
         />
       </Field>
 
-      {/* CHECKBOX LEGAL ALINEADO */}
+      {/* CHECKBOX LEGAL — estrategia 18px */}
       <div className="flex flex-col gap-1 mt-1">
-        <label className="flex items-start gap-3 cursor-pointer group">
-          <div className="relative flex items-center justify-center shrink-0 w-[18px] h-[18px] mt-[2px] rounded border-2 transition-colors duration-200"
+        <label className="flex items-start gap-2.5 cursor-pointer group">
+          <div
+            className="relative flex shrink-0 items-center justify-center w-[18px] h-[18px] mt-[1px] rounded border-2 transition-colors duration-200"
             style={{ 
               borderColor: form.aceptaLegales ? '#EC4E8D' : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
               background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
-            }}>
+            }}
+          >
             <input 
               type="checkbox" 
               name="aceptaLegales"
@@ -196,7 +200,7 @@ export default function CurriculumForm({ onSuccess }) {
               </svg>
             )}
           </div>
-          <span className="font-sans text-[11.5px] leading-[1.3] text-[#6B5F80] select-none pt-[1px]">
+          <span className="font-sans text-[12px] leading-[18px] text-[#6B5F80] select-none">
             He leído y acepto la{' '}
             <Link to="/politica-de-privacidad" target="_blank" className="font-semibold text-[#EC4E8D] underline hover:opacity-70 transition-opacity">
               Política de Privacidad
@@ -207,7 +211,7 @@ export default function CurriculumForm({ onSuccess }) {
           </span>
         </label>
         {touched.aceptaLegales && errors.aceptaLegales && (
-          <p className="font-sans text-[10px] text-red-400 pl-[30px]">{errors.aceptaLegales}</p>
+          <p className="font-sans text-[10px] text-red-400 pl-[26px]">{errors.aceptaLegales}</p>
         )}
       </div>
 

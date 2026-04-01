@@ -81,7 +81,7 @@ export default function Contacto() {
                   <div>
                     <p className="font-sans font-bold text-[#251B37] text-base mb-2">¿Querés ser parte de nuestra comunidad?</p>
                     <button onClick={() => setMostrarCV(!mostrarCV)} className="inline-flex items-center gap-2 font-sans font-semibold text-[#EC4E8D] hover:gap-3 transition-all duration-200">
-                      Dejar curriculum <svg className={`w-4 h-4 transition-transform duration-300 ${mostrarCV ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+                      Dejar currículum <svg className={`w-4 h-4 transition-transform duration-300 ${mostrarCV ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
                     </button>
                     
                     <div className="grid transition-[grid-template-rows] duration-300 ease-in-out" style={{ gridTemplateRows: mostrarCV ? '1fr' : '0fr' }}>
