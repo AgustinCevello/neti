@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-fuchsia: #EC4E8D;
-  --color-cyan: #00D8ED;
-  --color-dark-purple: #251B37;
-  --color-purple-gray: #85789A;
+  /* Identidad de Marca NETI */
+  --color-neti-pink: #EC4E8D;
+  --color-neti-cyan: #00D8ED;
+  --color-neti-dark: #251B37;
+  --color-neti-muted: #85789A;
 
+  /* Tipografías */
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui;
   --font-tourney: "Tourney", display;
 }
 
 @utility text-outline {
-  -webkit-text-stroke: 1px var(--color-fuchsia);
+  -webkit-text-stroke: 1.5px var(--color-neti-pink);
   color: transparent;
 }
 

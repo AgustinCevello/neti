@@ -1,54 +1,24 @@
+// src/components/FormularioModal/FormularioModal.jsx
 import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { enviarConsultaTaller } from '../../services/sheets';
+import {
+  CHAR_SETS,
+  TALLER_RULES,
+  filterChars,
+  formatCooldown,
+  getFormMountTime,
+  getHoneypotProps,
+  normalizeEmail,
+  recordAttempt,
+  runSecurityChecks,
+  sanitizeFormData,
+  validateForm,
 
-// ── Validación ────────────────────────────────────────────────────────────────
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const soloNumeros = /^[0-9]+$/;
+} from '../../utils/formHelpers';
 
-function validarCampo(name, value, form = {}) {
-  switch (name) {
-    case 'tipo':
-      return !value ? 'Seleccioná una opción para continuar' : '';
-    case 'nombre':
-      if (!value.trim()) return 'Tu nombre es requerido';
-      if (![...value].every(ch => isNombreChar(ch))) return 'Solo letras';
-      if (value.length > 80) return 'Máximo 80 caracteres';
-      return '';
-    case 'busco':
-      return !value ? 'Seleccioná qué estás buscando' : '';
-    case 'email':
-      if (!value.trim()) return 'El correo es requerido';
-      if (!emailRegex.test(value)) return 'Ingresá un correo válido (ej: nombre@empresa.com)';
-      return '';
-    case 'participantes':
-      if (value && !soloNumeros.test(value)) return 'Solo números';
-      if (value && parseInt(value) > 100000) return 'Número demasiado alto';
-      return '';
-    case 'descripcion':
-      // Si eligió "Otro...", este campo pasa a ser estrictamente obligatorio
-      if (form.busco === 'otro' && (!value || !value.trim())) return 'Por favor, detallá qué estás buscando';
-      if (value && value.length > 600) return 'Máximo 600 caracteres';
-      return '';
-    case 'motivacion':
-      if (value && value.length > 600) return 'Máximo 600 caracteres';
-      return '';
-    default:
-      return '';
-  }
-}
-
-function validarTodo(form) {
-  const errors = {};
-  Object.keys(form).forEach(name => {
-    const err = validarCampo(name, form[name], form);
-    if (err) errors[name] = err;
-  });
-  return errors;
-}
-
-// ── Config por taller ─────────────────────────────────────────────────────────
+// ── Config visual por taller ───────────────────────────────────────────────────
 const config = {
   liderazgo: {
     titulo: 'Taller de Liderazgo Disruptivo',
@@ -89,7 +59,7 @@ const config = {
   },
 };
 
-// ── Radio personalizado ───────────────────────────────────────────────────────
+// ── Radio personalizado ────────────────────────────────────────────────────────
 function RadioOption({ name, value, label, checked, onSelect, onDeselect, color, colorLight }) {
   return (
     <label
@@ -100,8 +70,8 @@ function RadioOption({ name, value, label, checked, onSelect, onDeselect, color,
         type="radio" name={name} value={value} checked={checked}
         onChange={() => {}}
         onClick={(e) => {
-          if (checked) { e.preventDefault(); onDeselect && onDeselect(); }
-          else { onSelect && onSelect(); }
+          if (checked) { e.preventDefault(); onDeselect?.(); }
+          else { onSelect?.(); }
         }}
         className="hidden"
       />
@@ -118,7 +88,7 @@ function RadioOption({ name, value, label, checked, onSelect, onDeselect, color,
   );
 }
 
-// ── Field wrapper ─────────────────────────────────────────────────────────────
+// ── Field wrapper ──────────────────────────────────────────────────────────────
 function Field({ label, hint, required, error, children }) {
   return (
     <div className="flex flex-col gap-2">
@@ -141,7 +111,7 @@ function Field({ label, hint, required, error, children }) {
   );
 }
 
-// ── Input clases ──────────────────────────────────────────────────────────────
+// ── Clases de inputs ───────────────────────────────────────────────────────────
 const BASE = 'w-full font-sans text-sm text-[#251B37] bg-[#faf9fc] border-2 rounded-xl px-4 py-3 outline-none transition-all duration-200 placeholder-[#C4BAD4]';
 function inputClass(state) {
   if (state === 'valid')   return `${BASE} border-[#00C9B1] shadow-[0_0_0_3px_rgba(0,201,177,0.10)]`;
@@ -167,43 +137,17 @@ function CharCount({ current, max }) {
   );
 }
 
-// ── Whitelists ────────────────────────────────────────────────────────────────
-const LC      = 'abcdefghijklmnopqrstuvwxyz';
-const UC      = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const ACCENTS = 'áéíóúÁÉÍÓÚüÜñÑ';
-const DIGITS  = '0123456789';
-const PUNCT   = ` .,;:!?¡¿()'"- `;
-const EMAIL_CHARS = LC + UC + DIGITS + '@.-_+';
-
-const makeSet = (str) => new Set([...str]);
-const NOMBRE_SET = makeSet(LC + UC + ACCENTS + ' ');
-const TEXTO_SET  = makeSet(LC + UC + ACCENTS + DIGITS + PUNCT);
-const EMAIL_SET  = makeSet(EMAIL_CHARS);
-
-const isNombreChar = (ch) => NOMBRE_SET.has(ch);
-const isTextoChar  = (ch) => TEXTO_SET.has(ch);
-const isEmailChar  = (ch) => EMAIL_SET.has(ch);
-
-const NOMBRE_ALLOWED = { test: (ch) => isNombreChar(ch) };
-const TEXTO_ALLOWED  = { test: (ch) => isTextoChar(ch) };
-const EMAIL_ALLOWED  = { test: (ch) => isEmailChar(ch) };
-
-// ── Toast personalizado ───────────────────────────────────────────────────────
+// ── Toast de éxito ─────────────────────────────────────────────────────────────
 function SuccessToast({ nombre, email, color }) {
   return (
     <div style={{
-      display: 'flex',
-      alignItems: 'flex-start',
-      gap: '12px',
-      background: 'rgba(255,255,255,0.85)',
-      backdropFilter: 'blur(20px) saturate(180%)',
+      display: 'flex', alignItems: 'flex-start', gap: '12px',
+      background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(20px) saturate(180%)',
       WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-      borderRadius: '16px',
-      padding: '14px 16px',
+      borderRadius: '16px', padding: '14px 16px',
       border: '1px solid rgba(255,255,255,0.6)',
       boxShadow: `0 8px 32px rgba(20,13,40,0.15), 0 0 0 1px rgba(0,0,0,0.04), 0 -1px 0 0 rgba(255,255,255,0.8) inset, 3px 0 0 0 ${color} inset`,
-      minWidth: '280px',
-      maxWidth: '340px',
+      minWidth: '280px', maxWidth: '340px',
       fontFamily: 'var(--font-sans, system-ui, sans-serif)',
     }}>
       <div style={{
@@ -229,7 +173,7 @@ function SuccessToast({ nombre, email, color }) {
   );
 }
 
-// ── Formulario interno ────────────────────────────────────────────────────────
+// ── Formulario interno ─────────────────────────────────────────────────────────
 function FormContent({ taller, onClose }) {
   const cfg = config[taller];
 
@@ -240,16 +184,21 @@ function FormContent({ taller, onClose }) {
   });
   const [touched,   setTouched]   = useState({});
   const [blurred,   setBlurred]   = useState({});
-  const [errors,    setErrors]    = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [secError,  setSecError]  = useState('');
+
+  // Seguridad
+  const honeypotRef = useRef(null);
+  const mountTime   = useRef(getFormMountTime());
+
+  // Errores derivados en cada render (sin estado extra)
+  const errors = validateForm(form, TALLER_RULES);
 
   const getState = (name) => {
     if (!touched[name]) return '';
     if (errors[name]) return 'invalid';
     const requeridos = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
-    // Validamos dinámicamente si seleccionó otro
     if (form.busco === 'otro') requeridos.push('descripcion');
-
     if (requeridos.includes(name) && !form[name]) return '';
     return form[name] ? 'valid' : '';
   };
@@ -264,17 +213,7 @@ function FormContent({ taller, onClose }) {
   const applyField = (name, next) => {
     setForm(prev => {
       const updated = { ...prev, [name]: next };
-      // Limpiar descripción si cambia la opción a algo que no sea "otro"
       if (name === 'busco' && next !== 'otro') updated.descripcion = '';
-      
-      // Actualizamos errores validando con el nuevo estado completo de form
-      setErrors(prevErrs => ({
-        ...prevErrs,
-        [name]: validarCampo(name, next, updated),
-        // Validamos la descripción en tiempo real si el usuario juega con el radio "busco"
-        ...(name === 'busco' ? { descripcion: validarCampo('descripcion', updated.descripcion, updated) } : {})
-      }));
-      
       return updated;
     });
     setTouched(prev => ({ ...prev, [name]: true }));
@@ -287,87 +226,85 @@ function FormContent({ taller, onClose }) {
   };
 
   const handleBlur = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
     setBlurred(prev => ({ ...prev, [name]: true }));
-    setErrors(prev => ({ ...prev, [name]: validarCampo(name, value, form) }));
   };
 
-  const handleNombreKeyDown = (e) => { if (e.key.length > 1) return; if (!NOMBRE_ALLOWED.test(e.key)) e.preventDefault(); };
-  const handleNombreChange  = (e) => {
-    applyField('nombre', e.target.value.split('').filter(ch => NOMBRE_ALLOWED.test(ch)).join('').slice(0, 80));
+  // Handlers de nombre
+  const handleNombreChange = (e) =>
+    applyField('nombre', filterChars(e.target.value, 'nombre', 80));
+  const handleNombreKeyDown = (e) => {
+    if (e.key.length > 1) return;
+    if (!CHAR_SETS.nombre.has(e.key)) e.preventDefault();
   };
   const handleNombrePaste = (e) => {
     e.preventDefault();
     const pasted = (e.clipboardData || window.clipboardData).getData('text');
     const room = 80 - form.nombre.length;
     if (room <= 0) return;
-    applyField('nombre', form.nombre + pasted.split('').filter(ch => NOMBRE_ALLOWED.test(ch)).join('').slice(0, room));
+    applyField('nombre', form.nombre + filterChars(pasted, 'nombre', room));
   };
 
+  // Handlers de textarea (texto genérico)
   const makeHandlers = (fieldName, maxLen) => ({
-    onKeyDown: (e) => { if (e.key.length > 1) return; if (!TEXTO_ALLOWED.test(e.key)) e.preventDefault(); },
-    onChange:  (e) => {
-      applyField(fieldName, e.target.value.split('').filter(ch => TEXTO_ALLOWED.test(ch)).join('').slice(0, maxLen));
-    },
-    onPaste: (e) => {
+    onKeyDown: (e) => { if (e.key.length > 1) return; if (!CHAR_SETS.texto.has(e.key)) e.preventDefault(); },
+    onChange : (e) => applyField(fieldName, filterChars(e.target.value, 'texto', maxLen)),
+    onPaste  : (e) => {
       e.preventDefault();
       const pasted = (e.clipboardData || window.clipboardData).getData('text');
       const room = maxLen - form[fieldName].length;
       if (room <= 0) return;
-      applyField(fieldName, form[fieldName] + pasted.split('').filter(ch => TEXTO_ALLOWED.test(ch)).join('').slice(0, room));
+      applyField(fieldName, form[fieldName] + filterChars(pasted, 'texto', room));
     },
   });
 
+  // Handlers de email
   const handleEmailKeyDown = (e) => {
     if (e.key.length > 1) return;
-    if (!EMAIL_ALLOWED.test(e.key)) { e.preventDefault(); return; }
+    if (!CHAR_SETS.email.has(e.key)) { e.preventDefault(); return; }
     if (e.key === '@' && form.email.includes('@'))     { e.preventDefault(); return; }
     if (e.key === '.' && form.email.slice(-1) === '.') { e.preventDefault(); return; }
     if ((e.key === '@' || e.key === '.') && form.email.length === 0) { e.preventDefault(); return; }
   };
-  const handleEmailChange = (e) => {
-    applyField('email', e.target.value.split('').filter(ch => EMAIL_ALLOWED.test(ch)).join('').slice(0, 100));
-  };
-  const handleEmailPaste = (e) => {
+  const handleEmailChange = (e) => applyField('email', normalizeEmail(form.email, e.target.value));
+  const handleEmailPaste  = (e) => {
     e.preventDefault();
     const pasted = (e.clipboardData || window.clipboardData).getData('text');
-    const room = 100 - form.email.length;
-    if (room <= 0) return;
-    let next = form.email + pasted.split('').filter(ch => EMAIL_ALLOWED.test(ch)).join('').slice(0, room);
-    if ((next.match(/@/g) || []).length > 1) {
-      const i = next.indexOf('@');
-      next = next.slice(0, i + 1) + next.slice(i + 1).replace(/@/g, '');
-    }
-    next = next.replace(/\.{2,}/g, '.').replace(/^[@.]+/, '');
-    applyField('email', next);
+    applyField('email', normalizeEmail(form.email, form.email + pasted));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLoading) return; // Guard: aborta doble envío
+    if (isLoading) return;
+    setSecError('');
 
     const allTouched = Object.keys(form).reduce((acc, k) => ({ ...acc, [k]: true }), {});
     setTouched(allTouched);
     setBlurred(allTouched);
 
-    const errs = validarTodo(form);
-    if (!form.aceptaLegales) {
-      errs.aceptaLegales = 'Debes aceptar la Política de Privacidad y Términos';
-    }
+    if (Object.keys(errors).length > 0) return;
 
-    setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
+    // ── Comprobaciones de seguridad ─────────────────
+    const sec = runSecurityChecks({ honeypotRef, mountTime: mountTime.current });
+    if (!sec.ok) {
+      if (sec.reason === 'rateLimit') {
+        setSecError(`Demasiados intentos. Por favor, esperá ${formatCooldown(sec.remainingMs)}.`);
+      } else {
+        // Honeypot o tooFast — simular éxito silenciosamente
+        onClose();
+      }
+      return;
+    }
 
     setIsLoading(true);
     const { nombre, email } = form;
     const color = cfg.color;
 
     try {
-      await enviarConsultaTaller({ ...form, taller: taller });
-      // Cerramos el modal (libera el body: fixed)
+      await enviarConsultaTaller(sanitizeFormData({ ...form, taller }));
+      recordAttempt();
       onClose();
-      // Lanzamos el toast cuando el body ya está libre
       setTimeout(() => {
         toast.custom(
           () => <SuccessToast nombre={nombre} email={email} color={color} />,
@@ -379,15 +316,19 @@ function FormContent({ taller, onClose }) {
     }
   };
 
-  // Cálculo de progreso dinámico 
+  // Progreso
   const requiredFields = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
   if (form.busco === 'otro') requiredFields.push('descripcion');
-
   const completed = requiredFields.filter(f => form[f] && !errors[f]).length;
   const progress  = (completed / requiredFields.length) * 100;
 
+  const honeypotProps = getHoneypotProps();
+
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+
+      {/* Campo Honeypot — invisible para humanos */}
+      <input ref={honeypotRef} type="text" {...honeypotProps} />
 
       {/* Progreso */}
       <div className="flex flex-col gap-1.5">
@@ -417,7 +358,9 @@ function FormContent({ taller, onClose }) {
             { value: 'empresa',    label: 'Represento a una empresa u organización' },
           ].map(op => (
             <RadioOption key={op.value} name="tipo" value={op.value} label={op.label}
-              checked={form.tipo === op.value} onSelect={() => applyField("tipo", op.value)} onDeselect={() => applyField("tipo", "")}
+              checked={form.tipo === op.value}
+              onSelect={() => applyField('tipo', op.value)}
+              onDeselect={() => applyField('tipo', '')}
               color="#16a34a" colorLight="rgba(22,163,74,0.08)" />
           ))}
         </div>
@@ -428,7 +371,8 @@ function FormContent({ taller, onClose }) {
           <input type="text" name="nombre" value={form.nombre}
             onChange={handleNombreChange} onBlur={handleBlur}
             onKeyDown={handleNombreKeyDown} onPaste={handleNombrePaste}
-            placeholder="¿Cómo te llamás?" className={inputClass(getState('nombre'))} />
+            placeholder="¿Cómo te llamás?" className={inputClass(getState('nombre'))}
+            disabled={isLoading} />
           {form.nombre.length > 40 && (
             <span className="absolute right-3 bottom-3 pointer-events-none">
               <CharCount current={form.nombre.length} max={80} />
@@ -443,23 +387,26 @@ function FormContent({ taller, onClose }) {
         <div className="flex flex-col gap-2 pt-0.5">
           {cfg.buscoOpciones.map(op => (
             <RadioOption key={op.value} name="busco" value={op.value} label={op.label}
-              checked={form.busco === op.value} onSelect={() => applyField("busco", op.value)} onDeselect={() => applyField("busco", "")}
+              checked={form.busco === op.value}
+              onSelect={() => applyField('busco', op.value)}
+              onDeselect={() => applyField('busco', '')}
               color="#16a34a" colorLight="rgba(22,163,74,0.08)" />
           ))}
         </div>
       </Field>
 
       {form.busco === 'otro' && (
-        <Field 
-          label={cfg.descripcionLabel} 
-          required 
+        <Field
+          label={cfg.descripcionLabel}
+          required
           error={touched.descripcion && errors.descripcion}
           hint="Detallá qué estás buscando para poder ayudarte mejor"
         >
           <div className="relative">
             <textarea name="descripcion" value={form.descripcion} onBlur={handleBlur}
               {...makeHandlers('descripcion', 600)} placeholder={cfg.descripcionPlaceholder} rows={3}
-              className={`${inputClass(getState('descripcion'))} min-h-[110px] resize-y`} />
+              className={`${inputClass(getState('descripcion'))} min-h-[110px] resize-y`}
+              disabled={isLoading} />
             {form.descripcion.length > 0 && (
               <span className="absolute right-3 bottom-3 pointer-events-none">
                 <CharCount current={form.descripcion.length} max={600} />
@@ -479,7 +426,9 @@ function FormContent({ taller, onClose }) {
             { value: 'no',   label: 'No, es territorio nuevo' },
           ].map(op => (
             <RadioOption key={op.value} name="experiencia" value={op.value} label={op.label}
-              checked={form.experiencia === op.value} onSelect={() => applyField("experiencia", op.value)} onDeselect={() => applyField("experiencia", "")}
+              checked={form.experiencia === op.value}
+              onSelect={() => applyField('experiencia', op.value)}
+              onDeselect={() => applyField('experiencia', '')}
               color="#16a34a" colorLight="rgba(22,163,74,0.08)" />
           ))}
         </div>
@@ -490,7 +439,8 @@ function FormContent({ taller, onClose }) {
           <input type="text" name="participantes" value={form.participantes}
             onChange={handle} onBlur={handleBlur}
             placeholder="Ej: 20" maxLength={6}
-            className={inputClass(getState('participantes'))} />
+            className={inputClass(getState('participantes'))}
+            disabled={isLoading} />
         </Field>
 
         <Field label="Correo electrónico" required error={getEmailError()} hint="Te contactaremos por acá">
@@ -498,7 +448,8 @@ function FormContent({ taller, onClose }) {
             onChange={handleEmailChange} onBlur={handleBlur}
             onKeyDown={handleEmailKeyDown} onPaste={handleEmailPaste}
             placeholder="nombre@empresa.com"
-            className={inputClass(getState('email'))} />
+            className={inputClass(getState('email'))}
+            disabled={isLoading} />
         </Field>
       </div>
 
@@ -507,7 +458,8 @@ function FormContent({ taller, onClose }) {
           <textarea name="motivacion" value={form.motivacion} onBlur={handleBlur}
             {...makeHandlers('motivacion', 600)}
             placeholder="Contanos un poco sobre tu equipo, el desafío que enfrentan o lo que esperan lograr..." rows={5}
-            className={`${inputClass(getState('motivacion'))} min-h-[120px]`} />
+            className={`${inputClass(getState('motivacion'))} min-h-[120px]`}
+            disabled={isLoading} />
           {form.motivacion.length > 0 && (
             <span className="absolute right-3 bottom-3 pointer-events-none">
               <CharCount current={form.motivacion.length} max={600} />
@@ -516,26 +468,23 @@ function FormContent({ taller, onClose }) {
         </div>
       </Field>
 
-      {/* ─── INICIO DEL CHECKBOX LEGAL ALINEADO PERFECTO ─── */}
+      {/* Checkbox legal */}
       <div className="flex flex-col gap-1 mt-2">
         <label className="flex items-start gap-2.5 cursor-pointer group">
-          
-          {/* Caja del Checkbox */}
           <div className="relative flex items-center justify-center shrink-0 w-[18px] h-[18px] rounded border-2 transition-colors duration-200"
-            style={{ 
+            style={{
               borderColor: form.aceptaLegales ? cfg.color : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
-              background: form.aceptaLegales ? cfg.color : 'transparent'
+              background: form.aceptaLegales ? cfg.color : 'transparent',
             }}>
-            <input 
-              type="checkbox" 
-              name="aceptaLegales"
+            <input
+              type="checkbox" name="aceptaLegales"
               className="absolute opacity-0 w-full h-full cursor-pointer m-0 p-0"
               checked={form.aceptaLegales}
+              disabled={isLoading}
               onChange={(e) => {
                 const checked = e.target.checked;
                 setForm(prev => ({ ...prev, aceptaLegales: checked }));
                 setTouched(prev => ({ ...prev, aceptaLegales: true }));
-                if (checked) setErrors(prev => ({ ...prev, aceptaLegales: null }));
               }}
             />
             {form.aceptaLegales && (
@@ -544,8 +493,6 @@ function FormContent({ taller, onClose }) {
               </svg>
             )}
           </div>
-
-          {/* Texto Legal */}
           <span className="font-sans text-[11.5px] leading-[18px] text-[#6B5F80] select-none flex-1">
             He leído y acepto la{' '}
             <Link to="/politica-de-privacidad" target="_blank" className="font-semibold underline hover:opacity-70 transition-opacity" style={{ color: cfg.color }}>
@@ -555,22 +502,28 @@ function FormContent({ taller, onClose }) {
               Términos y Condiciones
             </Link>.
           </span>
-
         </label>
-        
-        {/* Mensaje de error */}
         {touched.aceptaLegales && errors.aceptaLegales && (
           <p className="font-sans text-[10px] text-red-400 pl-[28px] m-0">{errors.aceptaLegales}</p>
         )}
       </div>
-      {/* ─── FIN DEL CHECKBOX LEGAL ─── */}
+
+      {/* Mensaje de rate limit */}
+      {secError && (
+        <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex items-center gap-2">
+          <svg className="w-4 h-4 shrink-0 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          <p className="font-sans text-xs text-amber-700">{secError}</p>
+        </div>
+      )}
 
       {/* Botón enviar */}
       <div className="flex justify-center pt-2 pb-1">
         <button type="submit"
           disabled={isLoading}
           className="relative text-white font-sans font-bold text-sm uppercase tracking-widest px-10 py-3.5 rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
-          style={{ background: `linear-gradient(135deg, #1a1030 60%, #2d1a4a)`, boxShadow: `0 4px 20px ${cfg.color}33` }}
+          style={{ background: 'linear-gradient(135deg, #1a1030 60%, #2d1a4a)', boxShadow: `0 4px 20px ${cfg.color}33` }}
           onMouseEnter={e => { if (!isLoading) e.currentTarget.style.boxShadow = `0 8px 28px ${cfg.color}55`; }}
           onMouseLeave={e => { e.currentTarget.style.boxShadow = `0 4px 20px ${cfg.color}33`; }}>
           <span className="absolute top-0 right-0 w-20 h-full pointer-events-none"
@@ -595,10 +548,10 @@ function FormContent({ taller, onClose }) {
   );
 }
 
-// ── Modal principal ───────────────────────────────────────────────────────────
+// ── Modal principal ────────────────────────────────────────────────────────────
 export default function FormularioModal({ taller, onClose }) {
-  const overlayRef = useRef(null);
-  const mouseDownTarget = useRef(null);
+  const overlayRef        = useRef(null);
+  const mouseDownTarget   = useRef(null);
 
   useEffect(() => {
     const body = document.body;
@@ -650,7 +603,7 @@ export default function FormularioModal({ taller, onClose }) {
       >
         {/* Header */}
         <div className="relative flex-shrink-0 px-6 pt-7 pb-5 overflow-hidden">
-          <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, #EAE5F5 0%, #F7DDE9 50%, #DAEEF5 100%)` }} />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #EAE5F5 0%, #F7DDE9 50%, #DAEEF5 100%)' }} />
           <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full pointer-events-none"
             style={{ background: `${cfg.color}22`, filter: 'blur(20px)' }} />
           <div className="absolute -bottom-4 left-10 w-24 h-24 rounded-full pointer-events-none"

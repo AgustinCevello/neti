@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import cocacola from '../../assets/images/empresas/cocacola.webp'
 import oracle from '../../assets/images/empresas/oracle.webp'
@@ -63,7 +63,7 @@ export default function Empresas() {
   return (
     <section className="py-16 px-4 bg-white border-t border-[#E6E2EE]">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-black text-center mb-16 uppercase tracking-widest text-transparent [-webkit-text-stroke:1px_#8b5cf6]">
+        <h2 className="text-3xl md:text-5xl font-black text-center mb-16 uppercase tracking-widest text-transparent [-webkit-text-stroke:1.5px_#8b5cf6]">
           Empresas con las que trabajamos
         </h2>
 

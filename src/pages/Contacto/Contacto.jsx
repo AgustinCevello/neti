@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import ContactoModal from '../../components/ContactoModal/ContactoModal';
@@ -49,7 +49,7 @@ export default function Contacto() {
       <section className="pt-16 pb-10 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <h1 className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-14 tracking-widest" style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+            <h1 className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-14 tracking-widest" style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
               Somos NETI
             </h1>
           </FadeIn>
@@ -133,7 +133,7 @@ export default function Contacto() {
       <section className="pt-8 pb-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-10 tracking-widest" style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+            <h2 className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-10 tracking-widest" style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
               ¡Los esperamos!
             </h2>
           </FadeIn>

@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import dobleDiamante from '../../assets/images/pictures/DobleDiamante.webp';
 import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.webp';
@@ -119,7 +119,7 @@ export default function Nosotros() {
         <FadeIn>
           <h1
             className="font-display text-5xl md:text-7xl font-black text-center mb-8 uppercase tracking-widest"
-            style={{ WebkitTextStroke: "2px #EC4E8D", color: "transparent" }}
+            style={{ WebkitTextStroke: "1.5px var(--color-neti-pink)", color: "transparent" }}
           >
             NOSOTROS
           </h1>
@@ -180,7 +180,7 @@ export default function Nosotros() {
           <FadeIn>
             <h2
               className="font-display text-4xl md:text-6xl font-black text-center mb-16 uppercase tracking-widest"
-              style={{ WebkitTextStroke: "2px #EC4E8D", color: "transparent" }}
+              style={{ WebkitTextStroke: "1.5px var(--color-neti-pink)", color: "transparent" }}
             >
               DOBLE DIAMANTE
             </h2>
@@ -232,7 +232,7 @@ export default function Nosotros() {
           <FadeIn>
             <h2
               className="font-display text-4xl md:text-6xl font-black text-center mb-16 uppercase tracking-widest"
-              style={{ WebkitTextStroke: "2px #EC4E8D", color: "transparent" }}
+              style={{ WebkitTextStroke: "1.5px var(--color-neti-pink)", color: "transparent" }}
             >
               EL EQUIPO
             </h2>

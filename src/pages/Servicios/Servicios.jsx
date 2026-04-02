@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import EmblaCarousel from '../../components/EmblaCarousel/EmblaCarousel';
 import FormularioModal from '../../components/FormularioModal/FormularioModal';
@@ -148,8 +148,8 @@ export default function Servicios() {
         <div className="relative max-w-5xl mx-auto z-10">
           <FadeIn>
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase text-center mb-14 leading-none tracking-widest">
-              <span style={{ WebkitTextStroke: '2px #505AA5', color: 'rgba(80,90,165,1)' }}>Workshops </span>
-              <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Empresas</span>
+              <span style={{ WebkitTextStroke: '1.5px #505AA5', color: 'rgba(80,90,165,1)' }}>Workshops </span>
+              <span style={{ WebkitTextStroke: '1.5px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Empresas</span>
             </h1>
           </FadeIn>
 
@@ -209,8 +209,8 @@ export default function Servicios() {
         <div className="relative max-w-5xl mx-auto z-10">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-6xl font-black uppercase text-center mb-14 leading-none tracking-widest">
-              <span style={{ WebkitTextStroke: '2px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Últimos </span>
-              <span style={{ WebkitTextStroke: '2px #505AA5', color: 'rgba(80,90,165,1)' }}>Netiatones</span>
+              <span style={{ WebkitTextStroke: '1.5px #5D5FEF', color: 'rgba(93,95,239,0.30)' }}>Últimos </span>
+              <span style={{ WebkitTextStroke: '1.5px #505AA5', color: 'rgba(80,90,165,1)' }}>Netiatones</span>
             </h2>
           </FadeIn>
 
@@ -235,8 +235,8 @@ export default function Servicios() {
 
             <FadeIn delay={140}>
               <div className="space-y-3">
-                <CaptionPhoto src={n1} alt="Neti en Rivadavia">
-                  <span className="text-[#251B37]">Neti en Rivadavia – Hackaton</span>
+                <CaptionPhoto src={n1} alt="NETI en Rivadavia">
+                  <span className="text-[#251B37]">NETI en Rivadavia – Hackaton</span>
                 </CaptionPhoto>
                 <CaptionPhoto src={n2} alt="Hackaton hibrido">
                   <span className="text-[#251B37]">Hackaton híbrido</span>
@@ -258,7 +258,7 @@ export default function Servicios() {
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-16 leading-none"
-              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
               Vení a aprender con nosotros
             </h2>
           </FadeIn>
@@ -364,7 +364,7 @@ export default function Servicios() {
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14"
-              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}>
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
               Casos Destacados
             </h2>
           </FadeIn>

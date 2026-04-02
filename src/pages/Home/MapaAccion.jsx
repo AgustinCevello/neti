@@ -1,4 +1,4 @@
-﻿import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import imgInspirar from "../../assets/images/pictures/MapaDeAccionInspirar.webp";
@@ -80,7 +80,7 @@ export default function MapaAccion() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 2 }}>
         <h2
           ref={tituloRef}
-          className="text-4xl md:text-6xl font-black text-center mb-24 uppercase tracking-widest text-transparent [-webkit-text-stroke:2px_#C85E99]"
+          className="text-4xl md:text-6xl font-black text-center mb-24 uppercase tracking-widest text-transparent [-webkit-text-stroke:1.5px_#C85E99]"
         >
           Mapa de Acción
         </h2>

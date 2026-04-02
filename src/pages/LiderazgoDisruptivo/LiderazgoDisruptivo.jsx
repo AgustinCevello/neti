@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import LiderazgoDisruptivoImg from '../../assets/images/pictures/LiderazcoDisruptivo.webp';
@@ -159,7 +159,7 @@ export default function LiderazgoDisruptivo() {
           <FadeIn>
             <h1
               className="font-display text-5xl md:text-7xl lg:text-8xl font-black uppercase leading-none mb-10"
-              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}
             >
               Liderazgo<br />Disruptivo
             </h1>
@@ -255,7 +255,7 @@ export default function LiderazgoDisruptivo() {
           <FadeIn>
             <h2
               className="font-display text-4xl md:text-6xl font-black text-center mb-14 uppercase tracking-widest"
-              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}
             >
               4 Módulos
             </h2>
@@ -297,7 +297,7 @@ export default function LiderazgoDisruptivo() {
           <FadeIn>
             <h2
               className="font-display text-4xl md:text-6xl font-black mb-14 uppercase tracking-widest"
-              style={{ WebkitTextStroke: '2px #EC4E8D', color: 'transparent' }}
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}
             >
               Nuestro diferencial
             </h2>

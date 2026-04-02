@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { enviarInscripcionEvento } from '../../services/sheets';
@@ -396,7 +396,7 @@ export default function Eventos() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(37,27,55,0.85) 0%, rgba(37,27,55,0.2) 60%, transparent 100%)' }} />
         <div className="absolute bottom-6 md:bottom-10 left-4 md:left-16 right-4 md:right-auto">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-none"
-            style={{ WebkitTextStroke: '2px #ffffff', color: 'white' }}>
+            style={{ WebkitTextStroke: '1.5px #ffffff', color: 'white' }}>
             Slogan del evento
           </h1>
         </div>

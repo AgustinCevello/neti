@@ -1,34 +1,23 @@
-import { useState } from 'react';
+// src/components/CurriculumForm/CurriculumForm.jsx
+import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { enviarContacto } from '../../services/sheets';
+import {
+  CHAR_SETS,
+  CV_RULES,
+  filterChars,
+  formatCooldown,
+  getFormMountTime,
+  getHoneypotProps,
+  recordAttempt,
+  runSecurityChecks,
+  sanitizeFormData,
+  validateForm,
+} from '../../utils/formHelpers';
 
-// ── Whitelists ────────────────────────────────────────────────────────────────
-const LC = 'abcdefghijklmnopqrstuvwxyz';
-const UC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const ACCENTS = 'áéíóúÁÉÍÓÚüÜñÑ';
-const DIGITS = '0123456789';
-const URL_CHARS = LC + UC + DIGITS + '/:.-_?=&#%+@';
-
-const NOMBRE_SET = new Set([...LC, ...UC, ...ACCENTS, ' ', '-', "'"].flat());
-const URL_SET = new Set([...URL_CHARS]);
-
-// ── Validación CV ─────────────────────────────────────────────────────────────
-function validarCV({ nombre, linkedin, aceptaLegales }) {
-  const errors = {};
-  if (!nombre.trim()) errors.nombre = 'El nombre es requerido';
-  else if (nombre.length > 80) errors.nombre = 'Máximo 80 caracteres';
-  
-  if (!linkedin.trim()) errors.linkedin = 'El link es requerido';
-  else if (!linkedin.includes('linkedin.com')) errors.linkedin = 'Debe ser un link válido de LinkedIn';
-  else if (linkedin.length > 200) errors.linkedin = 'URL demasiado larga';
-
-  if (!aceptaLegales) errors.aceptaLegales = 'Debes aceptar las políticas';
-  return errors;
-}
-
-// ── Toast Personalizado ───────────────────────────────────────────────────────
-function SuccessToast({ nombre, mensaje = "¡Perfil recibido!" }) {
+// ── Toast de éxito ────────────────────────────────────────────────────────────
+function SuccessToast({ nombre, mensaje = '¡Perfil recibido!' }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'flex-start', gap: '12px',
@@ -63,7 +52,7 @@ function SuccessToast({ nombre, mensaje = "¡Perfil recibido!" }) {
   );
 }
 
-// ── Componentes UI Internos ───────────────────────────────────────────────────
+// ── Clases de input ───────────────────────────────────────────────────────────
 const BASE = 'w-full font-sans text-sm text-[#251B37] bg-[#faf9fc] border-2 rounded-xl px-4 py-3 outline-none transition-all duration-200 placeholder-[#C4BAD4]';
 
 function inputClass(status) {
@@ -73,6 +62,7 @@ function inputClass(status) {
   return `${BASE} border-[#E6E2EE]`;
 }
 
+// ── Field wrapper ─────────────────────────────────────────────────────────────
 function Field({ label, required, hint, error, status, children }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -97,18 +87,24 @@ function Field({ label, required, hint, error, status, children }) {
 
 // ── Componente Principal Exportado ────────────────────────────────────────────
 export default function CurriculumForm({ onSuccess }) {
-  const [form, setForm] = useState({ nombre: '', linkedin: '', aceptaLegales: false });
-  const [touched, setTouched] = useState({});
-  const [focused, setFocused] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [form,     setForm]     = useState({ nombre: '', linkedin: '', aceptaLegales: false });
+  const [touched,  setTouched]  = useState({});
+  const [focused,  setFocused]  = useState('');
+  const [loading,  setLoading]  = useState(false);
+  const [secError, setSecError] = useState('');
+
+  // Seguridad
+  const honeypotRef = useRef(null);
+  const mountTime   = useRef(getFormMountTime());
 
   const apply = (name, value) => setForm(prev => ({ ...prev, [name]: value }));
+
+  const errors = validateForm(form, CV_RULES);
 
   const getStatus = (name) => {
     if (focused === name) return 'focused';
     if (!touched[name]) return 'idle';
-    const errs = validarCV(form);
-    return errs[name] ? 'error' : 'valid';
+    return errors[name] ? 'error' : 'valid';
   };
 
   const handleBlur = (name) => {
@@ -116,36 +112,48 @@ export default function CurriculumForm({ onSuccess }) {
     setTouched(prev => ({ ...prev, [name]: true }));
   };
 
-  const makeTextHandlers = (name, maxLen, charSet) => ({
-    value: form[name],
-    onFocus: () => setFocused(name),
-    onBlur: () => handleBlur(name),
-    onKeyDown: (e) => { if (e.key.length > 1) return; if (!charSet.has(e.key)) e.preventDefault(); },
-    onChange: (e) => apply(name, e.target.value.split('').filter(ch => charSet.has(ch)).join('').slice(0, maxLen)),
-    onPaste: (e) => {
+  const makeTextHandlers = (name, maxLen, charSetKey) => ({
+    value   : form[name],
+    onFocus : () => setFocused(name),
+    onBlur  : () => handleBlur(name),
+    onKeyDown: (e) => { if (e.key.length > 1) return; if (!CHAR_SETS[charSetKey]?.has(e.key)) e.preventDefault(); },
+    onChange : (e) => apply(name, filterChars(e.target.value, charSetKey, maxLen)),
+    onPaste  : (e) => {
       e.preventDefault();
       const pasted = (e.clipboardData || window.clipboardData).getData('text');
       const room = maxLen - form[name].length;
       if (room <= 0) return;
-      apply(name, form[name] + pasted.split('').filter(ch => charSet.has(ch)).join('').slice(0, room));
+      apply(name, form[name] + filterChars(pasted, charSetKey, room));
     },
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (loading) return;
+    setSecError('');
 
     setTouched({ nombre: true, linkedin: true, aceptaLegales: true });
-    const errs = validarCV(form);
-    if (Object.keys(errs).length > 0) return;
+    if (Object.keys(errors).length > 0) return;
+
+    // ── Comprobaciones de seguridad ─────────────────
+    const sec = runSecurityChecks({ honeypotRef, mountTime: mountTime.current });
+    if (!sec.ok) {
+      if (sec.reason === 'rateLimit') {
+        setSecError(`Demasiados intentos. Por favor, esperá ${formatCooldown(sec.remainingMs)}.`);
+      } else {
+        // Honeypot / tooFast — simular éxito silenciosamente
+        apply('nombre', ''); apply('linkedin', ''); apply('aceptaLegales', false);
+        setTouched({});
+        if (onSuccess) onSuccess();
+      }
+      return;
+    }
 
     setLoading(true);
     try {
-      await enviarContacto({ ...form, tipo: 'Curriculum' });
-      toast.custom(() => <SuccessToast nombre={form.nombre} />, {
-        duration: 5000,
-        position: 'top-right',
-      });
+      await enviarContacto(sanitizeFormData({ ...form, tipo: 'Curriculum' }));
+      recordAttempt();
+      toast.custom(() => <SuccessToast nombre={form.nombre} />, { duration: 5000, position: 'top-right' });
       setForm({ nombre: '', linkedin: '', aceptaLegales: false });
       setTouched({});
       if (onSuccess) onSuccess();
@@ -154,41 +162,45 @@ export default function CurriculumForm({ onSuccess }) {
     }
   };
 
-  const errors = validarCV(form);
+  const honeypotProps = getHoneypotProps();
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 bg-[#faf9fc] p-5 rounded-2xl border-2 border-[#E6E2EE] mt-3">
+
+      {/* Campo Honeypot — invisible para humanos */}
+      <input ref={honeypotRef} type="text" {...honeypotProps} />
+
       <Field label="Nombre completo" required error={errors.nombre} status={getStatus('nombre')}>
-        <input
-          type="text" placeholder="¿Cómo te llamás?"
+        <input type="text" placeholder="¿Cómo te llamás?"
           className={inputClass(getStatus('nombre'))}
-          {...makeTextHandlers('nombre', 80, NOMBRE_SET)}
-        />
-      </Field>
-      
-      <Field label="Link de LinkedIn" required error={errors.linkedin} status={getStatus('linkedin')}>
-        <input
-          type="text" placeholder="linkedin.com/in/tu-perfil"
-          className={inputClass(getStatus('linkedin'))}
-          {...makeTextHandlers('linkedin', 200, URL_SET)}
+          {...makeTextHandlers('nombre', 80, 'nombre')}
+          disabled={loading}
         />
       </Field>
 
-      {/* CHECKBOX LEGAL — estrategia 18px */}
+      <Field label="Link de LinkedIn" required error={errors.linkedin} status={getStatus('linkedin')}>
+        <input type="text" placeholder="linkedin.com/in/tu-perfil"
+          className={inputClass(getStatus('linkedin'))}
+          {...makeTextHandlers('linkedin', 200, 'url')}
+          disabled={loading}
+        />
+      </Field>
+
+      {/* Checkbox legal */}
       <div className="flex flex-col gap-1 mt-1">
         <label className="flex items-start gap-2.5 cursor-pointer group">
           <div
             className="relative flex shrink-0 items-center justify-center w-[18px] h-[18px] mt-[1px] rounded border-2 transition-colors duration-200"
-            style={{ 
+            style={{
               borderColor: form.aceptaLegales ? '#EC4E8D' : (touched.aceptaLegales && errors.aceptaLegales ? '#f87171' : '#C4BAD4'),
-              background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
+              background: form.aceptaLegales ? '#EC4E8D' : 'transparent',
             }}
           >
-            <input 
-              type="checkbox" 
-              name="aceptaLegales"
+            <input
+              type="checkbox" name="aceptaLegales"
               className="absolute opacity-0 w-full h-full cursor-pointer"
               checked={form.aceptaLegales}
+              disabled={loading}
               onChange={(e) => {
                 apply('aceptaLegales', e.target.checked);
                 setTouched(prev => ({ ...prev, aceptaLegales: true }));
@@ -215,16 +227,23 @@ export default function CurriculumForm({ onSuccess }) {
         )}
       </div>
 
+      {/* Mensaje de rate limit */}
+      {secError && (
+        <div className="rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex items-center gap-2">
+          <svg className="w-4 h-4 shrink-0 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          <p className="font-sans text-xs text-amber-700">{secError}</p>
+        </div>
+      )}
+
       <button
         type="submit"
         disabled={loading}
         className="w-full relative text-white font-sans font-bold text-sm uppercase tracking-widest py-3 rounded-xl overflow-hidden transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed mt-1"
-        style={{
-          background: 'linear-gradient(135deg, #1a1030 60%, #2d1a4a)',
-        }}
+        style={{ background: 'linear-gradient(135deg, #1a1030 60%, #2d1a4a)' }}
       >
-        <span
-          className="absolute top-0 right-0 w-20 h-full pointer-events-none"
+        <span className="absolute top-0 right-0 w-20 h-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse at top right, rgba(236,78,141,0.55), transparent 70%)' }}
         />
         <span className="relative z-10 flex items-center justify-center gap-2">
