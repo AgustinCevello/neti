@@ -95,3 +95,15 @@
   - **Línea:** 16
   - **Problema:** Estás usando llamadas asíncronas con promesas. Al usar `'no-cors'`, recibiremos SIEMPRE una respuesta opaca (status `0`), con lo que el front end en realidad NUNCA se entera si Google Sheets guardó exitosamente o devolvió un Status Code `500`. Siempre retornará `{ok: true}` a nivel de red (mientras la web esté viva).
   - **Acción:** Confirmar en el Apps Script de Google si el DoPost soporta JSON y retorna CORS headers correctos. En tal caso, eliminar `'no-cors'` para garantizar el feedback real del guardado. Si no, estar prevenidos de que en caso de error silencioso del form, al usuario le saldrá "¡Consulta enviada!" en su Toast igualmente.
+
+
+---
+
+### ? Pulido de UI y Ortograf�a
+
+- **Ortograf�a y Textos:** Se revis� la ortograf�a de palabras clave en todos los .jsx, confirmando que 'NETI' siempre aparezca en may�sculas (se corrigi� en Servicios.jsx) y que los textos visibles al usuario est�n correctos.
+- **Unificaci�n de UI (Text-Stroke):** Se normaliz� el uso de -webkit-text-stroke en todos los encabezados (Hero) de la p�gina.
+  - Todas las ocurrencias pasaron a 1.5px.
+  - Los colores rosados manuales (#EC4E8D etc.) pasaron a usar la variable de Tailwind ar(--color-neti-pink).
+  - Los blancos a #ffffff.
+  - Archivos corregidos: Servicios.jsx, Nosotros.jsx, LiderazgoDisruptivo.jsx, MapaAccion.jsx, Empresas.jsx, Contacto.jsx, Eventos.jsx, ContactoModal.jsx y index.css.
