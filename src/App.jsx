@@ -13,6 +13,8 @@ import Contacto from './pages/Contacto/Contacto';
 import PoliticaPrivacidad from './pages/legales/PoliticaPrivacidad';
 import TerminosCondiciones from './pages/legales/TerminosCondiciones';
 
+import NotFound from './pages/NotFound';
+
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +31,9 @@ function App() {
         {/* Agregamos las rutas de Legales */}
         <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
         <Route path="/terminos-y-condiciones" element={<TerminosCondiciones />} />
+
+        {/* Catch-all para 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

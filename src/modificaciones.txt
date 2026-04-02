@@ -107,3 +107,11 @@
   - Los colores rosados manuales (#EC4E8D etc.) pasaron a usar la variable de Tailwind ar(--color-neti-pink).
   - Los blancos a #ffffff.
   - Archivos corregidos: Servicios.jsx, Nosotros.jsx, LiderazgoDisruptivo.jsx, MapaAccion.jsx, Empresas.jsx, Contacto.jsx, Eventos.jsx, ContactoModal.jsx y index.css.
+
+---
+
+### 🎨 Experiencia de Usuario: Página 404 Personalizada
+
+- **Creación de Componente:** Se añadió src/pages/NotFound.jsx con diseño adaptado a la identidad (fondo dark, tipografía 404 outline gigante rosa).
+- **UX Resolutiva:** Mensaje con feedback constructivo ('nodo de innovación no existe') y CTA claro de 'Volver al Inicio' para evitar rebote infinito.
+- **Ruteo Implementado:** Atrapa URLs inexistentes con * en App.jsx.
