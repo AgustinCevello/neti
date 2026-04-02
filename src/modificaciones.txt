@@ -1,0 +1,97 @@
+# Auditoría del Codebase NETI (React + Tailwind)
+**Rol:** Arquitecto de Software Senior, Auditor de UX/UI y Experto en Ciberseguridad Web
+**Enfoque:** Estructura, Modales (POST), Seguridad, UX/UI, Arquitectura.
+
+---
+
+### 🛑 Bugs y Errores Críticos
+
+- **`src/components/FormularioModal/FormularioModal.jsx` | `src/components/ContactoModal/ContactoModal.jsx`**
+  - **Línea:** ~605 (FormularioModal) / ~313 (ContactoModal)
+  - **Problema:** En el `useEffect` principal que bloquea el scroll de la página modificando `document.body` y manejando `scrollY`. Usar custom attributes en el cuerpo (`body.dataset.scrollY`) para fijar la posición puede desincronizarse fácilmente en SPAs si la página sufre re-renders intermedios provocando saltos extraños (layout shifting) cuando el modal se cierra.
+  - **Acción:** Considerar delegar el bloqueo del body a una librería comprobada como `body-scroll-lock` o usar Custom Hooks (`useLockBodyScroll`) en un archivo separado para unificar y probar edge-cases.
+
+- **`src/components/FormularioModal/FormularioModal.jsx`**
+  - **Línea:** ~264 (Función `applyField`)
+  - **Problema:** En `setForm(prev => { /* update */ })`, dentro del setter `setErrors(prevErrs => ...)` se utiliza la función `validarCampo` enviándole un estado "mezclado". Aunque aparenta ser reactivo, puede introducir validaciones rancias si React decide apilar múltiples dispatchers de forma asincrónica.
+  - **Acción:** Separar la lógica completa en un custom hook como `useFormValidator` o validarlos justo antes de enviar en `handleSubmit`.
+
+
+---
+
+### 🛡️ Seguridad y Privacidad
+
+- **`.gitignore`**
+  - **Línea:** Todo el archivo
+  - **Problema (CRITICO):** ¡No aparece `.env` en la lista de ignorados! (Fuga en el Bundle) 
+  - **Acción:** Añadir inmediatamente `.env`, `.env.local`, `.env.*` a `.gitignore` para evitar que las llaves e IDs suban accidentalmente al repositorio público. Si se subieron previamente, eliminarlas del historial en git e invalidar esas contraseñas/links.
+
+- **`.env` y Client-Side Exposure**
+  - **Línea:** 1
+  - **Problema:** Se expone `VITE_SHEETS_URL`. Es aceptable si se usa en peticiones del frontend, pero significa que este webhook está expuesto sin autenticación y cualquiera podría hacer POST a él.
+  - **Acción:** Entender la visibilidad. Asegurarse que el webhook (`fetch`) a Google Apps Script tiene implementadas comprobaciones rudimentarias o es de uso público total (con todo el riesgo de SPAM que implica). Si es sensible, crear un proxy backend real.
+
+- **`src/services/sheets.js`**
+  - **Línea:** ~14
+  - **Problema (Sanitización & Configuración):** Recoge los datos en duro `JSON.stringify(data)` directo de los formularios. Mientras que hay `whitelists` en el front-end con js-regex, no existe sanitización central frente a accesos malintencionados. Un usuario malicioso podría utilizar `curl` con tu endpoint público y saltarse el control JS mandando `<script>alert("hack")</script>` insertándolo directo en la hoja de Excel.
+  - **Acción:** Mover/implementar sanitización fuerte en el servidor de destino (.gs Google Apps Script file), validando formato y quitando tags HTML.
+
+- **Protección de Bots (Honeypot / Rate Limiting)**
+  - **Línea:** Global en formularios Modales
+  - **Problema:** No se observa protección por HoneyPot, ReCaptcha u otros métodos para prevenir bombardeo automático de bots al archivo de Goolge Sheets.
+  - **Acción:** Añadir un `input` oculto (ej: `<input type="text" name="_honeypot" className="hidden" />`). Si ese campo viene "lleno" en `sheets.js`, cortar silenciosamente como spam. O alternativamente un captcha ligero.
+
+---
+
+### 🎨 Diseño y Consistencia UI
+
+- **Color Rosa NETI (`#EC4E8D`) (Hardcoded)**
+  - **Archivo:** `src/components/ContactoModal/ContactoModal.jsx` y `src/pages/Servicios/Servicios.jsx`
+  - **Línea:** ~251, ~289 ...
+  - **Problema:** La variable o hexadecimal se dispersa de forma manual muchísimas veces en línea de styles como `borderColor: '#EC4E8D'`.
+  - **Acción:** Debería ser definido en `tailwind.config.js` (ej: `theme: { colors: { netiPink: '#EC4E8D' }}`) para poder aplicarlo en clases como `bg-netiPink` y permitir escalabilidad de theming.
+
+- **Inconsistencia de Text-Stroke (Hero Sections)**
+  - **Archivo:** `src/pages/Home/Home.jsx` vs. `src/pages/Contacto/Contacto.jsx`
+  - **Línea:** 108 vs. 52
+  - **Problema:** En `Home.jsx` la clase hero tiene `WebkitTextStroke: "1.5px #ffffff"`, mientras que en `Contacto.jsx` y otros se ha usado `WebkitTextStroke: '2px #EC4E8D'`.
+  - **Acción:** Unificar el grosor a `1.5px` o `2px` para una experiencia uniforme frente a las pantallas con alto contraste a través de variables CSS.
+
+---
+
+### ⚙️ Utilidad y UX
+
+- **Modales (Feedback de Carga en Formularios y Cierres Accidentales)**
+  - **Archivo:** `src/components/FormularioModal/FormularioModal.jsx` y `ContactoModal.jsx`
+  - **Línea:** Todo el `FormContent`.
+  - **Problema 1 (UX de Cierre):** A pesar de controlar el mousedown en el modal, un click muy rápido que suelte de forma rara o combinaciones asincrónicas podrían no cerrar el modal de forma estándar o interferir si el usuario arrastra algo. El tratamiento implementado difiere en `ContactoModal` (`useRef(false)` para mousedown en backdrop) versus `FormularioModal` (`mousedownTarget.current = e.target`).
+  - **Acción 1:** Unificar y estandarizar el patrón de Overlay Dismiss a usar a lo largo de todo el proyecto usando un custom hook de overlay.
+  - **Problema 2 (Bloqueo de Inputs por "Loading"):** Cuando `isLoading` es true, solo los botones de envío se bloquean con estado `disabled`.
+  - **Acción 2:** Bloquear / deshabilitar `disabled={isLoading}` TODOS los `input` y `textarea` durante el request para evitar interferencia si la conexión es lenta y el usuario borra/edita lo requerido en dicho lapso.
+
+- **Lectores de Pantalla (Accesibilidad a11y)**
+  - **Archivo:** `src/pages/Home/Home.jsx` y `src/components/EmblaCarousel` (Asumido por estructura).
+  - **Línea:** ~82
+  - **Problema:** Hay elementos `button` tipo flecha en el carousel principal sin contexto para herramientas de lectura como VoiceOver. 
+  - **Acción:** Añadir `aria-hidden="true"` al svg o mejor, poner etiquetas visibles genéricas con clase genérica "sr-only" a las flechas. (Tiene `aria-label`, pero hay que verificar todos los interactuables en la red).
+
+---
+
+### 🧹 Arquitectura y Deuda Técnica
+
+- **Lógica Redundante (Regexes, Whitelists & Validators)**
+  - **Archivo:** `src/components/FormularioModal/FormularioModal.jsx` (L7, L171) , `src/components/ContactoModal/ContactoModal.jsx` (L7) , `src/components/CurriculumForm/CurriculumForm.jsx` (L7)
+  - **Problema:** Expresiones regulares, whitelists (ej. `LC, UC, EMAIL_CHARS...`), y métodos completos como lógica `Pasted` / Eventos "OnKeyDown" de strings. Toda la lógica base ha sido copiada literalmente 3 veces en base a pura deuda.
+  - **Acción:** Abstraerlo inmediatamente a un archivo `src/utils/validators.js`. El mantenimiento individual significa que una mejora a correos electrónicos en "Contacto" pasará desapercibida en "Talleres".
+
+- **Nomenclatura (Desuso importado de Funciones)**
+  - **Archivo:** `src/pages/Nosotros/Nosotros.jsx` (Animaciones Inline de Intersection)
+  - **Línea:** 17 `FadeIn`
+  - **Problema:** En vez de tener un HOC genérico de `FadeIn` usado globalmente (ej. framer-motion o clase unificada CSS), cada página repite el hook interno que registra el Resize/Intersection Observer localmente. Un dolor de cabeza globalizando tiempos/estados.
+  - **Acción:** Mover `FadeIn` y `SectionSeparator` en componentes funcionales globales con reusabilidad natural desde `src/components/animations` o `src/components/ui`.
+
+- **`mode: 'no-cors'` en las peticiones (*Important*)**
+  - **Archivo:** `src/services/sheets.js`
+  - **Línea:** 16
+  - **Problema:** Estás usando llamadas asíncronas con promesas. Al usar `'no-cors'`, recibiremos SIEMPRE una respuesta opaca (status `0`), con lo que el front end en realidad NUNCA se entera si Google Sheets guardó exitosamente o devolvió un Status Code `500`. Siempre retornará `{ok: true}` a nivel de red (mientras la web esté viva).
+  - **Acción:** Confirmar en el Apps Script de Google si el DoPost soporta JSON y retorna CORS headers correctos. En tal caso, eliminar `'no-cors'` para garantizar el feedback real del guardado. Si no, estar prevenidos de que en caso de error silencioso del form, al usuario le saldrá "¡Consulta enviada!" en su Toast igualmente.
