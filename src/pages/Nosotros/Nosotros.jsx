@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 import dobleDiamante from '../../assets/images/pictures/DobleDiamante.webp';
 import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.webp';
@@ -14,29 +14,7 @@ import estefania from '../../assets/images/pictures/EmpleadoEstefi.webp';
 import sorelys from '../../assets/images/pictures/EmpleadoSorelys.webp';
 import juani from '../../assets/images/pictures/EmpleadoJuani.webp';
 
-function FadeIn({ children, delay = 0, className = '' }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
-  return <div ref={ref} className={className}>{children}</div>;
-}
+
 
 const teamMembers = [
   { name: "Mara Provenzano", role: "Cofundadora-DEO", linkedin: "https://www.linkedin.com/in/marapro/", img: mara },

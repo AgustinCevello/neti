@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 
 import ContactoModal from '../../components/ContactoModal/ContactoModal';
@@ -8,30 +9,7 @@ import tallerImg from '../../assets/images/pictures/ContactoTaller.webp';
 import bannerImg from '../../assets/images/pictures/ContactoBanner.webp';
 import losEsperamosImg from '../../assets/images/pictures/ContactoLosEsperamos.webp';
 
-// ── FadeIn (Animación Compartida) ────────────────────────────────────────────
-function FadeIn({ children, delay = 0, className = '' }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms`;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
-  return <div ref={ref} className={className}>{children}</div>;
-}
+
 
 const noSelect = {
   WebkitUserSelect: 'none', MozUserSelect: 'none',
