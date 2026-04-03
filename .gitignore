@@ -28,3 +28,7 @@ dist-ssr
 .env.production
 .env.local
 .env.*.local
+
+# Documentación y reportes locales
+src/modificaciones.txt
+src/structure.txt

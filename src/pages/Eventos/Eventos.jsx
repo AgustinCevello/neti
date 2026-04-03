@@ -1,24 +1,23 @@
-import { useRef, useState } from 'react';
+﻿import { useRef, useState, useMemo } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 import { enviarInscripcionEvento } from '../../services/sheets';
+import { useSheetData } from '../../hooks/useSheetData';
 
-import heroImg from '../../assets/images/pictures/Eventosherosection.webp';
+import heroImg      from '../../assets/images/pictures/Eventosherosection.webp';
 import separadorImg from '../../assets/images/pictures/separadoreventossection.webp';
 import mapaInspirar from '../../assets/images/pictures/MapaDeAccionInspirar.webp';
-import mara from '../../assets/images/pictures/EmpleadoMara.webp';
-import esteban from '../../assets/images/pictures/EmpleadoEsteban3.webp';
-import maraP from '../../assets/images/pictures/EmpleadoMaraProvenzano.webp';
-import euge from '../../assets/images/pictures/EmpleadoEuge.webp';
-import juani from '../../assets/images/pictures/EmpleadoJuani.webp';
-import dreamLogo from '../../assets/images/empresas/dream.webp';
-import globantLogo from '../../assets/images/empresas/globant.webp';
-import mercedesLogo from '../../assets/images/empresas/mercedes.webp';
+import mara         from '../../assets/images/pictures/EmpleadoMara.webp';
+import esteban      from '../../assets/images/pictures/EmpleadoEsteban3.webp';
+import maraP        from '../../assets/images/pictures/EmpleadoMaraProvenzano.webp';
+import euge         from '../../assets/images/pictures/EmpleadoEuge.webp';
+import juani        from '../../assets/images/pictures/EmpleadoJuani.webp';
+import dreamLogo        from '../../assets/images/empresas/dream.webp';
+import globantLogo      from '../../assets/images/empresas/globant.webp';
+import mercedesLogo     from '../../assets/images/empresas/mercedes.webp';
 import nanotecnologiaLogo from '../../assets/images/empresas/nanotecnologia.webp';
-import telefonicaLogo from '../../assets/images/empresas/telefonica.webp';
-
-
+import telefonicaLogo   from '../../assets/images/empresas/telefonica.webp';
 
 const noSelect = {
   WebkitUserSelect: 'none', MozUserSelect: 'none',
@@ -58,42 +57,55 @@ const infoCards = [
 ];
 
 const oradores = [
-  { name: 'Mara Provenzano', role: 'Cofundadora', img: mara, bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Esteban Bonomi', role: 'Cofundador', img: esteban, bio: 'Esteban Bonomi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Mara Provenzano', role: 'Diseñadora', img: maraP, bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Euge Abratti', role: 'Diseñadora de experiencia', img: euge, bio: 'Euge is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Juan Ignacio Franchi', role: 'Diseñador UX/UI', img: juani, bio: 'Juani Franchi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
-];
-
-const agendaMock = [
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
-  { tag: 'Actividad', date: '15 de Julio 14:00 (GMT-3)', title: 'Título de la actividad', desc: 'Descripción de la actividad/reunión/sesión' },
+  { name: 'Mara Provenzano',      role: 'Cofundadora',               img: mara,    bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Esteban Bonomi',       role: 'Cofundador',                img: esteban, bio: 'Esteban Bonomi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Mara Provenzano',      role: 'Diseñadora',                img: maraP,   bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Euge Abratti',         role: 'Diseñadora de experiencia', img: euge,    bio: 'Euge is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Juan Ignacio Franchi', role: 'Diseñador UX/UI',           img: juani,   bio: 'Juani Franchi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
 ];
 
 const organizadores = [dreamLogo, globantLogo, mercedesLogo, nanotecnologiaLogo, telefonicaLogo];
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const LC = 'abcdefghijklmnopqrstuvwxyz';
-const UC = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const ACCENTS = '\u00e1\u00e9\u00ed\u00f3\u00fa\u00c1\u00c9\u00cd\u00d3\u00da\u00fc\u00dc\u00f1\u00d1';
+const MESES_ES       = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const MESES_ES_UPPER = MESES_ES.map(m => m.toUpperCase());
+
+function extraerMes(fecha) {
+  if (!fecha) return null;
+  const str = String(fecha);
+
+  const isoMatch = str.match(/^\d{4}-(\d{2})-\d{2}/);
+  if (isoMatch) return MESES_ES_UPPER[parseInt(isoMatch[1], 10) - 1] ?? null;
+
+  const lower = str.toLowerCase();
+  for (let i = 0; i < MESES_ES.length; i++) {
+    if (lower.includes(MESES_ES[i])) return MESES_ES_UPPER[i];
+  }
+
+  const slashMatch = str.match(/\d{1,2}\/(\d{1,2})\/\d{4}/);
+  if (slashMatch) return MESES_ES_UPPER[parseInt(slashMatch[1], 10) - 1] ?? null;
+
+  return null;
+}
+
+const emailRegex  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const LC          = 'abcdefghijklmnopqrstuvwxyz';
+const UC          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const ACCENTS     = '\u00e1\u00e9\u00ed\u00f3\u00fa\u00c1\u00c9\u00cd\u00d3\u00da\u00fc\u00dc\u00f1\u00d1';
 const EMAIL_CHARS = LC + UC + '0123456789@.-_+';
-const NOMBRE_SET = new Set([...LC, ...UC, ...ACCENTS, ' ', '-', "'"]);
-const EMAIL_SET = new Set([...EMAIL_CHARS]);
-const isNombreChar = (ch) => NOMBRE_SET.has(ch);
-const isEmailChar = (ch) => EMAIL_SET.has(ch);
+const NOMBRE_SET  = new Set([...LC, ...UC, ...ACCENTS, ' ', '-', "'"]);
+const EMAIL_SET   = new Set([...EMAIL_CHARS]);
+const isNombreChar = ch => NOMBRE_SET.has(ch);
+const isEmailChar  = ch => EMAIL_SET.has(ch);
 
 function validateForm({ nombre, apellido, email, aceptaLegales }) {
   const errors = {};
-  if (!nombre.trim()) errors.nombre = 'El nombre es requerido';
-  else if (nombre.length > 30) errors.nombre = 'Máximo 30 caracteres';
-  if (!apellido.trim()) errors.apellido = 'El apellido es requerido';
-  else if (apellido.length > 30) errors.apellido = 'Máximo 30 caracteres';
-  if (!email.trim()) errors.email = 'El email es requerido';
-  else if (!emailRegex.test(email)) errors.email = 'Email inválido';
-  if (!aceptaLegales) errors.aceptaLegales = 'Debes aceptar las políticas';
+  if (!nombre.trim())            errors.nombre        = 'El nombre es requerido';
+  else if (nombre.length > 30)   errors.nombre        = 'Máximo 30 caracteres';
+  if (!apellido.trim())          errors.apellido      = 'El apellido es requerido';
+  else if (apellido.length > 30) errors.apellido      = 'Máximo 30 caracteres';
+  if (!email.trim())             errors.email         = 'El email es requerido';
+  else if (!emailRegex.test(email)) errors.email      = 'Email inválido';
+  if (!aceptaLegales)            errors.aceptaLegales = 'Debes aceptar las políticas';
   return errors;
 }
 
@@ -134,13 +146,11 @@ function SuccessToast({ nombre, email }) {
 }
 
 function InscripcionForm() {
-  const [form, setForm] = useState({ nombre: '', apellido: '', email: '', aceptaLegales: false });
-  const [errors, setErrors] = useState({});
+  const [form, setForm]           = useState({ nombre: '', apellido: '', email: '', aceptaLegales: false });
+  const [errors, setErrors]       = useState({});
   const [submitted, setSubmitted] = useState(false);
-
-  // Ref para bloquear el envío: evita doble click y bugeo de animación
   const sendingRef = useRef(false);
-  const btnRef = useRef(null);
+  const btnRef     = useRef(null);
 
   const applyNombre = (name, raw) => {
     const clean = raw.split('').filter(ch => isNombreChar(ch)).join('').slice(0, 30);
@@ -168,7 +178,7 @@ function InscripcionForm() {
   const handleKeyDown = (e, type) => {
     if (e.key.length > 1) return;
     if (type === 'nombre' && !isNombreChar(e.key)) { e.preventDefault(); return; }
-    if (type === 'email' && !isEmailChar(e.key)) { e.preventDefault(); return; }
+    if (type === 'email'  && !isEmailChar(e.key))  { e.preventDefault(); return; }
   };
 
   const handlePaste = (e, type) => {
@@ -180,30 +190,19 @@ function InscripcionForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Guard con ref: corta inmediatamente en el primer click, sin esperar re-renders
     if (sendingRef.current) return;
-
     const errs = validateForm(form);
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      btnRef.current?.blur();
-      return;
-    }
+    if (Object.keys(errs).length > 0) { setErrors(errs); btnRef.current?.blur(); return; }
 
-    // Bloquear envíos subsiguientes antes de cualquier await
     sendingRef.current = true;
     btnRef.current?.blur();
-
     const { nombre, email } = form;
-
     await enviarInscripcionEvento(form);
 
     setTimeout(() => {
       setSubmitted(true);
       toast.custom(() => <SuccessToast nombre={nombre} email={email} />, {
-        duration: 5000,
-        position: 'top-right',
+        duration: 5000, position: 'top-right',
       });
     }, 2000);
   };
@@ -246,7 +245,7 @@ function InscripcionForm() {
               type={type} name={id} value={form[id]}
               onChange={handleChange}
               onKeyDown={(e) => handleKeyDown(e, inputType)}
-              onPaste={(e) => handlePaste(e, inputType)}
+              onPaste={(e)   => handlePaste(e, inputType)}
               placeholder={placeholder} maxLength={maxLen}
               className={`w-full font-sans text-sm text-[#251B37] border-b-2 py-2 px-0 bg-transparent outline-none transition-colors duration-200 placeholder-[#85789A]/50 ${errors[id] ? 'border-red-400' : 'border-[#E6E2EE] focus:border-[#EC4E8D]'}`}
             />
@@ -260,19 +259,17 @@ function InscripcionForm() {
         ))}
       </div>
 
-      {/* CHECKBOX LEGAL — estrategia 18px */}
       <div className="flex flex-col gap-1 mb-10">
         <label className="flex items-start gap-2.5 cursor-pointer group">
           <div
             className="relative flex shrink-0 items-center justify-center w-[18px] h-[18px] mt-[1px] rounded border-2 transition-colors duration-200"
-            style={{ 
+            style={{
               borderColor: form.aceptaLegales ? '#EC4E8D' : (errors.aceptaLegales ? '#f87171' : '#E6E2EE'),
-              background: form.aceptaLegales ? '#EC4E8D' : 'transparent'
+              background:  form.aceptaLegales ? '#EC4E8D' : 'transparent',
             }}
           >
-            <input 
-              type="checkbox" 
-              name="aceptaLegales"
+            <input
+              type="checkbox" name="aceptaLegales"
               className="absolute opacity-0 w-full h-full cursor-pointer m-0 p-0"
               checked={form.aceptaLegales}
               onChange={(e) => {
@@ -351,7 +348,7 @@ function SpeakerCard({ speaker, delay }) {
     <FadeIn delay={delay} className="flex flex-col items-center text-center">
       <img
         src={speaker.img} alt={speaker.name}
-        loading="lazy" 
+        loading="lazy"
         className="w-36 h-36 md:w-48 md:h-48 object-contain mb-4"
         style={noSelect} draggable={false}
       />
@@ -362,8 +359,77 @@ function SpeakerCard({ speaker, delay }) {
   );
 }
 
+function ActividadSkeleton() {
+  return (
+    <div className="snap-start shrink-0 w-56 border-2 border-[#E6E2EE] rounded-2xl p-5 flex flex-col gap-3 animate-pulse">
+      <div className="h-3 bg-[#E6E2EE] rounded w-2/3" />
+      <div className="h-3 bg-[#E6E2EE] rounded w-full" />
+      <div className="h-3 bg-[#E6E2EE] rounded w-4/5" />
+    </div>
+  );
+}
+
+function AgendaItemSkeleton() {
+  return (
+    <div className="grid md:grid-cols-[200px_1fr_auto] gap-4 items-center py-5 border-b border-[#E6E2EE] animate-pulse">
+      <div className="space-y-2">
+        <div className="h-5 bg-[#E6E2EE] rounded-full w-24" />
+        <div className="h-3 bg-[#E6E2EE] rounded w-32" />
+      </div>
+      <div className="space-y-2">
+        <div className="h-4 bg-[#E6E2EE] rounded w-3/4" />
+        <div className="h-3 bg-[#E6E2EE] rounded w-full" />
+      </div>
+      <div className="h-8 bg-[#E6E2EE] rounded-full w-40" />
+    </div>
+  );
+}
+
 export default function Eventos() {
-  const [activeTab, setActiveTab] = useState('JUNIO');
+  const [activeTab, setActiveTab] = useState('');
+  const [search,    setSearch]    = useState('');
+
+  const actividadesRef = useRef(null);
+  const scrollActividades = (dir) => {
+    actividadesRef.current?.scrollBy({ left: dir * 240, behavior: 'smooth' });
+  };
+
+  const { data: cronogramaRaw, loading: cronogramaLoading } = useSheetData('✏️ Cronograma Eventos');
+
+  const cronogramaVisible = useMemo(() => {
+    return cronogramaRaw.filter(item => {
+      const estado = String(item['Estado'] || '').trim().toLowerCase();
+      return estado !== 'inactivo' && estado !== 'false' && estado !== 'no';
+    });
+  }, [cronogramaRaw]);
+
+  // Actividades = todos los eventos visibles, sin filtrar por tipo
+  const actividadesItems = cronogramaVisible;
+
+  const meses = useMemo(() => {
+    const seen = new Set();
+    const result = [];
+    cronogramaVisible.forEach(item => {
+      const mes = extraerMes(item['Fecha']);
+      if (mes && !seen.has(mes)) { seen.add(mes); result.push(mes); }
+    });
+    return result;
+  }, [cronogramaVisible]);
+
+  const currentTab = activeTab || (meses.length > 0 ? meses[0] : '');
+
+  const agendaFiltrada = useMemo(() => {
+    return cronogramaVisible.filter(item => {
+      const mes         = extraerMes(item['Fecha']);
+      const matchMes    = !currentTab || mes === currentTab;
+      const q           = search.toLowerCase();
+      const matchSearch = !q ||
+        (item['Nombre del Evento'] || '').toLowerCase().includes(q) ||
+        (item['Descripción']       || '').toLowerCase().includes(q) ||
+        (item['Tipo de Evento']    || '').toLowerCase().includes(q);
+      return matchMes && matchSearch;
+    });
+  }, [cronogramaVisible, currentTab, search]);
 
   return (
     <div className="bg-white overflow-x-hidden">
@@ -427,22 +493,70 @@ export default function Eventos() {
               Actividades
             </h2>
           </FadeIn>
-          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth" style={{ scrollbarWidth: 'none' }}>
-            {[1, 2, 3, 4, 5].map((_, i) => (
-              <div key={i} className="snap-start shrink-0 w-56 border-2 border-[#EC4E8D] rounded-2xl p-5 flex flex-col gap-2"
-                style={{ boxShadow: '0 0 12px rgba(236,78,141,0.08)' }}>
-                <span className="font-sans text-xs font-bold text-[#EC4E8D] uppercase tracking-widest">Actividad</span>
-                <p className="font-sans text-xs text-[#85789A]">Jueves 15 de Julio<br />14:00 (GMT-3)</p>
-                <p className="font-sans text-xs text-[#85789A]">Lugar (o en físico)</p>
+
+          <div
+            ref={actividadesRef}
+            className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+            style={{ scrollbarWidth: 'none' }}
+          >
+            {cronogramaLoading && [...Array(5)].map((_, i) => <ActividadSkeleton key={i} />)}
+
+            {!cronogramaLoading && actividadesItems.length === 0 && (
+              <p className="font-sans text-sm text-[#85789A] py-4">
+                No hay actividades programadas por el momento.
+              </p>
+            )}
+
+            {!cronogramaLoading && actividadesItems.map((item, i) => (
+              <div
+                key={i}
+                className="snap-start shrink-0 w-56 border-2 border-[#EC4E8D] rounded-2xl p-5 flex flex-col gap-2"
+                style={{ boxShadow: '0 0 12px rgba(236,78,141,0.08)' }}
+              >
+                <span className="font-sans text-xs font-bold text-[#EC4E8D] uppercase tracking-widest">
+                  {item['Tipo de Evento'] || 'Actividad'}
+                </span>
+                <h3 className="font-sans font-bold text-[#251B37] text-sm leading-tight">
+                  {item['Nombre del Evento'] || ''}
+                </h3>
+                <p className="font-sans text-xs text-[#85789A]">
+                  {item['Fecha'] || '—'}
+                </p>
+                <p className="font-sans text-xs text-[#85789A] line-clamp-2">
+                  {item['Descripción'] || item['Notas'] || ''}
+                </p>
+                {item['Link de Difusión'] && (
+                  <a
+                    href={item['Link de Difusión']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-sans text-[11px] text-[#EC4E8D] font-semibold mt-auto hover:underline"
+                  >
+                    Ver más →
+                  </a>
+                )}
               </div>
             ))}
           </div>
+
           <div className="flex gap-3 mt-4">
-            <button className="w-9 h-9 rounded-full border-2 border-[#EC4E8D] text-[#EC4E8D] flex items-center justify-center hover:bg-[#EC4E8D] hover:text-white transition-colors">
-              <svg viewBox="0 0 12 12" className="w-4 h-4"><path d="M7.354 2.146a.5.5 0 0 0-.708 0L3.146 5.646a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L4.207 6l3.147-3.146a.5.5 0 0 0 0-.708z" fill="currentColor" /></svg>
+            <button
+              onClick={() => scrollActividades(-1)}
+              aria-label="Anterior"
+              className="w-9 h-9 rounded-full border-2 border-[#EC4E8D] text-[#EC4E8D] flex items-center justify-center hover:bg-[#EC4E8D] hover:text-white transition-colors"
+            >
+              <svg viewBox="0 0 12 12" className="w-4 h-4">
+                <path d="M7.354 2.146a.5.5 0 0 0-.708 0L3.146 5.646a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L4.207 6l3.147-3.146a.5.5 0 0 0 0-.708z" fill="currentColor" />
+              </svg>
             </button>
-            <button className="w-9 h-9 rounded-full border-2 border-[#EC4E8D] text-[#EC4E8D] flex items-center justify-center hover:bg-[#EC4E8D] hover:text-white transition-colors">
-              <svg viewBox="0 0 12 12" className="w-4 h-4"><path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6 4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="currentColor" /></svg>
+            <button
+              onClick={() => scrollActividades(1)}
+              aria-label="Siguiente"
+              className="w-9 h-9 rounded-full border-2 border-[#EC4E8D] text-[#EC4E8D] flex items-center justify-center hover:bg-[#EC4E8D] hover:text-white transition-colors"
+            >
+              <svg viewBox="0 0 12 12" className="w-4 h-4">
+                <path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6 4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="currentColor" />
+              </svg>
             </button>
           </div>
         </div>
@@ -475,39 +589,89 @@ export default function Eventos() {
               </h2>
             </FadeIn>
             <div className="flex items-center border border-[#E6E2EE] rounded-full px-4 py-2 gap-2">
-              <input type="text" placeholder="Buscar evento"
-                className="font-sans text-sm text-[#251B37] bg-transparent outline-none w-36 placeholder-[#85789A]/60" />
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Buscar evento"
+                className="font-sans text-sm text-[#251B37] bg-transparent outline-none w-36 placeholder-[#85789A]/60"
+              />
               <svg className="w-4 h-4 text-[#85789A]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
               </svg>
             </div>
           </div>
-          <div className="flex gap-6 mb-8 border-b border-[#E6E2EE]">
-            {['JUNIO', 'JULIO'].map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`font-sans font-bold text-sm pb-3 border-b-2 transition-colors duration-200 ${activeTab === tab ? 'border-[#EC4E8D] text-[#EC4E8D]' : 'border-transparent text-[#85789A] hover:text-[#251B37]'}`}>
-                {tab}
-              </button>
-            ))}
-          </div>
+
+          {(meses.length > 0 || cronogramaLoading) && (
+            <div className="flex gap-6 mb-8 border-b border-[#E6E2EE]">
+              {cronogramaLoading
+                ? ['', '', ''].map((_, i) => (
+                    <div key={i} className="h-4 w-16 bg-[#E6E2EE] rounded animate-pulse mb-3" />
+                  ))
+                : meses.map(mes => (
+                    <button
+                      key={mes}
+                      onClick={() => setActiveTab(mes)}
+                      className={`font-sans font-bold text-sm pb-3 border-b-2 transition-colors duration-200 ${
+                        currentTab === mes
+                          ? 'border-[#EC4E8D] text-[#EC4E8D]'
+                          : 'border-transparent text-[#85789A] hover:text-[#251B37]'
+                      }`}
+                    >
+                      {mes}
+                    </button>
+                  ))
+              }
+            </div>
+          )}
+
           <div className="space-y-0">
-            {agendaMock.map((item, i) => (
+            {cronogramaLoading && [...Array(4)].map((_, i) => <AgendaItemSkeleton key={i} />)}
+
+            {!cronogramaLoading && agendaFiltrada.length === 0 && (
+              <p className="font-sans text-sm text-[#85789A] py-8 text-center">
+                {search ? 'No se encontraron eventos para tu búsqueda.' : 'No hay eventos en este período.'}
+              </p>
+            )}
+
+            {!cronogramaLoading && agendaFiltrada.map((item, i) => (
               <FadeIn key={i} delay={i * 60}>
                 <div className="grid md:grid-cols-[200px_1fr_auto] gap-4 items-center py-5 border-b border-[#E6E2EE]">
                   <div>
-                    <span className="inline-block font-sans text-xs font-bold text-white bg-[#EC4E8D] px-3 py-1 rounded-full mb-2">{item.tag}</span>
-                    <p className="font-sans text-xs text-[#85789A]">{item.date}</p>
+                    <span className="inline-block font-sans text-xs font-bold text-white bg-[#EC4E8D] px-3 py-1 rounded-full mb-2">
+                      {item['Tipo de Evento'] || 'Evento'}
+                    </span>
+                    <p className="font-sans text-xs text-[#85789A]">{item['Fecha'] || '—'}</p>
                   </div>
                   <div>
-                    <h4 className="font-sans font-bold text-[#251B37] text-sm mb-1">{item.title}</h4>
-                    <p className="font-sans text-xs text-[#85789A]">{item.desc}</p>
+                    <h4 className="font-sans font-bold text-[#251B37] text-sm mb-1">
+                      {item['Nombre del Evento'] || ''}
+                    </h4>
+                    <p className="font-sans text-xs text-[#85789A]">{item['Descripción'] || ''}</p>
                   </div>
-                  <button className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                      <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                    </svg>
-                    Agregar al calendario
-                  </button>
+                  {item['Link de Difusión']
+                    ? (
+                        <a
+                          href={item['Link de Difusión']}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                          </svg>
+                          Agregar al calendario
+                        </a>
+                      )
+                    : (
+                        <button className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                          </svg>
+                          Agregar al calendario
+                        </button>
+                      )
+                  }
                 </div>
               </FadeIn>
             ))}
@@ -554,7 +718,7 @@ export default function Eventos() {
 
       <style>{`
         @keyframes thanksFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes thanksPop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+        @keyframes thanksPop    { from { opacity: 0; transform: scale(0); }        to { opacity: 1; transform: scale(1); } }
       `}</style>
 
     </div>

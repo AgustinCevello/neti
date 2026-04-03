@@ -1,8 +1,10 @@
-import { useState } from 'react';
+﻿// src/pages/Servicios/Servicios.jsx
+import { useState, useMemo } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 import EmblaCarousel from '../../components/EmblaCarousel/EmblaCarousel';
 import FormularioModal from '../../components/FormularioModal/FormularioModal';
+import { useSheetData } from '../../hooks/useSheetData';
 
 import g1 from '../../assets/images/pictures/ServiciosGalery1.webp';
 import g2 from '../../assets/images/pictures/ServiciosGalery2.webp';
@@ -16,11 +18,9 @@ import n3 from '../../assets/images/pictures/ServiciosGaleryNetiatones3.webp';
 import n4 from '../../assets/images/pictures/ServiciosGaleryNetiatones4.webp';
 import n5 from '../../assets/images/pictures/ServiciosGaleryNetiatones5.webp';
 import n6 from '../../assets/images/pictures/ServiciosGaleryNetiatones6.webp';
-
-// Importamos el logo
 import logoNetiBlue from '../../assets/images/icons/logo_neti_blue.webp';
 
-
+// ── Helpers de layout ─────────────────────────────────────────────────────────
 
 function SectionSeparator() {
   return (
@@ -41,9 +41,7 @@ function CaptionPhoto({ src, alt, children }) {
       style={{ boxShadow: '0 4px 20px rgba(103,88,155,0.12)' }}
     >
       <img
-        src={src}
-        alt={alt}
-        loading="lazy"
+        src={src} alt={alt} loading="lazy"
         className="w-full object-cover"
         style={{
           WebkitUserSelect: 'none', MozUserSelect: 'none',
@@ -60,62 +58,93 @@ function CaptionPhoto({ src, alt, children }) {
   );
 }
 
-const workshopsSlides = [g1, g2, g3, g4, g5, g6];
+const workshopsSlides  = [g1, g2, g3, g4, g5, g6];
 const netiatonesSlides = [n1, n2, n3, n4, n5, n6];
-const carouselOptions = { slidesToScroll: 'auto', loop: false };
+const carouselOptions  = { slidesToScroll: 'auto', loop: false };
 
-const talleres = [
-  {
-    title: "Taller de Liderazgo Disruptivo",
-    from: "#EC4E8D",
-    to: "#f9a8d4",
-    accent: "#EC4E8D",
-    items: [
-      "Pensado para líderes que quieren desarrollar proyectos innovadores",
-      "Para la transformación sistémica de la organización",
-      "Del mismo a sí mismo, a su equipo y a las redes de relacionamiento",
-      "Liderar los resultados, nuevos negocios y equipos orientados a resultados",
-      "Liderar una visión centrada en el cliente",
-    ],
-    link: "/liderazgo-disruptivo",
-  },
-  {
-    title: "Talleres Hands On con Metodologías Ágiles",
-    from: "#7C3AED",
-    to: "#a78bfa",
-    accent: "#7C3AED",
-    items: [
-      "Pensado para todos los miembros de la organización que buscan innovar",
-      "Surfear el cambio de paradigma. Desarrollar nuevas habilidades",
-      "Fuerza en marcos de proyectos innovadores",
-      "Eventos multidisciplinares que mejoran el espíritu de colaboración",
-      "Crea valor para la organización y sus clientes",
-    ],
-    link: "/servicios",
-  },
-  {
-    title: "Desarrollo de productos y servicios",
-    from: "#00D8ED",
-    to: "#6ee7f7",
-    accent: "#00D8ED",
-    items: [
-      "Pensado para aquellas personas curiosas que quieran desarrollar productos innovadores",
-      "Sector de prototipado rápido. Combiná la tecnología y el diseño para lograr un prototipo funcional",
-      "Guiados por equipos multidisciplinarios de expertos para crear prototipos que surjan en la etapa de ideación",
-      "Con laboratorio de prototipado físico: 3D Printing, Maquetado electrónico y/o Mediaciones",
-    ],
-    link: "/servicios",
-  },
+// ── Paletas asignadas cíclicamente (los colores originales del diseño) ─────────
+const PALETAS = [
+  { from: '#EC4E8D', to: '#f9a8d4', accent: '#EC4E8D' },
+  { from: '#7C3AED', to: '#a78bfa', accent: '#7C3AED' },
+  { from: '#00D8ED', to: '#6ee7f7', accent: '#00D8ED' },
 ];
 
+// Keys de FormularioModal asignados cíclicamente
+const TALLER_KEYS = ['liderazgo', 'hands_on', 'desarrollo'];
+
+// ── Skeleton de carga ─────────────────────────────────────────────────────────
+function TallerSkeleton() {
+  return (
+    <div className="relative flex flex-col w-full h-full min-h-[500px] border border-white/20 rounded-3xl overflow-hidden animate-pulse bg-[#f4f1f9]">
+      <div className="absolute inset-0 p-[2px]" style={{ background: '#E6E2EE' }}>
+        <div className="w-full h-full rounded-[22px] bg-[#f4f1f9]" />
+      </div>
+      <div className="relative z-10 flex flex-1 p-3 sm:p-4">
+        <div className="flex flex-col flex-1 p-6 sm:p-8 gap-5">
+          <div className="h-6 bg-[#E6E2EE] rounded-lg w-4/5" />
+          <div className="space-y-3 flex-1">
+            {[...Array(4)].map((_, j) => (
+              <div key={j} className="flex items-start gap-3">
+                <div className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[#C4BAD4]" />
+                <div className="h-3 bg-[#E6E2EE] rounded w-full" />
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 pt-5 border-t border-[#E6E2EE]">
+            <div className="h-4 bg-[#E6E2EE] rounded w-20" />
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-between w-12 sm:w-16 py-2 shrink-0 gap-4">
+          <div className="h-6 bg-[#E6E2EE] rounded w-8" />
+          <div className="w-10 h-10 rounded-full bg-[#E6E2EE]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Componente principal ──────────────────────────────────────────────────────
 export default function Servicios() {
   const [modalTaller, setModalTaller] = useState(null);
-  const tallerKeys = ['liderazgo', 'hands_on', 'desarrollo'];
+
+  // ── Datos dinámicos desde Google Sheets ──────────────────────────────────
+  const { data: talleresRaw, loading: talleresLoading, error: talleresError } =
+    useSheetData('✏️ Gestión Talleres');
+
+  // Mapeamos las filas del sheet al formato que espera el template.
+  // Los colores se asignan cíclicamente desde PALETAS según el índice.
+  // Los bullets se generan dividiendo el campo "Notas" por saltos de línea.
+  const talleres = useMemo(() => {
+    return talleresRaw
+      .filter(t => {
+        // Filtrar talleres inactivos si tienen campo Estado
+        const estado = String(t['Estado'] || '').trim().toLowerCase();
+        return estado !== 'inactivo' && estado !== 'false' && estado !== 'no';
+      })
+      .map((t, i) => {
+        const paleta = PALETAS[i % PALETAS.length];
+        const notas  = String(t['Notas'] || '');
+        const items  = notas.split('\n').map(s => s.trim()).filter(Boolean);
+        return {
+          title:       t['Título del Taller'] || `Taller ${i + 1}`,
+          from:        paleta.from,
+          to:          paleta.to,
+          accent:      paleta.accent,
+          items,
+          link:        t['Link de Inscripción'] || '/servicios',
+          // Datos extra disponibles para tooltips o futuros usos
+          facilitador: t['Facilitador'] || '',
+          modalidad:   t['Modalidad']   || '',
+          precio:      t['Precio']      || '',
+          cupo:        t['Cupo Máximo'] || '',
+        };
+      });
+  }, [talleresRaw]);
 
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* WORKSHOPS EMPRESAS */}
+      {/* ── WORKSHOPS EMPRESAS ────────────────────────────────────────────── */}
       <section className="relative py-16 px-4 md:px-8 overflow-hidden">
         <div style={{
           position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
@@ -176,7 +205,7 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* ÚLTIMOS NETIATONES */}
+      {/* ── ÚLTIMOS NETIATONES ────────────────────────────────────────────── */}
       <section className="relative py-16 px-4 md:px-8 overflow-hidden" style={{ background: 'rgba(240,230,255,0.2)' }}>
         <div style={{
           position: 'absolute', borderRadius: '50%', filter: 'blur(100px)',
@@ -232,28 +261,45 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* VENI A APRENDER */}
+      {/* ── VENÍ A APRENDER — Cards dinámicas desde Google Sheets ─────────── */}
       <section className="py-20 px-4 md:px-8">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-16 leading-none"
-              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
+            <h2
+              className="font-display text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-16 leading-none"
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}
+            >
               Vení a aprender con nosotros
             </h2>
           </FadeIn>
 
-          {/* Acá agregamos items-stretch para que todas las cards de la fila midan lo mismo */}
+          {/* Mensaje de error (no bloquea el resto de la página) */}
+          {talleresError && !talleresLoading && (
+            <p className="text-center font-sans text-sm text-[#85789A] mb-8">
+              No se pudieron cargar los talleres en este momento. Intentá de nuevo más tarde.
+            </p>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {talleres.map((taller, i) => (
+
+            {/* ── ESTADO: Cargando ── */}
+            {talleresLoading && [...Array(3)].map((_, i) => (
               <FadeIn key={i} delay={i * 100} className="flex">
+                <TallerSkeleton />
+              </FadeIn>
+            ))}
+
+            {/* ── ESTADO: Datos cargados ── */}
+            {!talleresLoading && talleres.map((taller, i) => (
+              <FadeIn key={taller.title + i} delay={i * 100} className="flex">
                 <div className="relative flex flex-col w-full h-full min-h-[500px] border border-white/20 rounded-3xl overflow-hidden group">
-                  
+
                   {/* Borde exterior colorido */}
                   <div className="absolute inset-0 p-[2px]" style={{ background: taller.from }}>
                     <div className="w-full h-full rounded-[22px] bg-[#140d28]" />
                   </div>
 
-                  {/* Orbe Brillante de fondo */}
+                  {/* Orbe brillante de fondo */}
                   <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
                     <div
                       className="w-64 h-64 rounded-full opacity-40 transition-transform duration-700 ease-out group-hover:scale-125 group-hover:opacity-50"
@@ -264,63 +310,73 @@ export default function Servicios() {
                     />
                   </div>
 
-                  {/* Contenido principal flex */}
+                  {/* Contenido principal */}
                   <div className="relative z-10 flex flex-1 p-3 sm:p-4">
-                    
-                    {/* Panel Izquierdo (Cristal / Glassmorphism) */}
-                    <div className="flex flex-col flex-1 p-6 sm:p-8 backdrop-blur-xl shadow-2xl"
+
+                    {/* Panel izquierdo — Cristal / Glassmorphism */}
+                    <div
+                      className="flex flex-col flex-1 p-6 sm:p-8 backdrop-blur-xl shadow-2xl"
                       style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.1)',
                         borderTopRightRadius: '64px',
                         borderBottomRightRadius: '24px',
                         borderTopLeftRadius: '16px',
-                        borderBottomLeftRadius: '16px'
-                      }}>
-                      
+                        borderBottomLeftRadius: '16px',
+                      }}
+                    >
                       <h3 className="font-sans text-[22px] font-bold text-white leading-tight mb-8 pr-2">
                         {taller.title}
                       </h3>
-                      
-                      {/* Flex-1 empuja el logo hacia abajo y estira la caja si hay mucho texto */}
+
                       <ul className="space-y-4 flex-1">
-                        {taller.items.map((item, j) => (
-                          <li key={j} className="flex items-start gap-3">
-                            <span 
-                              className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full" 
-                              style={{ background: taller.to, boxShadow: `0 0 8px ${taller.to}` }} 
-                            />
-                            <span className="font-sans text-[13.5px] text-white/80 leading-relaxed">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
+                        {taller.items.length > 0
+                          ? taller.items.map((item, j) => (
+                              <li key={j} className="flex items-start gap-3">
+                                <span
+                                  className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full"
+                                  style={{ background: taller.to, boxShadow: `0 0 8px ${taller.to}` }}
+                                />
+                                <span className="font-sans text-[13.5px] text-white/80 leading-relaxed">
+                                  {item}
+                                </span>
+                              </li>
+                            ))
+                          : (
+                              <li className="font-sans text-[13.5px] text-white/40 italic">
+                                Sin descripción disponible.
+                              </li>
+                            )
+                        }
                       </ul>
 
                       <div className="mt-10 pt-5 border-t border-white/10">
-                        <img 
-                          src={logoNetiBlue} 
-                          alt="Logo NETI" 
-                          className="h-6 w-auto opacity-60 transition-opacity duration-300 group-hover:opacity-100" 
-                          style={{ filter: 'brightness(0) invert(1)' }} 
+                        <img
+                          src={logoNetiBlue}
+                          alt="Logo NETI"
+                          className="h-6 w-auto opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+                          style={{ filter: 'brightness(0) invert(1)' }}
                         />
                       </div>
                     </div>
 
-                    {/* Panel Derecho (Número + Botón) */}
+                    {/* Panel derecho — Número + Botón */}
                     <div className="flex flex-col items-center justify-between w-12 sm:w-16 py-2 shrink-0">
-                      <span className="font-display text-xl font-black tracking-widest" style={{ color: taller.from }}>
+                      <span
+                        className="font-display text-xl font-black tracking-widest"
+                        style={{ color: taller.from }}
+                      >
                         0{i + 1}
                       </span>
-                      
+
                       <button
                         type="button"
-                        onClick={() => setModalTaller(tallerKeys[i])}
+                        onClick={() => setModalTaller(TALLER_KEYS[i % TALLER_KEYS.length])}
                         className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20 cursor-pointer shadow-lg"
-                        style={{ 
-                          background: 'rgba(255,255,255,0.1)', 
-                          backdropFilter: 'blur(12px)', 
-                          border: '1px solid rgba(255,255,255,0.2)' 
+                        style={{
+                          background: 'rgba(255,255,255,0.1)',
+                          backdropFilter: 'blur(12px)',
+                          border: '1px solid rgba(255,255,255,0.2)',
                         }}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4 ml-0.5">
@@ -338,12 +394,14 @@ export default function Servicios() {
 
       <SectionSeparator />
 
-      {/* CASOS DESTACADOS */}
+      {/* ── CASOS DESTACADOS ──────────────────────────────────────────────── */}
       <section className="py-16 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.2)' }}>
         <div className="max-w-5xl mx-auto">
           <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14"
-              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
+            <h2
+              className="font-display text-4xl md:text-5xl font-black uppercase text-center mb-14"
+              style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}
+            >
               Casos Destacados
             </h2>
           </FadeIn>
