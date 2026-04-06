@@ -1,4 +1,4 @@
-﻿import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
@@ -348,7 +348,7 @@ function SpeakerCard({ speaker, delay }) {
     <FadeIn delay={delay} className="flex flex-col items-center text-center">
       <img
         src={speaker.img} alt={speaker.name}
-        loading="lazy"
+        loading="lazy" width={300} height={300}
         className="w-36 h-36 md:w-48 md:h-48 object-contain mb-4"
         style={noSelect} draggable={false}
       />
@@ -436,7 +436,7 @@ export default function Eventos() {
 
       {/* HERO */}
       <section className="relative w-full overflow-hidden">
-        <img src={heroImg} alt="Evento NETI" className="w-full h-auto block" style={noSelect} draggable={false} />
+        <img src={heroImg} alt="Evento NETI" width={1920} height={600} className="w-full h-auto block" style={noSelect} draggable={false} />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(37,27,55,0.85) 0%, rgba(37,27,55,0.2) 60%, transparent 100%)' }} />
         <div className="absolute bottom-6 md:bottom-10 left-4 md:left-16 right-4 md:right-auto">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-none"
@@ -455,7 +455,7 @@ export default function Eventos() {
                 <div className="w-14 h-14 rounded-full border-2 border-[#EC4E8D] flex items-center justify-center text-[#EC4E8D] mb-4">
                   {card.icon}
                 </div>
-                <h3 className="font-sans font-bold text-[#251B37] text-lg mb-2">{card.label}</h3>
+                <h2 className="font-sans font-bold text-[#251B37] text-lg mb-2">{card.label}</h2>
                 <p className="font-sans text-sm text-[#85789A] leading-relaxed">{card.text}</p>
               </div>
             </FadeIn>
@@ -465,14 +465,14 @@ export default function Eventos() {
 
       {/* SEPARADOR */}
       <div className="w-full">
-        <img src={separadorImg} alt="Separador" loading="lazy" className="w-full object-cover max-h-48" style={noSelect} draggable={false} />
+        <img src={separadorImg} alt="Separador" loading="lazy" width={1920} height={200} className="w-full object-cover max-h-48" style={noSelect} draggable={false} />
       </div>
 
       {/* PROPUESTA DE VALOR */}
       <section className="py-16 px-4 md:px-8">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <FadeIn>
-            <img src={mapaInspirar} alt="Inspirar" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
+            <img src={mapaInspirar} alt="Inspirar" loading="lazy" width={800} height={600} className="w-full object-contain" style={noSelect} draggable={false} />
           </FadeIn>
           <FadeIn delay={100}>
             <p className="font-sans font-bold text-[#251B37] text-xl md:text-2xl leading-relaxed mb-6">
@@ -644,9 +644,9 @@ export default function Eventos() {
                     <p className="font-sans text-xs text-[#85789A]">{item['Fecha'] || '—'}</p>
                   </div>
                   <div>
-                    <h4 className="font-sans font-bold text-[#251B37] text-sm mb-1">
+                    <h3 className="font-sans font-bold text-[#251B37] text-sm mb-1">
                       {item['Nombre del Evento'] || ''}
-                    </h4>
+                    </h3>
                     <p className="font-sans text-xs text-[#85789A]">{item['Descripción'] || ''}</p>
                   </div>
                   {item['Link de Difusión']
@@ -691,7 +691,7 @@ export default function Eventos() {
             <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
               {organizadores.map((logo, i) => (
                 <img key={i} src={logo} alt={`Organizador ${i + 1}`}
-                  loading="lazy"
+                  loading="lazy" width={200} height={100}
                   className="h-10 object-contain grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100"
                   style={noSelect} draggable={false} />
               ))}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noestatodoinventado.netlify.app/sitemap.xml

@@ -1,4 +1,4 @@
-﻿// src/pages/Servicios/Servicios.jsx
+// src/pages/Servicios/Servicios.jsx
 import { useState, useMemo } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
@@ -41,7 +41,7 @@ function CaptionPhoto({ src, alt, children }) {
       style={{ boxShadow: '0 4px 20px rgba(103,88,155,0.12)' }}
     >
       <img
-        src={src} alt={alt} loading="lazy"
+        src={src} alt={alt} loading="lazy" width={600} height={400}
         className="w-full object-cover"
         style={{
           WebkitUserSelect: 'none', MozUserSelect: 'none',
@@ -354,6 +354,7 @@ export default function Servicios() {
                         <img
                           src={logoNetiBlue}
                           alt="Logo NETI"
+                          loading="lazy" width={100} height={40}
                           className="h-6 w-auto opacity-60 transition-opacity duration-300 group-hover:opacity-100"
                           style={{ filter: 'brightness(0) invert(1)' }}
                         />

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import logoFuchsia from '../assets/images/icons/logo_neti_fuchsia.webp';
 import logoBlack from '../assets/images/icons/logo_neti_black.webp';
@@ -152,9 +152,8 @@ const Navbar = () => {
             <button
               onClick={() => setIsOpen(o => !o)}
               aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-              className="md:hidden text-[#251B37] hover:text-[#EC4E8D] transition-colors duration-200 focus:outline-none z-[60] relative"
-              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+              className="md:hidden text-[#251B37] hover:text-[#EC4E8D] transition-colors duration-200 focus:outline-none z-[60] relative min-w-[44px] min-h-[44px] flex items-center justify-center p-2"
             >
               <HamburgerIcon isOpen={isOpen} />
             </button>
@@ -173,6 +172,7 @@ const Navbar = () => {
           WebkitBackdropFilter: isOpen ? 'blur(28px) saturate(160%)' : 'blur(0px)',
           pointerEvents: isOpen ? 'auto' : 'none',
           opacity: isOpen ? 1 : 0,
+          visibility: isOpen ? 'visible' : 'hidden',
         }}
         onClick={(e) => { if (e.target === e.currentTarget) setIsOpen(false); }}
       >

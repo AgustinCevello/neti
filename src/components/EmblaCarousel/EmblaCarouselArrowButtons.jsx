@@ -32,7 +32,8 @@ export const usePrevNextButtons = (emblaApi) => {
 
 export const PrevButton = ({ children, disabled, ...restProps }) => (
   <button
-    className={'embla__button embla__button--prev'.concat(disabled ? ' embla__button--disabled' : '')}
+    aria-label="Anterior"
+    className={'embla__button embla__button--prev min-w-[44px] min-h-[44px] flex items-center justify-center p-2'.concat(disabled ? ' embla__button--disabled' : '')}
     type="button"
     {...restProps}
   >
@@ -45,7 +46,8 @@ export const PrevButton = ({ children, disabled, ...restProps }) => (
 
 export const NextButton = ({ children, disabled, ...restProps }) => (
   <button
-    className={'embla__button embla__button--next'.concat(disabled ? ' embla__button--disabled' : '')}
+    aria-label="Siguiente"
+    className={'embla__button embla__button--next min-w-[44px] min-h-[44px] flex items-center justify-center p-2'.concat(disabled ? ' embla__button--disabled' : '')}
     type="button"
     {...restProps}
   >

@@ -76,7 +76,7 @@ const TeamCard = ({ member, delay = 0 }) => {
           </div>
         </a>
         <span className="font-sans text-[10px] sm:text-xs font-semibold text-[#EC4E8D] uppercase tracking-widest mb-1 text-center leading-tight">{member.role}</span>
-        <h3 className="font-sans font-bold text-[#251B37] text-center text-xs sm:text-sm leading-tight">{member.name}</h3>
+        <p className="font-sans font-bold text-[#251B37] text-center text-xs sm:text-sm leading-tight">{member.name}</p>
       </div>
     </FadeIn>
   );
@@ -143,10 +143,10 @@ export default function Nosotros() {
 
           <FadeIn delay={200}>
             <div className="grid grid-cols-2 gap-3 h-[520px]">
-              <img src={nosotros1} alt="NETI 1" loading="lazy" className="w-full h-full object-cover rounded-2xl" style={noSelect} draggable={false} />
-              <img src={nosotros2} alt="NETI 2" loading="lazy" className="w-full object-cover rounded-2xl mt-[-8%] h-[108%]" style={noSelect} draggable={false} />
-              <img src={nosotros3} alt="NETI 3" loading="lazy" className="w-full object-cover rounded-2xl h-[95%]" style={noSelect} draggable={false} />
-              <img src={nosotros4} alt="NETI 4" loading="lazy" className="w-full h-full object-cover rounded-2xl" style={noSelect} draggable={false} />
+              <img src={nosotros1} width={205} height={205} alt="NETI 1" loading="lazy" className="w-full h-full object-cover rounded-2xl" style={noSelect} draggable={false} />
+              <img src={nosotros2} width={210} height={210} alt="NETI 2" loading="lazy" className="w-full object-cover rounded-2xl mt-[-8%] h-[108%]" style={noSelect} draggable={false} />
+              <img src={nosotros3} width={212} height={212} alt="NETI 3" loading="lazy" className="w-full object-cover rounded-2xl h-[95%]" style={noSelect} draggable={false} />
+              <img src={nosotros4} width={345} height={345} alt="NETI 4" loading="lazy" className="w-full h-full object-cover rounded-2xl" style={noSelect} draggable={false} />
             </div>
           </FadeIn>
         </div>
@@ -166,7 +166,7 @@ export default function Nosotros() {
 
           <FadeIn delay={80}>
             <div className="w-full mb-16">
-              <img src={dobleDiamante} alt="Doble Diamante" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
+              <img src={dobleDiamante} width={779} height={400} alt="Doble Diamante" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
             </div>
           </FadeIn>
 

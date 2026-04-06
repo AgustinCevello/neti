@@ -617,7 +617,7 @@ export default function FormularioModal({ taller, onClose }) {
             </p>
           </div>
           <button onClick={onClose} aria-label="Cerrar"
-            className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full flex items-center justify-center text-[#6B5F80] transition-all duration-200 hover:text-[#251B37] hover:scale-110 hover:bg-white/80">
+            className="absolute top-3 right-3 z-10 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-[#6B5F80] transition-all duration-200 hover:text-[#251B37] hover:scale-110 hover:bg-white/80">
             <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="w-4 h-4">
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>

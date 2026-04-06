@@ -60,9 +60,8 @@ export default function MapaAccion() {
       <img
         src={imgFondo}
         alt=""
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 h-full pointer-events-none select-none"
-        style={{ zIndex: 0, transform: 'translateX(-50%)', width: 'auto' }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[323px] min-h-[3075px] max-w-full md:top-0 md:left-0 md:translate-x-0 md:translate-y-0 md:w-full md:h-full md:min-w-0 md:min-h-0 md:object-fill pointer-events-none select-none"
+        style={{ zIndex: 0 }}
       />
 
       {/* CAPA 2: Línea punteada - solo en pantallas >= 768px */}
@@ -70,6 +69,9 @@ export default function MapaAccion() {
         <img
           src={imgLineaPunteada}
           alt=""
+          loading="lazy"
+          width={502}
+          height={2724}
           aria-hidden="true"
           className="absolute left-1/2 pointer-events-none select-none"
           style={{ zIndex: 1, transform: 'translateX(-50%)', width: 'auto', height: 'auto', top: lineaStyle.top, bottom: lineaStyle.bottom }}
@@ -95,7 +97,7 @@ export default function MapaAccion() {
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">
-              <img alt="Inspirar" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgInspirar} />
+              <img alt="Inspirar" width={442} height={692} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgInspirar} />
             </div>
           </div>
 
@@ -108,7 +110,7 @@ export default function MapaAccion() {
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pl-12">
-              <img alt="Empatizar y aprender" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgEmpatizar} />
+              <img alt="Empatizar y aprender" width={597} height={826} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgEmpatizar} />
             </div>
           </div>
 
@@ -121,7 +123,7 @@ export default function MapaAccion() {
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">
-              <img alt="Generar ideas" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgGenerar} />
+              <img alt="Generar ideas" width={409} height={443} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgGenerar} />
             </div>
           </div>
 
@@ -134,7 +136,7 @@ export default function MapaAccion() {
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pl-12">
-              <img alt="Prototipar y testear ideas" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgPrototipar} />
+              <img alt="Prototipar y testear ideas" width={412} height={485} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgPrototipar} />
             </div>
           </div>
 
@@ -147,7 +149,7 @@ export default function MapaAccion() {
               </TextoConGlow>
             </div>
             <div className="md:w-1/2 md:pr-12">
-              <img alt="Iterar y desarrollar" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgIterar} />
+              <img alt="Iterar y desarrollar" width={568} height={740} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgIterar} />
             </div>
           </div>
         </div>
