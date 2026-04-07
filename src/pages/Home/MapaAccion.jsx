@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import imgFondo from "../../assets/images/pictures/MapaDeAccionFondo.webp";
 import imgInspirar from "../../assets/images/pictures/MapaDeAccionInspirar.webp";
 import imgEmpatizar from "../../assets/images/pictures/MapaDeAccionEmpatizaryAprender.webp";
 import imgGenerar from "../../assets/images/pictures/MapaDeAccionGenerarIdeas.webp";
 import imgPrototipar from "../../assets/images/pictures/MapaDeAccionPrototiparyTestearIdeas.webp";
 import imgIterar from "../../assets/images/pictures/MapaDeAccionIterarYDesarrollar.webp";
-import imgFondo from "../../assets/images/pictures/MapaDeAccionFondo.webp";
 import imgLineaPunteada from "../../assets/images/pictures/MapaDeAccionLineaPunteada.webp";
 
 const TextoConGlow = ({ children, align = "left" }) => (
@@ -56,11 +56,14 @@ export default function MapaAccion() {
   return (
     <section ref={seccionRef} className="py-20 relative overflow-hidden">
 
-      {/* CAPA 1: Fondo */}
+      {/* CAPA 1: Fondo (Corregido y Centrado) */}
       <img
         src={imgFondo}
         alt=""
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[323px] min-h-[3075px] max-w-full md:top-0 md:left-0 md:translate-x-0 md:translate-y-0 md:w-full md:h-full md:min-w-0 md:min-h-0 md:object-fill pointer-events-none select-none"
+        width={708} // user's provided original file's width
+        height={3009} // user's provided original file's height
+        aria-hidden="true"
+        className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2 h-full w-auto object-contain pointer-events-none select-none"
         style={{ zIndex: 0 }}
       />
 
@@ -70,14 +73,17 @@ export default function MapaAccion() {
           src={imgLineaPunteada}
           alt=""
           loading="lazy"
-          width={502}
-          height={2724}
           aria-hidden="true"
           className="absolute left-1/2 pointer-events-none select-none"
-          style={{ zIndex: 1, transform: 'translateX(-50%)', width: 'auto', height: 'auto', top: lineaStyle.top, bottom: lineaStyle.bottom }}
+          style={{ 
+            zIndex: 1, 
+            transform: 'translateX(-50%)', 
+            top: lineaStyle.top, 
+            height: `calc(100% - ${lineaStyle.top} - ${lineaStyle.bottom})`,
+            width: 'auto'
+          }}
         />
       )}
-
       {/* CAPA 3: Contenido */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative" style={{ zIndex: 2 }}>
         <h2

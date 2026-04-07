@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import LiderazgoDisruptivoImg from '../../assets/images/pictures/LiderazcoDisruptivo.webp';
 import LiderazgoDisruptivoNuestroDiferencial1Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial1.webp';
 import LiderazgoDisruptivoNuestroDiferencial2Img from '../../assets/images/pictures/LiderazcoDisruptivoNuestroDiferencial2.webp';
-import FormularioModal from '../../components/FormularioModal/FormularioModal';
+import FondoCuadricula from '../../assets/images/pictures/FondoCuadricula.png';
 
-// â”€â”€ Datos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+import FormularioModal from '../../components/FormularioModal/FormularioModal';
 
 const infoCards = [
   {
@@ -15,7 +15,10 @@ const infoCards = [
     value: "11 de Octubre",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-        <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
       </svg>
     ),
   },
@@ -25,7 +28,9 @@ const infoCards = [
     sub: "Modalidad sincrónica",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        <circle cx="12" cy="12" r="10" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
       </svg>
     ),
   },
@@ -34,7 +39,8 @@ const infoCards = [
     value: "Mar 18:30–20:30",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+        <circle cx="12" cy="12" r="10" />
+        <polyline points="12 6 12 12 16 14" />
       </svg>
     ),
   },
@@ -44,7 +50,8 @@ const infoCards = [
     sub: "Precios especiales para grupos",
     icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-        <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        <line x1="12" y1="1" x2="12" y2="23" />
+        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
       </svg>
     ),
   },
@@ -102,21 +109,19 @@ const diferencial = [
   },
 ];
 
-// â”€â”€ Section Separator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-
 function SectionSeparator() {
   return (
     <div className="max-w-5xl mx-auto px-4 py-2">
-      <div style={{
-        height: '1px',
-        background: 'linear-gradient(to right, transparent, #EC4E8D, transparent)',
-        opacity: 0.3,
-      }} />
+      <div
+        style={{
+          height: '1px',
+          background: 'linear-gradient(to right, transparent, #EC4E8D, transparent)',
+          opacity: 0.3,
+        }}
+      />
     </div>
   );
 }
-
-// â”€â”€ Componente principal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export default function LiderazgoDisruptivo() {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -124,8 +129,10 @@ export default function LiderazgoDisruptivo() {
   return (
     <div className="bg-white overflow-x-hidden">
 
-      {/* â”€â”€ HERO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <section className="relative pt-16 pb-20 px-4 md:px-8 overflow-hidden">
+      <section
+        className="relative pt-16 pb-20 px-4 md:px-8 overflow-hidden bg-fixed bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${FondoCuadricula})` }}
+      >
         <div className="hero-bg-gradient hero-bg-gradient-1" />
         <div className="hero-bg-gradient hero-bg-gradient-2" />
         <div className="hero-bg-gradient hero-bg-gradient-3" />
@@ -150,7 +157,7 @@ export default function LiderazgoDisruptivo() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {infoCards.map((card, i) => (
               <FadeIn key={i} delay={i * 80} className="h-full">
-                <div className="glass-card flex flex-col items-center justify-start gap-3 p-5 rounded-2xl h-full">
+                <div className="glass-card flex flex-col items-center justify-start gap-3 p-5 rounded-2xl h-full backdrop-blur-sm bg-white/70">
                   <div className="w-10 h-10 rounded-full bg-[#EC4E8D] flex items-center justify-center text-white shrink-0">
                     {card.icon}
                   </div>
@@ -168,7 +175,6 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ A QUIÃ‰NES ESTÁ DIRIGIDO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.25)' }}>
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-14 items-center">
           <FadeIn>
@@ -187,7 +193,10 @@ export default function LiderazgoDisruptivo() {
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 rounded-full bg-[#EC4E8D] flex items-center justify-center text-white shrink-0">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                   </div>
                   <h2 className="font-sans text-xl font-bold text-[#251B37]">¿A quiénes está dirigido?</h2>
@@ -224,8 +233,10 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ 4 MÃ“DULOS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <section className="py-20 px-4 md:px-8">
+      <section
+        className="py-20 px-4 md:px-8 bg-fixed bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${FondoCuadricula})` }}
+      >
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2
@@ -239,7 +250,7 @@ export default function LiderazgoDisruptivo() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {modulos.map((mod, i) => (
               <FadeIn key={i} delay={i * 80} className="h-full">
-                <div className="module-card flex flex-col relative p-6 rounded-2xl bg-white overflow-hidden h-full">
+                <div className="module-card flex flex-col relative p-6 rounded-2xl bg-white overflow-hidden h-full shadow-lg">
                   <div className="absolute top-0 left-0 right-0 h-1" style={{ background: mod.color }} />
                   <div
                     className="absolute -top-3 -right-1 font-display font-black leading-none select-none pointer-events-none"
@@ -266,7 +277,6 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ NUESTRO DIFERENCIAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 md:px-8" style={{ background: 'rgba(240,230,255,0.25)' }}>
         <div className="max-w-5xl mx-auto">
           <FadeIn>
@@ -314,13 +324,9 @@ export default function LiderazgoDisruptivo() {
 
       <SectionSeparator />
 
-      {/* â”€â”€ CTA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="py-20 px-4 text-center">
         <FadeIn>
-          <button
-            onClick={() => setModalAbierto(true)}
-            className="premium-cta-btn"
-          >
+          <button onClick={() => setModalAbierto(true)} className="premium-cta-btn">
             Inscripción
           </button>
         </FadeIn>

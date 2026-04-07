@@ -57,7 +57,7 @@ export default function Home() {
 
   return (
     <main className="bg-white overflow-x-hidden">
-      {/* â”€â”€ HERO CARRUSEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── HERO CARRUSEL ────────────────────────────────────────── */}
       <section className="relative w-full min-h-[60vh] md:min-h-[75vh] flex flex-col justify-end overflow-hidden">
 
         {/* Slides */}
@@ -78,10 +78,10 @@ export default function Home() {
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-        {/* Flecha izquierda -” chevron simple, pegado al borde */}
+        {/* Flecha izquierda */}
         <button
           onClick={handlePrev}
-          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
+          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Anterior"
         >
           <svg width="16" height="28" viewBox="0 0 16 28" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
@@ -89,10 +89,10 @@ export default function Home() {
           </svg>
         </button>
 
-        {/* Flecha derecha -” chevron simple, pegado al borde */}
+        {/* Flecha derecha */}
         <button
           onClick={handleNext}
-          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1"
+          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 text-white/40 hover:text-white/90 transition-colors duration-200 p-1 min-w-[44px] min-h-[44px] flex items-center justify-center"
           aria-label="Siguiente"
         >
           <svg width="16" height="28" viewBox="0 0 16 28" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
@@ -115,14 +115,14 @@ export default function Home() {
             de innovación
           </h1>
 
-          {/* Dots -” pegados debajo del título, alineados a la izquierda */}
+          {/* Dots */}
           <div className="flex gap-[6px] items-center">
             {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => handleDot(i)}
                 aria-label={`Slide ${i + 1}`}
-                className="p-0 bg-transparent border-none cursor-pointer flex items-center"
+                className="p-2 bg-transparent border-none cursor-pointer flex items-center min-w-[44px] min-h-[44px]"
               >
                 <div
                   className="rounded-full transition-all duration-300"
@@ -150,8 +150,10 @@ export default function Home() {
         </div>
       </section>
 
-      <MapaAccion />
-      <Empresas />
+      <div className="relative overflow-hidden">
+        <MapaAccion />
+        <Empresas />
+      </div>
     </main>
   );
 }
