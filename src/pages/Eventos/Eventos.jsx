@@ -96,7 +96,7 @@ function formatearFecha(fechaIso) {
     const [year, month, day] = datePart.split('-');
     const [hour, minute] = timePart.split(':');
     return `${Number(day)}/${Number(month)}/${year} ${Number(hour)}:${minute}`;
-  } catch (e) {
+  } catch {
     return str;
   }
 }
@@ -120,7 +120,7 @@ function generarLinkGoogleCalendar(item) {
       const endStr = new Date(ms + 2 * 60 * 60 * 1000).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
       
       datesQuery = `&dates=${startStr}/${endStr}`;
-    } catch (e) {}
+    } catch { /* fecha inválida, se omite el rango */ }
   }
   
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesQuery}`;
