@@ -124,7 +124,7 @@ export default function Servicios() {
       .map((t, i) => {
         const paleta = PALETAS[i % PALETAS.length];
         const notas  = String(t['Notas'] || '');
-        const items  = notas.split('\n').map(s => s.trim()).filter(Boolean);
+        const items  = notas.split(';').map(s => s.trim()).filter(Boolean);
         return {
           title:       t['Título del Taller'] || `Taller ${i + 1}`,
           from:        paleta.from,
@@ -262,7 +262,7 @@ export default function Servicios() {
       <SectionSeparator />
 
       {/* ── VENÍ A APRENDER — Cards dinámicas desde Google Sheets ─────────── */}
-      <section className="py-20 px-4 md:px-8">
+      <section id="aprender" className="py-20 px-4 md:px-8 scroll-mt-24">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2

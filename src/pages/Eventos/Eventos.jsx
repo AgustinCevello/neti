@@ -87,6 +87,45 @@ function extraerMes(fecha) {
   return null;
 }
 
+function formatearFecha(fechaIso) {
+  if (!fechaIso) return '';
+  const str = String(fechaIso);
+  if (!str.includes('T')) return str;
+  try {
+    const [datePart, timePart] = str.split('T');
+    const [year, month, day] = datePart.split('-');
+    const [hour, minute] = timePart.split(':');
+    return `${Number(day)}/${Number(month)}/${year} ${Number(hour)}:${minute}`;
+  } catch (e) {
+    return str;
+  }
+}
+
+function generarLinkGoogleCalendar(item) {
+  const title = encodeURIComponent(item['Nombre del Evento'] || 'Evento NETI');
+  const details = encodeURIComponent(item['Descripción'] || item['Notas'] || '');
+  
+  let datesQuery = '';
+  const fechaStr = String(item['Fecha'] || '');
+  
+  if (fechaStr.includes('T')) {
+    try {
+      const [datePart, timePart] = fechaStr.split('T');
+      const [year, month, day] = datePart.split('-');
+      const [hourStr, minStr] = timePart.split(':');
+      
+      const ms = Date.UTC(Number(year), Number(month) - 1, Number(day), Number(hourStr), Number(minStr));
+      
+      const startStr = new Date(ms).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      const endStr = new Date(ms + 2 * 60 * 60 * 1000).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      
+      datesQuery = `&dates=${startStr}/${endStr}`;
+    } catch (e) {}
+  }
+  
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}${datesQuery}`;
+}
+
 const emailRegex  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LC          = 'abcdefghijklmnopqrstuvwxyz';
 const UC          = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -385,6 +424,24 @@ function AgendaItemSkeleton() {
   );
 }
 
+function NotasRender({ text }) {
+  if (!text) return null;
+  const items = String(text).split(';').map(s => s.trim()).filter(Boolean);
+  
+  if (items.length === 0) return null;
+  
+  return (
+    <ul className="flex flex-col gap-1.5 mt-2">
+      {items.map((item, idx) => (
+        <li key={idx} className="flex items-start gap-2">
+          <span className="shrink-0 mt-[6px] w-[5px] h-[5px] rounded-full bg-[#EC4E8D]" />
+          <span className="font-sans text-xs text-[#85789A] leading-relaxed">{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default function Eventos() {
   const [activeTab, setActiveTab] = useState('');
   const [search,    setSearch]    = useState('');
@@ -520,20 +577,18 @@ export default function Eventos() {
                   {item['Nombre del Evento'] || ''}
                 </h3>
                 <p className="font-sans text-xs text-[#85789A]">
-                  {item['Fecha'] || '—'}
+                  {formatearFecha(item['Fecha']) || '—'}
                 </p>
-                <p className="font-sans text-xs text-[#85789A] line-clamp-2">
-                  {item['Descripción'] || item['Notas'] || ''}
-                </p>
+                <div className="flex-1 overflow-hidden" style={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', maxHeight: '60px' }}>
+                  <NotasRender text={item['Descripción'] || item['Notas'] || ''} />
+                </div>
                 {item['Link de Difusión'] && (
-                  <a
-                    href={item['Link de Difusión']}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to="/servicios#aprender"
                     className="font-sans text-[11px] text-[#EC4E8D] font-semibold mt-auto hover:underline"
                   >
                     Ver más →
-                  </a>
+                  </Link>
                 )}
               </div>
             ))}
@@ -641,37 +696,35 @@ export default function Eventos() {
                     <span className="inline-block font-sans text-xs font-bold text-white bg-[#EC4E8D] px-3 py-1 rounded-full mb-2">
                       {item['Tipo de Evento'] || 'Evento'}
                     </span>
-                    <p className="font-sans text-xs text-[#85789A]">{item['Fecha'] || '—'}</p>
+                    <p className="font-sans text-xs text-[#85789A]">{formatearFecha(item['Fecha']) || '—'}</p>
                   </div>
                   <div>
                     <h3 className="font-sans font-bold text-[#251B37] text-sm mb-1">
                       {item['Nombre del Evento'] || ''}
                     </h3>
-                    <p className="font-sans text-xs text-[#85789A]">{item['Descripción'] || ''}</p>
+                    <NotasRender text={item['Descripción'] || item['Notas'] || ''} />
                   </div>
-                  {item['Link de Difusión']
-                    ? (
-                        <a
-                          href={item['Link de Difusión']}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                          </svg>
-                          Agregar al calendario
-                        </a>
-                      )
-                    : (
-                        <button className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
-                          </svg>
-                          Agregar al calendario
-                        </button>
-                      )
-                  }
+                  <div className="flex flex-col sm:flex-row gap-2 mt-4 md:mt-0 items-start">
+                    <a
+                      href={generarLinkGoogleCalendar(item)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 font-sans text-xs text-[#251B37] border border-[#E6E2EE] rounded-full px-4 py-2 hover:border-[#EC4E8D] hover:text-[#EC4E8D] transition-colors whitespace-nowrap"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                      Agregar al calendario
+                    </a>
+                    {item['Link de Difusión'] && (
+                      <Link
+                        to="/servicios#aprender"
+                        className="flex items-center justify-center gap-2 font-sans text-xs text-white bg-[#EC4E8D] border border-[#EC4E8D] rounded-full px-4 py-2 hover:bg-[#d83876] transition-colors whitespace-nowrap"
+                      >
+                        Más info / Unirme
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </FadeIn>
             ))}
