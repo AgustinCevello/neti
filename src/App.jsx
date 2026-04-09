@@ -14,29 +14,32 @@ import PoliticaPrivacidad from './pages/legales/PoliticaPrivacidad';
 import TerminosCondiciones from './pages/legales/TerminosCondiciones';
 
 import NotFound from './pages/NotFound';
+import { GlobalSheetsProvider } from './context/GlobalSheetsContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/nosotros" element={<Nosotros />} />
-        <Route path="/liderazgo-disruptivo" element={<LiderazgoDisruptivo />} />
-        <Route path="/servicios" element={<Servicios />} />
-        <Route path="/eventos" element={<Eventos />} />
-        <Route path="/contacto" element={<Contacto />} />
-        
-        {/* Agregamos las rutas de Legales */}
-        <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
-        <Route path="/terminos-y-condiciones" element={<TerminosCondiciones />} />
+    <GlobalSheetsProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/nosotros" element={<Nosotros />} />
+          <Route path="/liderazgo-disruptivo" element={<LiderazgoDisruptivo />} />
+          <Route path="/servicios" element={<Servicios />} />
+          <Route path="/eventos" element={<Eventos />} />
+          <Route path="/contacto" element={<Contacto />} />
+          
+          {/* Agregamos las rutas de Legales */}
+          <Route path="/politica-de-privacidad" element={<PoliticaPrivacidad />} />
+          <Route path="/terminos-y-condiciones" element={<TerminosCondiciones />} />
 
-        {/* Catch-all para 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+          {/* Catch-all para 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </GlobalSheetsProvider>
   );
 }
 
