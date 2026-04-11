@@ -105,7 +105,7 @@ function TallerSkeleton() {
 
 // ── Componente principal ──────────────────────────────────────────────────────
 export default function Servicios() {
-  const [modalTaller, setModalTaller] = useState(null);
+  const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
 
   // ── Datos dinámicos desde Google Sheets ──────────────────────────────────
   const { data: talleresRaw, loading: talleresLoading, error: talleresError } =
@@ -131,12 +131,13 @@ export default function Servicios() {
           to:          paleta.to,
           accent:      paleta.accent,
           items,
-          link:        t['Link de Inscripción'] || '/servicios',
+          link:        t['Link de Inscripción'] || '',
           // Datos extra disponibles para tooltips o futuros usos
           facilitador: t['Facilitador'] || '',
           modalidad:   t['Modalidad']   || '',
           precio:      t['Precio']      || '',
           cupo:        t['Cupo Máximo'] || '',
+          _raw:        t,  // Fila original del sheet para el modal
         };
       });
   }, [talleresRaw]);
@@ -370,20 +371,38 @@ export default function Servicios() {
                         0{i + 1}
                       </span>
 
-                      <button
-                        type="button"
-                        onClick={() => setModalTaller(TALLER_KEYS[i % TALLER_KEYS.length])}
-                        className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20 cursor-pointer shadow-lg"
-                        style={{
-                          background: 'rgba(255,255,255,0.1)',
-                          backdropFilter: 'blur(12px)',
-                          border: '1px solid rgba(255,255,255,0.2)',
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4 ml-0.5">
-                          <path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6L4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="white" />
-                        </svg>
-                      </button>
+                      {taller.link ? (
+                        <a
+                          href={taller.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20 cursor-pointer shadow-lg"
+                          style={{
+                            background: 'rgba(255,255,255,0.1)',
+                            backdropFilter: 'blur(12px)',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4 ml-0.5">
+                            <path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6L4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="white" />
+                          </svg>
+                        </a>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setEventoSeleccionado(TALLER_KEYS[i % TALLER_KEYS.length])}
+                          className="w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 hover:scale-110 hover:bg-white/20 cursor-pointer shadow-lg"
+                          style={{
+                            background: 'rgba(255,255,255,0.1)',
+                            backdropFilter: 'blur(12px)',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" className="w-4 h-4 ml-0.5">
+                            <path d="M4.646 2.146a.5.5 0 0 0 0 .708L7.793 6L4.646 9.146a.5.5 0 1 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z" fill="white" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -450,8 +469,8 @@ export default function Servicios() {
         </div>
       </section>
 
-      {modalTaller && (
-        <FormularioModal taller={modalTaller} onClose={() => setModalTaller(null)} />
+      {eventoSeleccionado && (
+        <FormularioModal taller={eventoSeleccionado} onClose={() => setEventoSeleccionado(null)} />
       )}
     </div>
   );

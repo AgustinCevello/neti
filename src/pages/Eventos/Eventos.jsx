@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
@@ -184,7 +184,7 @@ function SuccessToast({ nombre, email }) {
   );
 }
 
-function InscripcionForm() {
+function InscripcionForm({ evento }) {
   const [form, setForm]           = useState({ nombre: '', apellido: '', email: '', aceptaLegales: false });
   const [errors, setErrors]       = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -236,7 +236,8 @@ function InscripcionForm() {
     sendingRef.current = true;
     btnRef.current?.blur();
     const { nombre, email } = form;
-    await enviarInscripcionEvento(form);
+    const eventoNombre = evento?.['Nombre del Evento'] || 'Evento NETI';
+    await enviarInscripcionEvento({ ...form, evento: eventoNombre });
 
     setTimeout(() => {
       setSubmitted(true);
@@ -382,6 +383,147 @@ function InscripcionForm() {
   );
 }
 
+// ── Modal de Inscripción dinámico ──────────────────────────────────────────────
+function ModalInscripcion({ evento, onClose }) {
+  const overlayRef = useRef(null);
+  const mouseDownTarget = useRef(null);
+
+  useEffect(() => {
+    const body = document.body;
+    const html = document.documentElement;
+    const scrollY = window.scrollY;
+    body.dataset.scrollY = String(scrollY);
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.width = '100%';
+    body.style.overflow = 'hidden';
+    html.style.overflow = 'hidden';
+    return () => {
+      const sy = parseInt(body.dataset.scrollY || '0', 10);
+      body.style.position = '';
+      body.style.top = '';
+      body.style.width = '';
+      body.style.overflow = '';
+      html.style.overflow = '';
+      window.scrollTo(0, sy);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  const nombreEvento = evento['Nombre del Evento'] || 'Evento NETI';
+  const fechaEvento = formatearFecha(evento['Fecha']);
+  const descEvento = evento['Descripción'] || evento['Notas'] || '';
+  const extracto = descEvento.length > 120 ? descEvento.slice(0, 120) + '…' : descEvento;
+
+  return (
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+      style={{ background: 'rgba(20,13,40,0.65)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
+      onMouseDown={(e) => { mouseDownTarget.current = e.target; }}
+      onMouseUp={(e) => {
+        if (mouseDownTarget.current === overlayRef.current && e.target === overlayRef.current) onClose();
+        mouseDownTarget.current = null;
+      }}
+    >
+      <div
+        className="relative w-full max-w-[640px] flex flex-col rounded-2xl overflow-hidden bg-white"
+        style={{
+          maxHeight: '92vh',
+          boxShadow: '0 32px 80px rgba(20,13,40,0.35), 0 0 0 1px rgba(255,255,255,0.06)',
+          animation: 'modalIn 0.38s cubic-bezier(0.34,1.48,0.64,1)',
+        }}
+      >
+        {/* Header dinámico con datos del evento */}
+        <div className="relative flex-shrink-0 px-6 pt-7 pb-5 overflow-hidden">
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #EAE5F5 0%, #F7DDE9 50%, #DAEEF5 100%)' }} />
+          <div className="absolute -top-6 -right-6 w-32 h-32 rounded-full pointer-events-none"
+            style={{ background: 'rgba(236,78,141,0.12)', filter: 'blur(20px)' }} />
+          <div className="absolute -bottom-4 left-10 w-24 h-24 rounded-full pointer-events-none"
+            style={{ background: 'rgba(168,85,247,0.10)', filter: 'blur(16px)' }} />
+
+          <div className="relative z-10 pr-10">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-block font-sans text-[10px] font-bold text-white bg-[#EC4E8D] px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                Inscripción
+              </span>
+              {fechaEvento && (
+                <span className="inline-flex items-center gap-1 font-sans text-[10px] font-semibold text-[#6B5F80] bg-white/60 px-2.5 py-0.5 rounded-full">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                  {fechaEvento}
+                </span>
+              )}
+            </div>
+            <h1 className="font-sans font-extrabold text-xl text-[#251B37] mb-1.5 leading-tight">
+              {nombreEvento}
+            </h1>
+            {extracto && (
+              <p className="font-sans text-xs text-[#6B5F80] leading-relaxed">
+                {extracto}
+              </p>
+            )}
+          </div>
+
+          <button onClick={onClose} aria-label="Cerrar"
+            className="absolute top-3 right-3 z-10 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-[#6B5F80] transition-all duration-200 hover:text-[#251B37] hover:scale-110 hover:bg-white/80">
+            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" className="w-4 h-4">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Body con el formulario */}
+        <div className="overflow-y-auto flex-1 px-6 py-6"
+          style={{ scrollbarWidth: 'thin', scrollbarColor: '#EC4E8D44 transparent' }}>
+          <InscripcionForm evento={evento} />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes modalIn {
+          from { opacity: 0; transform: translateY(28px) scale(0.97); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+// ── Botón de inscripción condicional ──────────────────────────────────────────
+const INSCRIPCION_BTN_CLASSES = 'flex items-center justify-center gap-2 font-sans text-xs text-white bg-[#EC4E8D] border border-[#EC4E8D] rounded-full px-4 py-2 hover:bg-[#d83876] hover:border-[#d83876] transition-colors whitespace-nowrap cursor-pointer';
+
+function BotonInscripcion({ item, onInscripcion }) {
+  const link = item['Link de Inscripción'];
+  if (link) {
+    return (
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={INSCRIPCION_BTN_CLASSES}
+      >
+        Más info / Unirme
+      </a>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => onInscripcion(item)}
+      className={INSCRIPCION_BTN_CLASSES}
+    >
+      Más info / Unirme
+    </button>
+  );
+}
+
 function SpeakerCard({ speaker, delay }) {
   return (
     <FadeIn delay={delay} className="flex flex-col items-center text-center">
@@ -443,8 +585,9 @@ function NotasRender({ text }) {
 }
 
 export default function Eventos() {
-  const [activeTab, setActiveTab] = useState('');
-  const [search,    setSearch]    = useState('');
+  const [activeTab, setActiveTab]             = useState('');
+  const [search,    setSearch]                = useState('');
+  const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
 
   const actividadesRef = useRef(null);
   const scrollActividades = (dir) => {
@@ -582,14 +725,7 @@ export default function Eventos() {
                 <div className="flex-1 overflow-hidden" style={{ maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)', maxHeight: '60px' }}>
                   <NotasRender text={item['Descripción'] || item['Notas'] || ''} />
                 </div>
-                {item['Link de Difusión'] && (
-                  <Link
-                    to="/servicios#aprender"
-                    className="font-sans text-[11px] text-[#EC4E8D] font-semibold mt-auto hover:underline"
-                  >
-                    Ver más →
-                  </Link>
-                )}
+                <BotonInscripcion item={item} onInscripcion={setEventoSeleccionado} />
               </div>
             ))}
           </div>
@@ -716,14 +852,7 @@ export default function Eventos() {
                       </svg>
                       Agregar al calendario
                     </a>
-                    {item['Link de Difusión'] && (
-                      <Link
-                        to="/servicios#aprender"
-                        className="flex items-center justify-center gap-2 font-sans text-xs text-white bg-[#EC4E8D] border border-[#EC4E8D] rounded-full px-4 py-2 hover:bg-[#d83876] transition-colors whitespace-nowrap"
-                      >
-                        Más info / Unirme
-                      </Link>
-                    )}
+                    <BotonInscripcion item={item} onInscripcion={setEventoSeleccionado} />
                   </div>
                 </div>
               </FadeIn>
@@ -753,21 +882,13 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* INSCRIBIRSE */}
-      <section className="py-20 px-4 md:px-8 bg-[#faf9fc]">
-        <div className="max-w-4xl mx-auto">
-          <FadeIn>
-            <h2 className="font-display text-4xl md:text-5xl font-black uppercase mb-12" style={{ color: '#35112F' }}>
-              Inscribirse
-            </h2>
-          </FadeIn>
-          <FadeIn delay={80}>
-            <div style={{ minHeight: '260px' }}>
-              <InscripcionForm />
-            </div>
-          </FadeIn>
-        </div>
-      </section>
+      {/* MODAL DE INSCRIPCIÓN DINÁMICO */}
+      {eventoSeleccionado !== null && (
+        <ModalInscripcion
+          evento={eventoSeleccionado}
+          onClose={() => setEventoSeleccionado(null)}
+        />
+      )}
 
       <style>{`
         @keyframes thanksFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
