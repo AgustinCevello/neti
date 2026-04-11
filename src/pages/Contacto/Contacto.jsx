@@ -45,7 +45,7 @@ export default function Contacto() {
         <div className="absolute top-[60%] left-[30%] w-[600px] h-[600px] bg-[#251B37] rounded-full mix-blend-multiply filter blur-[150px] opacity-[0.08] animate-float delay-5000" />
       </div>
 
-      <section className="pt-16 px-4 md:px-8 relative z-10" style={{ minHeight: '680px' }}>
+      <section className="pt-16 px-4 md:px-8 pb-12 relative z-10">
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h1 className="font-display text-5xl md:text-7xl font-black uppercase text-center mb-14 tracking-widest relative" style={{ WebkitTextStroke: '1.5px var(--color-neti-pink)', color: 'transparent' }}>
@@ -68,7 +68,7 @@ export default function Contacto() {
             </FadeIn>
 
             <FadeIn delay={140}>
-              <div>
+              <div className="min-h-[1100px] md:min-h-[500px] flex flex-col">
                 <h2 className="font-sans text-2xl md:text-3xl font-black text-[#251B37] mb-5 tracking-tight">
                   El universo de la innovación<span className="text-[#EC4E8D]">.</span>
                 </h2>
@@ -158,9 +158,9 @@ export default function Contacto() {
         </div>
       </section>
 
-      {/* ── Banner: margen fijo grande para que el formulario no lo empuje ── */}
+      {/* ── Banner: Distancia significativa garantizada ── */}
       <FadeIn delay={60}>
-        <div className="w-full mt-64 mb-12 relative z-10">
+        <div className="w-full mt-32 mb-12 relative z-10">
           <div className="absolute inset-0 bg-[#251B37]/5 pointer-events-none" />
           <img src={bannerImg} alt="NETI comunidad" className="w-full object-cover max-h-[250px] shadow-sm" style={noSelect} draggable={false} />
         </div>

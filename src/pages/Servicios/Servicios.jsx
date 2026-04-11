@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import EmblaCarousel from '../../components/EmblaCarousel/EmblaCarousel';
 import FormularioModal from '../../components/FormularioModal/FormularioModal';
 import { useSheetData } from '../../hooks/useSheetData';
+import FondoCuadricula from '../../assets/images/pictures/FondoCuadricula.png';
 
 import g1 from '../../assets/images/pictures/ServiciosGalery1.webp';
 import g2 from '../../assets/images/pictures/ServiciosGalery2.webp';
@@ -263,7 +264,11 @@ export default function Servicios() {
       <SectionSeparator />
 
       {/* ── VENÍ A APRENDER — Cards dinámicas desde Google Sheets ─────────── */}
-      <section id="aprender" className="py-20 px-4 md:px-8 scroll-mt-24">
+      <section
+        id="aprender"
+        className="py-20 px-4 md:px-8 scroll-mt-24 bg-fixed bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${FondoCuadricula})` }}
+      >
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2

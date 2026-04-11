@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
 
           {/* Columna 2: Talleres */}
-          <div className="flex flex-col gap-5">
+          <div className="hidden md:flex flex-col gap-5">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-fuchsia/80">
               Talleres
             </h4>
@@ -107,7 +107,7 @@ export default function Footer() {
           </div>
 
           {/* Columna 3: Navegación */}
-          <div className="flex flex-col gap-5">
+          <div className="hidden md:flex flex-col gap-5">
             <h4 className="text-xs font-semibold uppercase tracking-widest text-cyan/80">
               Navegación
             </h4>

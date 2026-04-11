@@ -2,6 +2,7 @@ import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 import dobleDiamante from '../../assets/images/pictures/DobleDiamante.webp';
 import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.webp';
+import FondoCuadricula from '../../assets/images/pictures/FondoCuadricula.png';
 import nosotros1 from '../../assets/images/pictures/Nosotros1.webp';
 import nosotros2 from '../../assets/images/pictures/Nosotros2.webp';
 import nosotros3 from '../../assets/images/pictures/Nosotros3.webp';
@@ -42,21 +43,14 @@ const noSelect = {
   pointerEvents: "none",
 };
 
-const LinkedInIcon = () => (
-  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-  </svg>
-);
+
 
 const TeamCard = ({ member, delay = 0 }) => {
   return (
     <FadeIn delay={delay}>
       <div className="flex flex-col items-center w-full">
-        <a
-          href={member.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="relative group mb-5 block w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44"
+        <div
+          className="relative mb-5 block w-24 h-24 sm:w-36 sm:h-36 md:w-44 md:h-44"
         >
           <img
             src={member.img}
@@ -66,17 +60,18 @@ const TeamCard = ({ member, delay = 0 }) => {
             style={{ ...noSelect, pointerEvents: "none" }}
             draggable={false}
           />
-          <div
-            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: "radial-gradient(circle 50px at center, rgba(0,119,181,0.80) 0%, rgba(0,119,181,0.0) 100%)" }}
-          >
-            <div className="text-white scale-0 group-hover:scale-100 transition-transform duration-300 delay-75">
-              <LinkedInIcon />
-            </div>
-          </div>
-        </a>
+        </div>
         <span className="font-sans text-[10px] sm:text-xs font-semibold text-[#EC4E8D] uppercase tracking-widest mb-1 text-center leading-tight">{member.role}</span>
         <p className="font-sans font-bold text-[#251B37] text-center text-xs sm:text-sm leading-tight">{member.name}</p>
+        <a 
+          href={member.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-1 mt-1 font-sans text-[11px] sm:text-xs font-medium text-[#85789A] hover:text-[#EC4E8D] transition-colors"
+        >
+          LinkedIn
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" /></svg>
+        </a>
       </div>
     </FadeIn>
   );
@@ -90,10 +85,10 @@ const SocialIcon = ({ href, children }) => (
 
 export default function Nosotros() {
   return (
-    <div className="bg-white overflow-hidden">
+    <div className="overflow-hidden">
 
       {/* SECCION 1 */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+      <div className="bg-white max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
         <FadeIn>
           <h1
             className="font-display text-5xl md:text-7xl font-black text-center mb-8 uppercase tracking-widest"
@@ -153,7 +148,10 @@ export default function Nosotros() {
       </div>
 
       {/* SECCION 2 - Doble Diamante */}
-      <div className="py-20 px-4 bg-white">
+      <div
+        className="py-20 px-4 border-y border-[#E6E2EE] bg-fixed bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${FondoCuadricula})` }}
+      >
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2
@@ -203,7 +201,7 @@ export default function Nosotros() {
           backgroundSize: 'contain',
           backgroundPosition: 'center top',
           backgroundRepeat: 'no-repeat',
-          backgroundColor: 'white',
+          backgroundColor: '#faf9fc',
         }}
       >
         <div className="max-w-6xl mx-auto">
