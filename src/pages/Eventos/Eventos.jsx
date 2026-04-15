@@ -18,7 +18,7 @@ import globantLogo      from '../../assets/images/empresas/globant.webp';
 import mercedesLogo     from '../../assets/images/empresas/mercedes.webp';
 import nanotecnologiaLogo from '../../assets/images/empresas/nanotecnologia.webp';
 import telefonicaLogo   from '../../assets/images/empresas/telefonica.webp';
-
+import FondoCuadricula from '../../assets/images/pictures/FondoCuadricula.png';
 const noSelect = {
   WebkitUserSelect: 'none', MozUserSelect: 'none',
   msUserSelect: 'none', userSelect: 'none',
@@ -754,7 +754,10 @@ export default function Eventos() {
       </section>
 
       {/* ORADORES */}
-      <section className="py-16 px-4 md:px-8">
+      <section 
+        className="py-16 px-4 md:px-8 bg-fixed bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${FondoCuadricula})` }}
+      >
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase mb-14" style={{ color: '#35112F' }}>
