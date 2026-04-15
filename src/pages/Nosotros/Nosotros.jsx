@@ -1,6 +1,8 @@
 import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 import dobleDiamante from '../../assets/images/pictures/DobleDiamante.webp';
+import dobleDiamante1 from '../../assets/images/pictures/DobleDiamante1.webp';
+import dobleDiamante2 from '../../assets/images/pictures/DobleDiamante2.webp';
 import equipoFondo from '../../assets/images/pictures/ElEquipoFondo.webp';
 import FondoCuadricula from '../../assets/images/pictures/FondoCuadricula.png';
 import nosotros1 from '../../assets/images/pictures/Nosotros1.webp';
@@ -10,10 +12,7 @@ import nosotros4 from '../../assets/images/pictures/Nosotros4.webp';
 import mara from '../../assets/images/pictures/EmpleadoMara.webp';
 import esteban1 from '../../assets/images/pictures/EmpleadoEsteban1.webp';
 import euge from '../../assets/images/pictures/EmpleadoEuge.webp';
-import esteban2 from '../../assets/images/pictures/EmpleadoEsteban2.webp';
-import estefania from '../../assets/images/pictures/EmpleadoEstefi.webp';
 import sorelys from '../../assets/images/pictures/EmpleadoSorelys.webp';
-import juani from '../../assets/images/pictures/EmpleadoJuani.webp';
 
 
 
@@ -21,10 +20,7 @@ const teamMembers = [
   { name: "Mara Provenzano", role: "Cofundadora-DEO", linkedin: "https://www.linkedin.com/in/marapro/", img: mara },
   { name: "Esteban Bonomi", role: "Cofundador-COO", linkedin: "https://www.linkedin.com/in/esteban-bonomi-642720116/", img: esteban1 },
   { name: "Euge Abratti Bogdanich", role: "Diseñadora de experiencia", linkedin: "https://www.linkedin.com/in/eugenia-abratti-bogdanich/", img: euge },
-  { name: "Santiago Marchetti", role: "Facilitador IoT", linkedin: "https://www.linkedin.com/in/santiago-marchetti/", img: esteban2 },
-  { name: "Estefania Cedermaz", role: "Facilitadora SD", linkedin: "https://www.linkedin.com/in/estefaniacedermazservicedesigner/", img: estefania },
   { name: "Sorelys Marcano Martinez", role: "Facilitadora SD", linkedin: "https://www.linkedin.com/in/sorelys-marcano-martinez", img: sorelys },
-  { name: "Juan Ignacio Franchi", role: "Diseñador UX/UI", linkedin: "https://www.linkedin.com/in/juan-ignacio-franchi-5356a81b7/", img: juani },
 ];
 
 const diamanteTexts = [
@@ -163,8 +159,12 @@ export default function Nosotros() {
           </FadeIn>
 
           <FadeIn delay={80}>
-            <div className="w-full mb-16">
+            <div className="w-full mb-16 hidden md:block">
               <img src={dobleDiamante} width={779} height={400} alt="Doble Diamante" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
+            </div>
+            <div className="flex flex-col gap-4 md:hidden mb-16">
+              <img src={dobleDiamante1} alt="Doble Diamante - Parte 1" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
+              <img src={dobleDiamante2} alt="Doble Diamante - Parte 2" loading="lazy" className="w-full object-contain" style={noSelect} draggable={false} />
             </div>
           </FadeIn>
 
@@ -214,14 +214,9 @@ export default function Nosotros() {
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 justify-items-center mb-16">
-            {teamMembers.slice(0, 3).map((member, idx) => (
-              <TeamCard key={idx} member={member} delay={idx * 80} />
-            ))}
-          </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 justify-items-center">
-            {teamMembers.slice(3).map((member, idx) => (
-              <TeamCard key={idx + 3} member={member} delay={idx * 60} />
+            {teamMembers.map((member, idx) => (
+              <TeamCard key={idx} member={member} delay={idx * 80} />
             ))}
           </div>
         </div>
