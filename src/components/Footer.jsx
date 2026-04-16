@@ -211,9 +211,29 @@ export default function Footer() {
             href="https://agustincervello.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-white/40 hover:text-cyan transition-colors shrink-0"
+            className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#00D8ED]/30 transition-all duration-300 shrink-0"
           >
-            Diseñado por Agus
+            <span className="text-[11px] text-white/40 group-hover:text-white/60 transition-colors duration-300">
+              Diseñado y Desarrollado con
+            </span>
+            <svg
+              className="w-3 h-3 text-[#EC4E8D] shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+            <span className="text-[11px] text-white/40 transition-colors duration-300">
+              por{' '}
+              <span className="font-semibold text-white/60 group-hover:text-[#00D8ED] transition-colors duration-300">
+                Agus
+              </span>
+            </span>
           </a>
 
         </div>
