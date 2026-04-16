@@ -13,6 +13,7 @@ import mara from '../../assets/images/pictures/EmpleadoMara.webp';
 import esteban1 from '../../assets/images/pictures/EmpleadoEsteban1.webp';
 import euge from '../../assets/images/pictures/EmpleadoEuge.webp';
 import sorelys from '../../assets/images/pictures/EmpleadoSorelys.webp';
+import agustin from '../../assets/images/pictures/EmpleadoAgustin.webp';
 
 
 
@@ -21,6 +22,7 @@ const teamMembers = [
   { name: "Esteban Bonomi", role: "Cofundador-COO", linkedin: "https://www.linkedin.com/in/esteban-bonomi-642720116/", img: esteban1 },
   { name: "Euge Abratti Bogdanich", role: "Diseñadora de experiencia", linkedin: "https://www.linkedin.com/in/eugenia-abratti-bogdanich/", img: euge },
   { name: "Sorelys Marcano Martinez", role: "Facilitadora SD", linkedin: "https://www.linkedin.com/in/sorelys-marcano-martinez", img: sorelys },
+  { name: "Agustín Cervello", role: "Desarrollador web", linkedin: "https://www.linkedin.com/in/agustin-cervello-b04b37235/", img: agustin },
 ];
 
 const diamanteTexts = [
@@ -214,10 +216,21 @@ export default function Nosotros() {
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 justify-items-center">
-            {teamMembers.map((member, idx) => (
-              <TeamCard key={idx} member={member} delay={idx * 80} />
-            ))}
+          <div className="flex flex-col gap-10 items-center">
+            {/* Fila 1: 3 miembros */}
+            <div className="flex flex-wrap justify-center gap-10 w-full max-w-4xl mx-auto">
+              {teamMembers.slice(0, 3).map((member, idx) => (
+                <div key={idx} className="w-[calc(50%-20px)] sm:w-[calc(33.333%-27px)] flex justify-center">
+                  <TeamCard member={member} delay={idx * 80} />
+                </div>
+              ))}
+            </div>
+            {/* Fila 2: 2 miembros centrados */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-10 justify-items-center w-full max-w-2xl mx-auto">
+              {teamMembers.slice(3).map((member, idx) => (
+                <TeamCard key={idx + 3} member={member} delay={(idx + 3) * 80} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
