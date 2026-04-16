@@ -159,7 +159,7 @@ function SuccessToast({ nombre, email }) {
       border: '1px solid rgba(255,255,255,0.6)',
       boxShadow: '0 8px 32px rgba(20,13,40,0.15), 0 0 0 1px rgba(0,0,0,0.04), 3px 0 0 0 #EC4E8D inset',
       minWidth: '280px', maxWidth: '340px',
-      fontFamily: 'IBM Plex Sans, system-ui, sans-serif',
+      fontFamily: 'DM Sans, system-ui, sans-serif',
     }}>
       <div style={{
         width: '36px', height: '36px', borderRadius: '10px', flexShrink: 0,
@@ -236,7 +236,7 @@ function InscripcionForm({ evento }) {
     sendingRef.current = true;
     btnRef.current?.blur();
     const { nombre, email } = form;
-    const eventoNombre = evento?.['Nombre del Evento'] || 'Evento NETI';
+    const eventoNombre = evento?.['Nombre del Evento'] || 'Inscripción General (Desde pie de página)';
     await enviarInscripcionEvento({ ...form, evento: eventoNombre });
 
     setTimeout(() => {
@@ -882,6 +882,24 @@ export default function Eventos() {
               ))}
             </div>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* INSCRIPCIÓN GENERAL */}
+      <section className="py-16 px-4 md:px-8 border-t border-[#E6E2EE]">
+        <div className="max-w-4xl mx-auto">
+          <FadeIn>
+            <h2
+              className="font-display text-4xl md:text-5xl font-black uppercase mb-4 tracking-widest"
+              style={{ color: '#35112F' }}
+            >
+              Inscripción General
+            </h2>
+            <p className="font-sans text-[#85789A] text-sm mb-10">
+              ¿No encontrás el evento que buscabas? Dejá tus datos y te avisamos de los próximos encuentros.
+            </p>
+          </FadeIn>
+          <InscripcionForm />
         </div>
       </section>
 

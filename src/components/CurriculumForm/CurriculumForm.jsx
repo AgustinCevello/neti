@@ -100,6 +100,7 @@ export default function CurriculumForm({ onSuccess }) {
   const apply = (name, value) => setForm(prev => ({ ...prev, [name]: value }));
 
   const errors = validateForm(form, CV_RULES);
+  const isFormValid = Object.keys(errors).length === 0;
 
   const getStatus = (name) => {
     if (focused === name) return 'focused';
@@ -240,7 +241,11 @@ export default function CurriculumForm({ onSuccess }) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full relative text-white font-sans font-bold text-sm uppercase tracking-widest py-3 rounded-xl overflow-hidden transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed mt-1"
+        className={`w-full relative text-white font-sans font-bold text-sm uppercase tracking-widest py-3 rounded-xl overflow-hidden transition-all duration-200 mt-1 ${
+          isFormValid
+            ? 'active:scale-95 hover:shadow-xl cursor-pointer'
+            : 'opacity-60 cursor-not-allowed'
+        } disabled:opacity-60 disabled:cursor-not-allowed`}
         style={{ background: 'linear-gradient(135deg, #1a1030 60%, #2d1a4a)' }}
       >
         <span className="absolute top-0 right-0 w-20 h-full pointer-events-none"

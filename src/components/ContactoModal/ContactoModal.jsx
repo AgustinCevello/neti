@@ -95,6 +95,7 @@ function ContactoForm({ onSuccess }) {
   const apply = (name, value) => setForm(prev => ({ ...prev, [name]: value }));
 
   const errors = validateForm(form, CONTACTO_RULES);
+  const isFormValid = Object.keys(errors).length === 0;
 
   const getStatus = (name) => {
     if (focused === name) return 'focused';
@@ -291,9 +292,13 @@ function ContactoForm({ onSuccess }) {
       <div>
         <button
           type="submit" disabled={loading}
-          className="relative text-white font-sans font-bold text-sm uppercase tracking-widest px-10 py-3.5 rounded-xl overflow-hidden transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+          className={`relative text-white font-sans font-bold text-sm uppercase tracking-widest px-10 py-3.5 rounded-xl overflow-hidden transition-all duration-200 ${
+            isFormValid
+              ? 'active:scale-95 hover:shadow-xl cursor-pointer'
+              : 'opacity-60 cursor-not-allowed'
+          } disabled:opacity-60 disabled:cursor-not-allowed`}
           style={{ background: 'linear-gradient(135deg, #1a1030 60%, #2d1a4a)', boxShadow: '0 4px 20px rgba(236,78,141,0.2)' }}
-          onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 28px rgba(236,78,141,0.35)'; }}
+          onMouseEnter={e => { if (isFormValid && !loading) e.currentTarget.style.boxShadow = '0 8px 28px rgba(236,78,141,0.35)'; }}
           onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(236,78,141,0.2)'; }}
         >
           <span className="absolute top-0 right-0 w-20 h-full pointer-events-none" style={{ background: 'radial-gradient(ellipse at top right, rgba(236,78,141,0.55), transparent 70%)' }} />
