@@ -129,13 +129,13 @@ const Navbar = () => {
             </Link>
 
             {/* Nav desktop */}
-            <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
+            <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
               {navLinks.map((link) => (
                 <NavLink
                   key={link.name}
                   to={link.path}
                   className={({ isActive }) =>
-                    `relative group font-medium text-lg transition-colors duration-200 py-2 ${isActive ? 'text-[#EC4E8D]' : 'text-black'}`
+                    `relative group font-medium text-base transition-colors duration-200 py-2 ${isActive ? 'text-[#EC4E8D]' : 'text-black'}`
                   }
                 >
                   {({ isActive }) => (

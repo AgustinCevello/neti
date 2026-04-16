@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import MapaAccion from "./MapaAccion";
 import Empresas from "./Empresas";
 
@@ -103,7 +103,7 @@ export default function Home() {
         {/* Título + dots */}
         <div ref={heroRef} className="relative z-10 px-6 md:px-10 pb-4 max-w-4xl w-full">
           <h1
-            className="font-display text-5xl md:text-7xl lg:text-8xl leading-none uppercase mb-3"
+            className="font-display text-5xl md:text-7xl lg:text-6xl xl:text-7xl leading-none uppercase mb-3"
             style={{
               WebkitTextStroke: "1.5px #ffffff",
               color: "transparent",
