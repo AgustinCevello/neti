@@ -334,9 +334,11 @@ function InscripcionForm({ evento }) {
             </Link>.
           </span>
         </label>
-        {errors.aceptaLegales && (
-          <p className="font-sans text-[10px] text-red-400 pl-[26px] m-0">{errors.aceptaLegales}</p>
-        )}
+        <div className="min-h-[1.25rem] pl-[26px]">
+          {errors.aceptaLegales && (
+            <p className="font-sans text-[10px] text-red-400 m-0">{errors.aceptaLegales}</p>
+          )}
+        </div>
       </div>
 
       <div className="text-center">
