@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import FadeIn from '../../components/FadeIn';
 import { Link } from 'react-router-dom';
 
@@ -68,7 +68,7 @@ export default function Contacto() {
             </FadeIn>
 
             <FadeIn delay={140}>
-              <div className="min-h-[1100px] md:min-h-[500px] flex flex-col">
+              <div className="md:min-h-[500px] flex flex-col">
                 <h2 className="font-sans text-2xl md:text-3xl font-black text-[#251B37] mb-5 tracking-tight">
                   El universo de la innovación<span className="text-[#EC4E8D]">.</span>
                 </h2>
@@ -160,7 +160,7 @@ export default function Contacto() {
 
       {/* ── Banner: Distancia significativa garantizada ── */}
       <FadeIn delay={60}>
-        <div className="w-full mt-32 mb-12 relative z-10">
+        <div className="w-full mt-16 md:mt-32 mb-12 relative z-10">
           <div className="absolute inset-0 bg-[#251B37]/5 pointer-events-none" />
           <img src={bannerImg} alt="NETI comunidad" className="w-full object-cover max-h-[250px] shadow-sm" style={noSelect} draggable={false} />
         </div>

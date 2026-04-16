@@ -34,7 +34,7 @@ const infoCards = [
       </svg>
     ),
     label: '¿Qué?',
-    text: 'Un espacio de innovación, co-creación y aprendizaje. Combinamos workshops, fórums y actividades prácticas para transformar ideas en soluciones reales.',
+    text: 'Experiencias inmersivas de co-creación. Un ecosistema donde el diseño, la tecnología y el pensamiento crítico convergen para transformar ideas en impacto real.',
   },
   {
     icon: (
@@ -43,7 +43,7 @@ const infoCards = [
       </svg>
     ),
     label: '¿Cuándo?',
-    text: 'Fecha inicio y final. Es un único día, las horas que abarca.',
+    text: 'A lo largo de todo el año. Diseñamos jornadas intensivas y workshops estratégicos. Consultá nuestra agenda activa para conocer los próximos encuentros.',
   },
   {
     icon: (
@@ -52,7 +52,7 @@ const infoCards = [
       </svg>
     ),
     label: '¿Dónde?',
-    text: 'Si tiene parte presencial, híbrido o "nos encontraremos por zoom/meet/spatialchat/topia", va acá.',
+    text: 'Sin barreras físicas. Nos movemos entre el mundo presencial, plataformas virtuales y experiencias en el metaverso, creando formatos híbridos que potencian la conexión.',
   },
 ];
 
@@ -641,7 +641,7 @@ export default function Eventos() {
         <div className="absolute bottom-6 md:bottom-10 left-4 md:left-16 right-4 md:right-auto">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-none"
             style={{ WebkitTextStroke: '1.5px #ffffff', color: 'white' }}>
-            Slogan del evento
+            Conocé nuestros eventos
           </h1>
         </div>
       </section>
