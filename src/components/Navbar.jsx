@@ -60,44 +60,22 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
   const [isOpen, setIsOpen] = useState(false);
 
-  // Bloquear scroll -” compatible iOS Safari
+  // Bloquear scroll
   useEffect(() => {
-    const html = document.documentElement;
     const body = document.body;
 
     if (isOpen) {
-      const scrollY = window.scrollY;
-      // Guardamos el scroll en un data attribute para recuperarlo al cerrar
-      body.dataset.scrollY = String(scrollY);
-      body.style.position = 'fixed';
-      body.style.top = `-${scrollY}px`;
-      body.style.left = '0';
-      body.style.right = '0';
-      body.style.width = '100%';
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.paddingRight = `${scrollbarWidth}px`;
       body.style.overflow = 'hidden';
-      html.style.overflow = 'hidden';
     } else {
-      const scrollY = parseInt(body.dataset.scrollY || '0', 10);
-      body.style.position = '';
-      body.style.top = '';
-      body.style.left = '';
-      body.style.right = '';
-      body.style.width = '';
+      body.style.paddingRight = '';
       body.style.overflow = '';
-      html.style.overflow = '';
-      window.scrollTo(0, scrollY);
     }
 
     return () => {
-      const scrollY = parseInt(body.dataset.scrollY || '0', 10);
-      body.style.position = '';
-      body.style.top = '';
-      body.style.left = '';
-      body.style.right = '';
-      body.style.width = '';
+      body.style.paddingRight = '';
       body.style.overflow = '';
-      html.style.overflow = '';
-      if (scrollY) window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
 
@@ -109,8 +87,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* â”€â”€ BARRA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
-      <header className="sticky top-0 z-50 transition-colors duration-300 bg-white/65 backdrop-blur-[18px] backdrop-saturate-[180%] border-b border-white/30 shadow-[0_2px_16px_rgba(103,88,155,0.07)]">
+      {/* ── BARRA ──────────────────────────────────────────────────────── */}
+      <header className="sticky top-0 z-[100] transition-colors duration-300 bg-white/65 backdrop-blur-[18px] backdrop-saturate-[180%] border-b border-white/30 shadow-[0_2px_16px_rgba(103,88,155,0.07)]">
         <div className="w-full px-6 lg:px-16">
           <div className="flex justify-between items-center h-20">
 
@@ -150,7 +128,11 @@ const Navbar = () => {
 
             {/* Botón hamburguesa */}
             <button
-              onClick={() => setIsOpen(o => !o)}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsOpen(o => !o);
+              }}
               aria-expanded={isOpen}
               aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
               className="md:hidden text-[#251B37] hover:text-[#EC4E8D] transition-colors duration-200 focus:outline-none z-[60] relative min-w-[44px] min-h-[44px] flex items-center justify-center p-2"
