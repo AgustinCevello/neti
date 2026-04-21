@@ -213,21 +213,12 @@ export default function Nosotros() {
             </h2>
           </FadeIn>
 
-          <div className="flex flex-col gap-10 items-center">
-            {/* Fila 1: 3 miembros */}
-            <div className="flex flex-wrap justify-center gap-10 w-full max-w-4xl mx-auto">
-              {teamMembers.slice(0, 3).map((member, idx) => (
-                <div key={idx} className="w-[calc(50%-20px)] sm:w-[calc(33.333%-27px)] flex justify-center">
-                  <TeamCard member={member} delay={idx * 80} />
-                </div>
-              ))}
-            </div>
-            {/* Fila 2: 1 miembro centrado */}
-            <div className="flex justify-center gap-10 w-full max-w-2xl mx-auto">
-              {teamMembers.slice(3).map((member, idx) => (
-                <TeamCard key={idx + 3} member={member} delay={(idx + 3) * 80} />
-              ))}
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 w-full max-w-5xl mx-auto">
+            {teamMembers.map((member, idx) => (
+              <div key={idx} className="flex justify-center">
+                <TeamCard member={member} delay={idx * 80} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
