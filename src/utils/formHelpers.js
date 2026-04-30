@@ -169,6 +169,14 @@ export const CONTACTO_RULES = {
       return '';
     },
   },
+  apellido: {
+    required: true, requiredMsg: 'El apellido es requerido',
+    max: 80, maxMsg: 'Máximo 80 caracteres',
+    custom: (v) => {
+      if (v && [...v].some(ch => !isAllowedChar(ch, 'nombre'))) return 'Solo letras, sin números ni símbolos';
+      return '';
+    },
+  },
   email: {
     required: true, requiredMsg: 'El email es requerido',
     custom: (v) => (!v?.trim() ? '' : (!isValidEmail(v) ? 'Ingresá un correo válido (ej: nombre@empresa.com)' : '')),
@@ -206,6 +214,10 @@ export const CV_RULES = {
     required: true, requiredMsg: 'El nombre es requerido',
     max: 80, maxMsg: 'Máximo 80 caracteres',
   },
+  apellido: {
+    required: true, requiredMsg: 'El apellido es requerido',
+    max: 80, maxMsg: 'Máximo 80 caracteres',
+  },
   linkedin: {
     required: true, requiredMsg: 'El link de LinkedIn es requerido',
     custom: (v) => {
@@ -227,6 +239,15 @@ export const TALLER_RULES = {
   },
   nombre: {
     required: true, requiredMsg: 'Tu nombre es requerido',
+    max: 80, maxMsg: 'Máximo 80 caracteres',
+    custom: (v) => {
+      if (!v?.trim()) return '';
+      if ([...v].some(ch => !isAllowedChar(ch, 'nombre'))) return 'Solo letras';
+      return '';
+    },
+  },
+  apellido: {
+    required: true, requiredMsg: 'Tu apellido es requerido',
     max: 80, maxMsg: 'Máximo 80 caracteres',
     custom: (v) => {
       if (!v?.trim()) return '';

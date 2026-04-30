@@ -82,7 +82,7 @@ function Field({ label, required, hint, error, status, children }) {
 // ── Formulario Principal ──────────────────────────────────────────────────────
 function ContactoForm({ onSuccess }) {
   const [form, setForm] = useState({
-    nombre: '', email: '', telefono: '', linkedin: '', mensaje: '', aceptaLegales: false,
+    nombre: '', apellido: '', email: '', telefono: '', linkedin: '', mensaje: '', aceptaLegales: false,
   });
   const [touched,   setTouched]   = useState({});
   const [focused,   setFocused]   = useState('');
@@ -152,7 +152,7 @@ function ContactoForm({ onSuccess }) {
     setSecError('');
 
     // ── Marcar todos como tocados para mostrar errores ──
-    setTouched({ nombre: true, email: true, telefono: true, linkedin: true, mensaje: true, aceptaLegales: true });
+    setTouched({ nombre: true, apellido: true, email: true, telefono: true, linkedin: true, mensaje: true, aceptaLegales: true });
     if (Object.keys(errors).length > 0) return;
 
     // ── Comprobaciones de seguridad ───────────────────
@@ -200,9 +200,9 @@ function ContactoForm({ onSuccess }) {
       <input ref={honeypotRef} type="text" {...honeypotProps} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Field label="Nombre completo" required error={errors.nombre} status={getStatus('nombre')}>
+        <Field label="Nombre" required error={errors.nombre} status={getStatus('nombre')}>
           <div className="relative">
-            <input type="text" placeholder="¿Cómo te llamás?" className={inputClass(getStatus('nombre'))}
+            <input type="text" placeholder="Tu nombre" className={inputClass(getStatus('nombre'))}
               {...makeTextHandlers('nombre', 80, 'nombre')} />
             {form.nombre.length > 50 && (
               <span className="absolute right-3 bottom-3 font-sans text-[11px] pointer-events-none" style={{ color: form.nombre.length / 80 > 0.85 ? '#EC4E8D' : '#C4BAD4' }}>
@@ -211,6 +211,20 @@ function ContactoForm({ onSuccess }) {
             )}
           </div>
         </Field>
+        <Field label="Apellido" required error={errors.apellido} status={getStatus('apellido')}>
+          <div className="relative">
+            <input type="text" placeholder="Tu apellido" className={inputClass(getStatus('apellido'))}
+              {...makeTextHandlers('apellido', 80, 'nombre')} />
+            {form.apellido.length > 50 && (
+              <span className="absolute right-3 bottom-3 font-sans text-[11px] pointer-events-none" style={{ color: form.apellido.length / 80 > 0.85 ? '#EC4E8D' : '#C4BAD4' }}>
+                {form.apellido.length}/80
+              </span>
+            )}
+          </div>
+        </Field>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field label="Email" required error={errors.email} status={getStatus('email')}>
           <input type="email" placeholder="nombre@empresa.com" className={inputClass(getStatus('email'))} {...emailHandlers} />
         </Field>

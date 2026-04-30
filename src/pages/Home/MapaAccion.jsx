@@ -8,6 +8,8 @@ import imgGenerar from "../../assets/images/pictures/MapaDeAccionGenerarIdeas.we
 import imgPrototipar from "../../assets/images/pictures/MapaDeAccionPrototiparyTestearIdeas.webp";
 import imgIterar from "../../assets/images/pictures/MapaDeAccionIterarYDesarrollar.webp";
 import imgLineaPunteada from "../../assets/images/pictures/MapaDeAccionLineaPunteada.webp";
+import imgNoTengoTiempo from "../../assets/images/pictures/InicioNoTengoTiempo.webp";
+import imgCinturonAsteroides from "../../assets/images/pictures/InicioCinturonAsteroides.webp";
 
 const TextoConGlow = ({ children, align = "left" }) => (
   <div className={`relative text-center md:text-${align} mb-8 md:mb-0`}>
@@ -97,13 +99,14 @@ export default function MapaAccion() {
           {/* Inspirar */}
           <div className="flex flex-col md:flex-row-reverse items-center mb-32 relative">
             <div className="md:w-1/2 md:pl-12">
-              <TextoConGlow align="left">
+              <img alt="No tengo tiempo" loading="lazy" draggable={false} className="hidden md:block w-full h-auto max-w-xs mx-auto pointer-events-none select-none -translate-y-36 -translate-x-4" style={{ WebkitUserDrag: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} src={imgNoTengoTiempo} />
+            </div>
+            <div className="md:w-1/2 md:pr-12 flex flex-col items-center">
+              <TextoConGlow align="center">
                 <h3 className="text-xl font-bold mb-2">Call to action</h3>
                 <p className="text-gray-600">Dentro de lo cotidiano, surge el llamado al cambio. Es nuestro deber convertir los problemas en desafíos y embarcarnos en la aventura.</p>
               </TextoConGlow>
-            </div>
-            <div className="md:w-1/2 md:pr-12">
-              <img alt="Inspirar" width={442} height={692} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgInspirar} />
+              <img alt="Inspirar" width={442} height={692} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none mt-4" src={imgInspirar} />
             </div>
           </div>
 
@@ -127,6 +130,7 @@ export default function MapaAccion() {
                 <h3 className="text-xl font-bold mb-2">Convertir los desafíos en soluciones</h3>
                 <p className="text-gray-600">Diferentes tipos de problemas surgirán con la información que obtuvimos hasta ahora. Llega el momento de superarnos, debemos tener miradas objetivas.</p>
               </TextoConGlow>
+              <img alt="Cinturón de asteroides" loading="lazy" draggable={false} className="hidden md:block w-full h-auto max-w-sm mx-auto pointer-events-none select-none mt-8" style={{ WebkitUserDrag: 'none', WebkitUserSelect: 'none', userSelect: 'none' }} src={imgCinturonAsteroides} />
             </div>
             <div className="md:w-1/2 md:pr-12">
               <img alt="Generar ideas" width={409} height={443} loading="lazy" draggable={false} className="w-full h-auto max-w-lg mx-auto pointer-events-none select-none" src={imgGenerar} />

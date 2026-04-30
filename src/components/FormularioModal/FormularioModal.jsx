@@ -180,7 +180,7 @@ function FormContent({ taller, onClose }) {
   const cfg = config[taller];
 
   const [form, setForm] = useState({
-    tipo: '', nombre: '', busco: '', descripcion: '',
+    tipo: '', nombre: '', apellido: '', busco: '', descripcion: '',
     experiencia: '', participantes: '', email: '', motivacion: '',
     aceptaLegales: false,
   });
@@ -199,7 +199,7 @@ function FormContent({ taller, onClose }) {
   const getState = (name) => {
     if (!touched[name]) return '';
     if (errors[name]) return 'invalid';
-    const requeridos = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
+    const requeridos = ['tipo', 'nombre', 'apellido', 'busco', 'email', 'aceptaLegales'];
     if (form.busco === 'otro') requeridos.push('descripcion');
     if (requeridos.includes(name) && !form[name]) return '';
     return form[name] ? 'valid' : '';
@@ -246,6 +246,21 @@ function FormContent({ taller, onClose }) {
     const room = 80 - form.nombre.length;
     if (room <= 0) return;
     applyField('nombre', form.nombre + filterChars(pasted, 'nombre', room));
+  };
+
+  // Handlers de apellido (mismas reglas que nombre)
+  const handleApellidoChange = (e) =>
+    applyField('apellido', filterChars(e.target.value, 'nombre', 80));
+  const handleApellidoKeyDown = (e) => {
+    if (e.key.length > 1) return;
+    if (!CHAR_SETS.nombre.has(e.key)) e.preventDefault();
+  };
+  const handleApellidoPaste = (e) => {
+    e.preventDefault();
+    const pasted = (e.clipboardData || window.clipboardData).getData('text');
+    const room = 80 - form.apellido.length;
+    if (room <= 0) return;
+    applyField('apellido', form.apellido + filterChars(pasted, 'nombre', room));
   };
 
   // Handlers de textarea (texto genérico)
@@ -319,7 +334,7 @@ function FormContent({ taller, onClose }) {
   };
 
   // Progreso
-  const requiredFields = ['tipo', 'nombre', 'busco', 'email', 'aceptaLegales'];
+  const requiredFields = ['tipo', 'nombre', 'apellido', 'busco', 'email', 'aceptaLegales'];
   if (form.busco === 'otro') requiredFields.push('descripcion');
   const completed = requiredFields.filter(f => form[f] && !errors[f]).length;
   const progress  = (completed / requiredFields.length) * 100;
@@ -368,16 +383,31 @@ function FormContent({ taller, onClose }) {
         </div>
       </Field>
 
-      <Field label="Nombre completo" required error={touched.nombre && errors.nombre}>
+      <Field label="Nombre" required error={touched.nombre && errors.nombre}>
         <div className="relative">
           <input type="text" name="nombre" value={form.nombre}
             onChange={handleNombreChange} onBlur={handleBlur}
             onKeyDown={handleNombreKeyDown} onPaste={handleNombrePaste}
-            placeholder="¿Cómo te llamás?" className={inputClass(getState('nombre'))}
+            placeholder="Tu nombre" className={inputClass(getState('nombre'))}
             disabled={isLoading} />
           {form.nombre.length > 40 && (
             <span className="absolute right-3 bottom-3 pointer-events-none">
               <CharCount current={form.nombre.length} max={80} />
+            </span>
+          )}
+        </div>
+      </Field>
+
+      <Field label="Apellido" required error={touched.apellido && errors.apellido}>
+        <div className="relative">
+          <input type="text" name="apellido" value={form.apellido}
+            onChange={handleApellidoChange} onBlur={handleBlur}
+            onKeyDown={handleApellidoKeyDown} onPaste={handleApellidoPaste}
+            placeholder="Tu apellido" className={inputClass(getState('apellido'))}
+            disabled={isLoading} />
+          {form.apellido.length > 40 && (
+            <span className="absolute right-3 bottom-3 pointer-events-none">
+              <CharCount current={form.apellido.length} max={80} />
             </span>
           )}
         </div>

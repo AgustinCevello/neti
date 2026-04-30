@@ -6,7 +6,7 @@ import { enviarInscripcionEvento } from '../../services/sheets';
 import { useSheetData } from '../../hooks/useSheetData';
 
 import heroImg      from '../../assets/images/pictures/Eventosherosection.webp';
-import separadorImg from '../../assets/images/pictures/separadoreventossection.webp';
+import separadorImg from '../../assets/images/pictures/separadoreventossection2.webp';
 import mapaInspirar from '../../assets/images/pictures/MapaDeAccionInspirar.webp';
 import mara         from '../../assets/images/pictures/EmpleadoMara.webp';
 import esteban      from '../../assets/images/pictures/EmpleadoEsteban3.webp';
@@ -57,11 +57,11 @@ const infoCards = [
 ];
 
 const oradores = [
-  { name: 'Mara Provenzano',      role: 'Cofundadora',               img: mara,    bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Esteban Bonomi',       role: 'Cofundador',                img: esteban, bio: 'Esteban Bonomi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Mara Provenzano',      role: 'Diseñadora',                img: maraP,   bio: 'Mara Provenzano is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Euge Abratti',         role: 'Diseñadora de experiencia', img: euge,    bio: 'Euge is a Social Communicator graduated from Universidad de Buenos Aires, but her career was forged with an imperfect combination of a bit of everything.' },
-  { name: 'Juan Ignacio Franchi', role: 'Diseñador UX/UI',           img: juani,   bio: 'Juani Franchi is a Social Communicator graduated from Universidad de Buenos Aires, but his career was forged with an imperfect combination of a bit of everything.' },
+  { name: 'Mara Provenzano',      role: 'Cofundadora',               img: mara,    bio: 'Comunicadora Social egresada de la Universidad de Buenos Aires, pero su carrera se forjó con una combinación imperfecta de un poco de todo.' },
+  { name: 'Esteban Bonomi',       role: 'Cofundador',                img: esteban, bio: 'Diseñador Industrial, jefe de taller, espacialista en prototipado rápido, facilitación de talleres.' },
+  { name: 'Sheila Steffen',       role: 'Comunicadora',              img: maraP,   bio: 'Comunicadora, experta en marketing digital y oratoria, facilitadora de proyectos innovadores en NETI.' },
+  { name: 'Eugenia Abratti',      role: 'Diseñadora industrial',     img: euge,    bio: 'Diseñadora industrial, capacitadora en innovación y nuevas tecnologías, fundadora de Aveneris y coordinadora de innovación.' },
+  { name: 'Juan Ignacio Franchi', role: 'Diseñador industrial y UX/UI', img: juani,   bio: 'Diseñador industrial y UX/UI, facilitador de Design Thinking, combina creatividad y metodologías ágiles para innovar.' },
 ];
 
 const organizadores = [dreamLogo, globantLogo, mercedesLogo, nanotecnologiaLogo, telefonicaLogo];
@@ -184,7 +184,7 @@ function SuccessToast({ nombre, email }) {
   );
 }
 
-function InscripcionForm({ evento }) {
+function InscripcionForm({ evento, onSuccess }) {
   const [form, setForm]           = useState({ nombre: '', apellido: '', email: '', aceptaLegales: false });
   const [errors, setErrors]       = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -244,6 +244,8 @@ function InscripcionForm({ evento }) {
       toast.custom(() => <SuccessToast nombre={nombre} email={email} />, {
         duration: 5000, position: 'top-right',
       });
+      // Auto-cerrar el modal tras la animación de éxito
+      setTimeout(() => onSuccess?.(), 2000);
     }, 2000);
   };
 
@@ -484,7 +486,7 @@ function ModalInscripcion({ evento, onClose }) {
         {/* Body con el formulario */}
         <div className="overflow-y-auto flex-1 px-6 py-6"
           style={{ scrollbarWidth: 'thin', scrollbarColor: '#EC4E8D44 transparent' }}>
-          <InscripcionForm evento={evento} />
+          <InscripcionForm evento={evento} onSuccess={onClose} />
         </div>
       </div>
 
@@ -643,7 +645,7 @@ export default function Eventos() {
         <div className="absolute bottom-6 md:bottom-10 left-4 md:left-16 right-4 md:right-auto">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-none"
             style={{ WebkitTextStroke: '1.5px #ffffff', color: 'white' }}>
-            Conocé nuestros eventos
+            Conocé nuestra agenda de eventos
           </h1>
         </div>
       </section>
@@ -755,7 +757,7 @@ export default function Eventos() {
         </div>
       </section>
 
-      {/* ORADORES */}
+      {/* COLABORADORES */}
       <section 
         className="py-16 px-4 md:px-8 bg-fixed bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${FondoCuadricula})` }}
@@ -763,7 +765,7 @@ export default function Eventos() {
         <div className="max-w-5xl mx-auto">
           <FadeIn>
             <h2 className="font-display text-4xl md:text-5xl font-black uppercase mb-14" style={{ color: '#35112F' }}>
-              Oradores
+              Colaboradores del proyecto web
             </h2>
           </FadeIn>
           <div className="hidden md:flex flex-row flex-nowrap overflow-x-auto gap-10 pb-4 justify-center" style={{ scrollbarWidth: 'none' }}>

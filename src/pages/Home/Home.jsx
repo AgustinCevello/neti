@@ -4,7 +4,7 @@ import Empresas from "./Empresas";
 
 import slide1 from "../../assets/images/pictures/carruselherosection1.webp";
 import slide2 from "../../assets/images/pictures/carruselherosection2.webp";
-import slide3 from "../../assets/images/pictures/carruselherosection3.webp";
+import slide3 from "../../assets/images/pictures/carruselherosection3v2.webp";
 
 const slides = [slide1, slide2, slide3];
 
@@ -103,7 +103,7 @@ export default function Home() {
         {/* Título + dots */}
         <div ref={heroRef} className="relative z-10 px-6 md:px-10 pb-4 max-w-4xl w-full">
           <h1
-            className="font-display text-5xl md:text-7xl lg:text-6xl xl:text-7xl leading-none uppercase mb-3"
+            className="font-display text-3xl md:text-7xl lg:text-6xl xl:text-7xl leading-none uppercase mb-3"
             style={{
               WebkitTextStroke: "1.5px #ffffff",
               color: "transparent",

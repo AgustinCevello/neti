@@ -89,7 +89,7 @@ function Field({ label, required, hint, error, status, children }) {
 
 // ── Componente Principal Exportado ────────────────────────────────────────────
 export default function CurriculumForm({ onSuccess }) {
-  const [form,     setForm]     = useState({ nombre: '', linkedin: '', aceptaLegales: false });
+  const [form,     setForm]     = useState({ nombre: '', apellido: '', linkedin: '', aceptaLegales: false });
   const [touched,  setTouched]  = useState({});
   const [focused,  setFocused]  = useState('');
   const [loading,  setLoading]  = useState(false);
@@ -135,7 +135,7 @@ export default function CurriculumForm({ onSuccess }) {
     if (loading) return;
     setSecError('');
 
-    setTouched({ nombre: true, linkedin: true, aceptaLegales: true });
+    setTouched({ nombre: true, apellido: true, linkedin: true, aceptaLegales: true });
     if (Object.keys(errors).length > 0) return;
 
     // ── Comprobaciones de seguridad ─────────────────
@@ -145,7 +145,7 @@ export default function CurriculumForm({ onSuccess }) {
         setSecError(`Demasiados intentos. Por favor, esperá ${formatCooldown(sec.remainingMs)}.`);
       } else {
         // Honeypot / tooFast — simular éxito silenciosamente
-        apply('nombre', ''); apply('linkedin', ''); apply('aceptaLegales', false);
+        apply('nombre', ''); apply('apellido', ''); apply('linkedin', ''); apply('aceptaLegales', false);
         setTouched({});
         if (onSuccess) onSuccess();
       }
@@ -157,7 +157,7 @@ export default function CurriculumForm({ onSuccess }) {
       await enviarContacto(sanitizeFormData({ ...form, tipo: 'Curriculum' }));
       recordAttempt();
       toast.custom(() => <SuccessToast nombre={form.nombre} />, { duration: 5000, position: 'top-right' });
-      setForm({ nombre: '', linkedin: '', aceptaLegales: false });
+      setForm({ nombre: '', apellido: '', linkedin: '', aceptaLegales: false });
       setTouched({});
       if (onSuccess) onSuccess();
     } finally {
@@ -173,13 +173,23 @@ export default function CurriculumForm({ onSuccess }) {
       {/* Campo Honeypot — invisible para humanos */}
       <input ref={honeypotRef} type="text" {...honeypotProps} />
 
-      <Field label="Nombre completo" required error={errors.nombre} status={getStatus('nombre')}>
-        <input type="text" placeholder="¿Cómo te llamás?"
-          className={inputClass(getStatus('nombre'))}
-          {...makeTextHandlers('nombre', 80, 'nombre')}
-          disabled={loading}
-        />
-      </Field>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Field label="Nombre" required error={errors.nombre} status={getStatus('nombre')}>
+          <input type="text" placeholder="Tu nombre"
+            className={inputClass(getStatus('nombre'))}
+            {...makeTextHandlers('nombre', 80, 'nombre')}
+            disabled={loading}
+          />
+        </Field>
+
+        <Field label="Apellido" required error={errors.apellido} status={getStatus('apellido')}>
+          <input type="text" placeholder="Tu apellido"
+            className={inputClass(getStatus('apellido'))}
+            {...makeTextHandlers('apellido', 80, 'nombre')}
+            disabled={loading}
+          />
+        </Field>
+      </div>
 
       <Field label="Link de LinkedIn" required error={errors.linkedin} status={getStatus('linkedin')}>
         <input type="text" placeholder="linkedin.com/in/tu-perfil"
